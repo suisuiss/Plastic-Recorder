@@ -29,7 +29,42 @@ class _CompareState extends State<Compare> {
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Container(color: Colors.orange),
+                child: Column(
+                  children: [
+                    Container(
+                      child: Stack(
+                        alignment: AlignmentDirectional.center,
+                        children: <Widget>[
+                          Positioned(
+                            child: Image(
+                              image: AssetImage('assets/bottle_fill.png'),
+                              color: Colors.green,
+                              width: 500,
+                              height: 500,
+                            ),
+                          ),
+                          Positioned(
+                            child: Image(
+                              image: AssetImage('assets/screen.png'),
+                              width: 500,
+                              height: 500,
+                            ),
+                            bottom: 140,
+                          ),
+                          Positioned(
+                            child: Image(
+                              image: AssetImage('assets/bottle.png'),
+                              width: 500,
+                              height: 500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text(
+                        " On April 1st, your plastic consumption is 521 points below average!"),
+                  ],
+                ),
               ),
             ),
 
