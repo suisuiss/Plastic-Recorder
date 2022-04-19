@@ -30,7 +30,7 @@ class _firstPageState extends State<firstPage> {
 
   route() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => Login()));
+        context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 
   initScreen(BuildContext context) {
