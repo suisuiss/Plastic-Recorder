@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:plastic_recorder/footer.dart';
-import 'package:plastic_recorder/header.dart';
 import 'package:plastic_recorder/login_screen.dart';
 import 'package:plastic_recorder/compare.dart';
 
