@@ -4,7 +4,7 @@ import 'package:plastic_recorder/footer.dart';
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
-  Widget textfield({@required hintText}) {
+  Widget textfield({@required hintText, required icon}) {
     return Material(
       elevation: 2,
       shadowColor: Colors.grey,
@@ -20,6 +20,7 @@ class ProfilePage extends StatelessWidget {
               color: Color.fromARGB(137, 0, 0, 0),
               fontWeight: FontWeight.bold,
             ),
+            prefixIcon: Icon(icon),
             fillColor: const Color.fromARGB(77, 255, 255, 255),
             filled: true,
             border: const UnderlineInputBorder()),
@@ -43,20 +44,18 @@ class ProfilePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: 350,
+                      height: 330,
                       width: double.infinity,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           textfield(
-                            hintText: 'Username',
-                          ),
+                              hintText: 'Username',
+                              icon: Icons.account_circle_outlined),
+                          textfield(hintText: 'Email', icon: Icons.email),
                           textfield(
-                            hintText: 'Email',
-                          ),
-                          textfield(
-                            hintText: 'change the password',
-                          ),
+                              hintText: 'change the password',
+                              icon: Icons.lock),
                           Container(
                             height: 40,
                             width: 160,
