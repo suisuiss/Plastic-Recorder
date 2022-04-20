@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
+import 'package:intl/intl.dart';
 
 class Compare extends StatefulWidget {
   const Compare({Key? key}) : super(key: key);
@@ -26,6 +27,11 @@ class _CompareState extends State<Compare> {
     // Height (without status and toolbar)
     double height3 = height - padding.top - kToolbarHeight;
 
+    var now = new DateTime.now();
+    String formattedDate = DateFormat('MMMd').format(now);
+
+    int points = 521;
+
     return Scaffold(
       //You should use `Scaffold` if you have `TextField` in body.
       //Otherwise on focus your `TextField` won`t scroll when keyboard popup.
@@ -47,11 +53,64 @@ class _CompareState extends State<Compare> {
                   children: [
                     Container(
                       width: width,
-                      height: 350,
-                      color: Colors.red,
+                      height: 400,
+                      //color: Colors.red,
+                      child: Stack(
+                          alignment: AlignmentDirectional.bottomCenter,
+                          children: <Widget>[
+                            Container(
+                              child: FittedBox(
+                                child: Image.asset(
+                                  'assets/bottle_fill.png',
+                                  color: Colors.green,
+                                ),
+                                fit: BoxFit.fill,
+                              ),
+                              height: 70,
+                              width: 200,
+                            ),
+                            Container(
+                              child: Image.asset('assets/bottle.png'),
+                            ),
+                            Container(
+                              child: Image.asset('assets/divider.png'),
+                              width: 130,
+                              height: 100,
+                            ),
+                          ]),
                     ),
                     Container(
                       alignment: Alignment.center,
+                      child: Padding(
+                          padding: EdgeInsets.all(2.0),
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              text: 'On ' +
+                                  formattedDate +
+                                  ', your plastic consumption is ',
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: points.toString(),
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFFFF9F1D),
+                                        decoration: TextDecoration.none)),
+                                TextSpan(
+                                  text: ' points below average!',
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      color: Colors.black,
+                                      decoration: TextDecoration.none),
+                                ),
+                              ],
+                            ),
+                          )),
                     ),
                   ],
                 ),
