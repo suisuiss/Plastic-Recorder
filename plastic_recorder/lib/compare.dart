@@ -12,6 +12,20 @@ class Compare extends StatefulWidget {
 class _CompareState extends State<Compare> {
   @override
   Widget build(BuildContext context) {
+    // Full screen width and height
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    // Height (without SafeArea)
+    var padding = MediaQuery.of(context).viewPadding;
+    double height1 = height - padding.top - padding.bottom;
+
+    // Height (without status bar)
+    double height2 = height - padding.top;
+
+    // Height (without status and toolbar)
+    double height3 = height - padding.top - kToolbarHeight;
+
     return Scaffold(
       //You should use `Scaffold` if you have `TextField` in body.
       //Otherwise on focus your `TextField` won`t scroll when keyboard popup.
@@ -32,37 +46,13 @@ class _CompareState extends State<Compare> {
                 child: Column(
                   children: [
                     Container(
-                      child: Stack(
-                        alignment: AlignmentDirectional.center,
-                        children: <Widget>[
-                          Positioned(
-                            child: Image(
-                              image: AssetImage('assets/bottle_fill.png'),
-                              color: Colors.green,
-                              width: 500,
-                              height: 500,
-                            ),
-                          ),
-                          Positioned(
-                            child: Image(
-                              image: AssetImage('assets/screen.png'),
-                              width: 500,
-                              height: 500,
-                            ),
-                            bottom: 140,
-                          ),
-                          Positioned(
-                            child: Image(
-                              image: AssetImage('assets/bottle.png'),
-                              width: 500,
-                              height: 500,
-                            ),
-                          ),
-                        ],
-                      ),
+                      width: width,
+                      height: 350,
+                      color: Colors.red,
                     ),
-                    Text(
-                        " On April 1st, your plastic consumption is 521 points below average!"),
+                    Container(
+                      alignment: Alignment.center,
+                    ),
                   ],
                 ),
               ),
