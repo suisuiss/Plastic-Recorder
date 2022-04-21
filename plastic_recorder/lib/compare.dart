@@ -66,16 +66,19 @@ class _CompareState extends State<Compare> {
                                 ),
                                 fit: BoxFit.fill,
                               ),
-                              height: 70,
+                              height: 315, //315 Max
                               width: 200,
                             ),
                             Container(
                               child: Image.asset('assets/bottle.png'),
                             ),
-                            Container(
-                              child: Image.asset('assets/divider.png'),
-                              width: 130,
-                              height: 100,
+                            Positioned(
+                              child: Container(
+                                child: Image.asset('assets/divider.png'),
+                                width: 130,
+                                height: 50,
+                              ),
+                              bottom: 290, //Max 290
                             ),
                           ]),
                     ),
