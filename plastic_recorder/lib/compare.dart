@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/animation.dart';
 
 class Compare extends StatefulWidget {
   const Compare({Key? key}) : super(key: key);
@@ -30,7 +31,11 @@ class _CompareState extends State<Compare> {
     var now = new DateTime.now();
     String formattedDate = DateFormat('MMMd').format(now);
 
-    int points = 521;
+    int avg = 2500;
+    int points = 1200;
+    double progress = points / avg;
+
+    var color = ColorTween(begin: Colors.green, end: Colors.red);
 
     return Scaffold(
       //You should use `Scaffold` if you have `TextField` in body.
@@ -58,16 +63,19 @@ class _CompareState extends State<Compare> {
                       child: Stack(
                           alignment: AlignmentDirectional.bottomCenter,
                           children: <Widget>[
-                            Container(
-                              child: FittedBox(
-                                child: Image.asset(
-                                  'assets/bottle_fill.png',
-                                  color: Colors.green,
+                            Positioned(
+                              child: Container(
+                                child: FittedBox(
+                                  child: Image.asset(
+                                    'assets/bottle_fill.png',
+                                    color: color.lerp(progress),
+                                  ),
+                                  fit: BoxFit.fill,
                                 ),
-                                fit: BoxFit.fill,
+                                height: 278 * progress, //278 Max
+                                width: 200,
                               ),
-                              height: 315, //315 Max
-                              width: 200,
+                              bottom: 36,
                             ),
                             Container(
                               child: Image.asset('assets/bottle.png'),
@@ -78,7 +86,25 @@ class _CompareState extends State<Compare> {
                                 width: 130,
                                 height: 50,
                               ),
-                              bottom: 290, //Max 290
+                              bottom: 10 + (282 * progress), //Max 290
+                            ),
+                            Positioned(
+                              child: Container(
+                                child: DefaultTextStyle(
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      decoration: TextDecoration.none),
+                                  child: Text(
+                                    points.toString(),
+                                  ),
+                                ),
+                                width: 130,
+                                height: 32,
+                              ),
+                              bottom: 10 + (282 * progress), //Max 290
                             ),
                           ]),
                     ),
@@ -93,23 +119,26 @@ class _CompareState extends State<Compare> {
                                   formattedDate +
                                   ', your plastic consumption is ',
                               style: TextStyle(
-                                  fontSize: 24,
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none),
+                                fontSize: 24,
+                                color: Colors.black,
+                                decoration: TextDecoration.none,
+                              ),
                               children: <TextSpan>[
                                 TextSpan(
-                                    text: points.toString(),
-                                    style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFFFF9F1D),
-                                        decoration: TextDecoration.none)),
+                                  text: (avg - points).toString(),
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFFFF9F1D),
+                                      decoration: TextDecoration.none),
+                                ),
                                 TextSpan(
                                   text: ' points below average!',
                                   style: TextStyle(
-                                      fontSize: 24,
-                                      color: Colors.black,
-                                      decoration: TextDecoration.none),
+                                    fontSize: 24,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.none,
+                                  ),
                                 ),
                               ],
                             ),
