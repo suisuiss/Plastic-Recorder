@@ -32,8 +32,13 @@ class _CompareState extends State<Compare> {
     String formattedDate = DateFormat('MMMd').format(now);
 
     int avg = 2500;
-    int points = 1200;
+    int points = 3000;
     double progress = points / avg;
+
+    String display = ' points below average!';
+    if (progress > 1) {
+      display = ' points above average!';
+    }
 
     var color = ColorTween(begin: Colors.green, end: Colors.red);
 
@@ -72,7 +77,7 @@ class _CompareState extends State<Compare> {
                                   ),
                                   fit: BoxFit.fill,
                                 ),
-                                height: 278 * progress, //278 Max
+                                height: 278 * progress.clamp(0, 1), //278 Max
                                 width: 200,
                               ),
                               bottom: 36,
@@ -86,7 +91,8 @@ class _CompareState extends State<Compare> {
                                 width: 130,
                                 height: 50,
                               ),
-                              bottom: 10 + (282 * progress), //Max 290
+                              bottom:
+                                  10 + (282 * progress.clamp(0, 1)), //Max 290
                             ),
                             Positioned(
                               child: Container(
@@ -104,7 +110,8 @@ class _CompareState extends State<Compare> {
                                 width: 130,
                                 height: 32,
                               ),
-                              bottom: 10 + (282 * progress), //Max 290
+                              bottom:
+                                  10 + (282 * progress.clamp(0, 1)), //Max 290
                             ),
                           ]),
                     ),
@@ -125,7 +132,7 @@ class _CompareState extends State<Compare> {
                               ),
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: (avg - points).toString(),
+                                  text: (avg - points).abs().toString(),
                                   style: TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
@@ -133,7 +140,7 @@ class _CompareState extends State<Compare> {
                                       decoration: TextDecoration.none),
                                 ),
                                 TextSpan(
-                                  text: ' points below average!',
+                                  text: display,
                                   style: TextStyle(
                                     fontSize: 24,
                                     color: Colors.black,
