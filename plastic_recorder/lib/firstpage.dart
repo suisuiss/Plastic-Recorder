@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:plastic_recorder/login_screen.dart';
 import 'package:plastic_recorder/compare.dart';
 import 'package:plastic_recorder/today_screen.dart';
+import 'package:plastic_recorder/recommend.dart';
 
 class firstPage extends StatefulWidget {
   @override
@@ -30,7 +31,7 @@ class _firstPageState extends State<firstPage> {
 
   route() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => Compare()));
+        context, MaterialPageRoute(builder: (context) => Recommend()));
   }
 
   initScreen(BuildContext context) {
