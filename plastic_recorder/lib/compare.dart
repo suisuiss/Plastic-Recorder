@@ -32,7 +32,7 @@ class _CompareState extends State<Compare> {
     String formattedDate = DateFormat('MMMd').format(now);
 
     int avg = 2500;
-    int points = 3000;
+    int points = 300;
     double progress = points / avg;
 
     String display = ' points below average!';
@@ -61,59 +61,72 @@ class _CompareState extends State<Compare> {
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Column(
                   children: [
-                    Container(
-                      width: width,
-                      height: 400,
-                      //color: Colors.red,
-                      child: Stack(
-                          alignment: AlignmentDirectional.bottomCenter,
-                          children: <Widget>[
-                            Positioned(
-                              child: Container(
-                                child: FittedBox(
-                                  child: Image.asset(
-                                    'assets/bottle_fill.png',
-                                    color: color.lerp(progress),
+                    FittedBox(
+                      fit: BoxFit.fill,
+                      child: Container(
+                        width: width,
+                        height: 400,
+                        //color: Colors.red,
+                        child: Stack(
+                            alignment: AlignmentDirectional.bottomCenter,
+                            children: <Widget>[
+                              Positioned(
+                                child: Container(
+                                  child: FittedBox(
+                                    child: Image.asset(
+                                      'assets/bottle_fill.png',
+                                      color: color.lerp(progress),
+                                    ),
+                                    fit: BoxFit.fill,
                                   ),
-                                  fit: BoxFit.fill,
+                                  height: 278 * progress.clamp(0, 1), //278 Max
+                                  width: 200,
                                 ),
-                                height: 278 * progress.clamp(0, 1), //278 Max
-                                width: 200,
+                                bottom: 36,
                               ),
-                              bottom: 36,
-                            ),
-                            Container(
-                              child: Image.asset('assets/bottle.png'),
-                            ),
-                            Positioned(
-                              child: Container(
-                                child: Image.asset('assets/divider.png'),
-                                width: 130,
-                                height: 50,
-                              ),
-                              bottom:
-                                  10 + (282 * progress.clamp(0, 1)), //Max 290
-                            ),
-                            Positioned(
-                              child: Container(
-                                child: DefaultTextStyle(
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      decoration: TextDecoration.none),
-                                  child: Text(
-                                    points.toString(),
+                              Positioned(
+                                child: Container(
+                                  child: FittedBox(
+                                    child: Image.asset(
+                                      'assets/bottle.png',
+                                    ),
+                                    fit: BoxFit.fill,
                                   ),
+                                  height: 350,
+                                  width: 350,
                                 ),
-                                width: 130,
-                                height: 32,
+                                bottom: 36,
                               ),
-                              bottom:
-                                  10 + (282 * progress.clamp(0, 1)), //Max 290
-                            ),
-                          ]),
+                              Positioned(
+                                child: Container(
+                                  child: Image.asset('assets/divider.png'),
+                                  width: 130,
+                                  height: 50,
+                                ),
+                                bottom:
+                                    8 + (282 * progress.clamp(0, 1)), //Max 290
+                              ),
+                              Positioned(
+                                child: Container(
+                                  child: DefaultTextStyle(
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        decoration: TextDecoration.none),
+                                    child: Text(
+                                      points.toString(),
+                                    ),
+                                  ),
+                                  width: 130,
+                                  height: 32,
+                                ),
+                                bottom:
+                                    8 + (282 * progress.clamp(0, 1)), //Max 290
+                              ),
+                            ]),
+                      ),
                     ),
                     Container(
                       alignment: Alignment.center,
