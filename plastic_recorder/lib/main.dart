@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plastic_recorder/firstpage.dart';
-import 'package:plastic_recorder/editprofile_page.dart';
+import 'package:plastic_recorder/profile_page.dart';
 
 void main() {
   runApp(const MyApp());

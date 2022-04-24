@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plastic_recorder/footer.dart';
-import 'package:plastic_recorder/header.dart';
+import 'package:plastic_recorder/profile_header.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -13,6 +13,7 @@ class ProfilePage extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
       ),
       child: TextField(
+        enabled: false,
         textAlign: TextAlign.center,
         decoration: InputDecoration(
             hintText: hintText,

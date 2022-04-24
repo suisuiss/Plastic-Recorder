@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plastic_recorder/editprofile_page.dart';
 
 class header extends StatefulWidget {
   const header({Key? key}) : super(key: key);
@@ -20,10 +21,13 @@ class _headerState extends State<header> {
               size: 45,
               color: Color(0xffFF9F1D),
             ),
-            Icon(
-              Icons.edit,
-              size: 30,
-            )
+            IconButton(
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => EditProfilePage())),
+                icon: Icon(
+                  Icons.edit,
+                  size: 30,
+                ))
           ]),
         ]),
       ),
