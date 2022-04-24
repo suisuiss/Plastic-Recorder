@@ -3,8 +3,8 @@ import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
 import 'package:intl/intl.dart';
 
-class Today extends StatelessWidget {
-  Today({Key? key}) : super(key: key);
+class Add extends StatelessWidget {
+  Add({Key? key}) : super(key: key);
  
 
   @override
@@ -27,7 +27,7 @@ class Today extends StatelessWidget {
                     Container(
                       alignment: Alignment.topCenter,
                       margin: const EdgeInsets.all(0),
-                      child: Text(formattedDate,
+                      child: Text("Add Plastics",
                         style: TextStyle(
                             fontSize: 30,
                             color: Colors.black,
@@ -41,18 +41,7 @@ class Today extends StatelessWidget {
                     Box(pieces: 10, points: 20, name: 'PP',pic:'assets/im5.png' ,),
                     Box(pieces: 10, points: 20, name: 'PS',pic:'assets/im6.png' ,),
                     Box(pieces: 10, points: 20, name: 'O',pic:'assets/im7.png' ,),
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        'Total: $sum  point(s)',
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            decoration: TextDecoration.none),
-                        textAlign: TextAlign.right,
-                      ),
-                    ),
+                   
                     Button(),
                   ],
                 ),
@@ -139,48 +128,12 @@ class _BoxState extends State<Box> {
                 color: Colors.black,
                 decoration: TextDecoration.none),
           ), 
-          ),
           
-          Column(
-            children: [
-              Container(
-                  padding: const EdgeInsets.all(5.0),
-                  margin: const EdgeInsets.only(top: 3.5),
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1.0, color: Color(0xffFF9F1D)),
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color(0xffFF9F1D),
-                  ),
-                  width: 125.0,
-                  height: 28.0,
-                  child: Text(
-                    '$pieces piece(s)',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        decoration: TextDecoration.none),
-                    textAlign: TextAlign.center,
-                  )),
-              Container(
-                  padding: const EdgeInsets.all(5.0),
-                  margin: const EdgeInsets.only(top: 3.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1.0, color: Color(0xffFF9F1D)),
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color(0xffFF9F1D),
-                  ),
-                  width: 125.0,
-                  height: 28.0,
-                  child: Text(
-                    '$points point(s) $sumpoint()',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        decoration: TextDecoration.none),
-                    textAlign: TextAlign.center,
-                  )),
-            ],
-          )
+          ),
+          addbut(),
+          
+          
+         
         ],
       ),
     );
@@ -198,13 +151,64 @@ class _ButtonState extends State<Button> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
+      width: 100,
       child: ElevatedButton(
         onPressed: () {},
-        child: Text('Compare Usage'),
+        child: Text('ADD'),
         style: ElevatedButton.styleFrom(
           primary: Color(0xffFF9F1D),
         ),
+      ),
+    );
+  }
+}
+
+
+class addbut extends StatefulWidget {
+  const addbut({ Key? key }) : super(key: key);
+  
+  @override
+  State<addbut> createState() => _addbutState();
+}
+
+class _addbutState extends State<addbut> {
+  int _counter = 0;
+
+  void _increment(){
+    setState(() {
+      ++_counter;
+    });
+  }
+
+  void _decreasement(){
+    setState(() {
+      if(_counter != 0){
+      --_counter;
+      }else{
+        _counter=0;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(0),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1.0, color: Color(0xffFF9F1D)),
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xffFF9F1D),
+                  ),
+      width: 125.0,
+      height: 28.0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          IconButton(onPressed: _decreasement, icon: Icon(Icons.remove_circle), color: Color.fromARGB(255, 216, 191, 184), padding: EdgeInsets.only(bottom: 9.0),),
+          Text('$_counter'),
+          IconButton(onPressed: _increment, icon: Icon(Icons.add_circle), color: Color.fromARGB(255, 216, 191, 184), padding: EdgeInsets.only(bottom: 9.0),),   
+        ],
       ),
     );
   }
