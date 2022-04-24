@@ -15,7 +15,7 @@ class Recommend extends StatefulWidget {
 class _RecommendState extends State<Recommend> {
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<int> _pageNotifier = new ValueNotifier<int>(0);
+    final _currentPageNotifier = ValueNotifier<int>(0);
     int test = 0;
 
     // Full screen width and height
@@ -32,7 +32,7 @@ class _RecommendState extends State<Recommend> {
     // Height (without status and toolbar)
     double height3 = height - padding.top - kToolbarHeight;
 
-    final controller = PageController(initialPage: 1);
+    final controller = PageController(initialPage: 0);
 
     var bottlesCard = RecommendCard(
         'Plastic Bottles',
@@ -40,7 +40,23 @@ class _RecommendState extends State<Recommend> {
         'Small plastic bottles might be convenient, but they are even more wasteful than large plastic bottles. As an alternative, you should try using refillable bottles instead of single use. You can also use blah blah and blah blah for an even greener option...',
         UniqueKey());
 
-    List<Widget> totalCards = <Widget>[bottlesCard, bottlesCard, bottlesCard];
+    List<Widget> totalCards = <Widget>[
+      RecommendCard(
+          'Plastic Bottles',
+          'assets/bottles.png',
+          'Small plastic bottles might be convenient, but they are even more wasteful than large plastic bottles. As an alternative, you should try using refillable bottles instead of single use. You can also use blah blah and blah blah for an even greener option...',
+          UniqueKey()),
+      RecommendCard(
+          'Plastic Bottles',
+          'assets/bottles.png',
+          'Small plastic bottles might be convenient, but they are even more wasteful than large plastic bottles. As an alternative, you should try using refillable bottles instead of single use. You can also use blah blah and blah blah for an even greener option...',
+          UniqueKey()),
+      RecommendCard(
+          'Plastic Bottles',
+          'assets/bottles.png',
+          'Small plastic bottles might be convenient, but they are even more wasteful than large plastic bottles. As an alternative, you should try using refillable bottles instead of single use. You can also use blah blah and blah blah for an even greener option...',
+          UniqueKey())
+    ];
 
     return Scaffold(
       //You should use `Scaffold` if you have `TextField` in body.
@@ -64,23 +80,34 @@ class _RecommendState extends State<Recommend> {
                       Container(
                         height: 410,
                         width: 300,
-                        child: PageView(
-                          controller: controller,
-                          children: totalCards,
-                          onPageChanged: (index) {
-                            setState(() {
-                              _pageNotifier.value = index;
-                              print(_pageNotifier.value);
-                            });
-                          },
+                        child: PageView.builder(
+                            itemCount: totalCards.length,
+                            controller: controller,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Center(
+                                child: totalCards[index],
+                              );
+                            },
+                            onPageChanged: (int index) {
+                              _currentPageNotifier.value = index;
+                            }),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(12),
+                        child: Center(
+                          child: CirclePageIndicator(
+                            currentPageNotifier: _currentPageNotifier,
+                            itemCount: totalCards.length,
+                          ),
                         ),
                       ),
-                      Text(_pageNotifier.value.toString()),
-                      Center(
-                        child: CirclePageIndicator(
-                          currentPageNotifier: _pageNotifier,
-                          itemCount: totalCards.length,
-                        ),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Respond to button press
+                        },
+                        style: ElevatedButton.styleFrom(
+                            primary: Color(0xFFFF9F1D)),
+                        child: Text('Continue'),
                       ),
                     ],
                   )),
