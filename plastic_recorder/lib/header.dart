@@ -21,8 +21,8 @@ class _headerState extends State<header> {
               color: Color(0xffFF9F1D),
             ),
             Icon(
-              Icons.account_circle,
-              size: 60,
+              Icons.edit,
+              size: 30,
             )
           ]),
         ]),
