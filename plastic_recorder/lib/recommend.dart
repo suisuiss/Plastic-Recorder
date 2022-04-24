@@ -78,8 +78,8 @@ class _RecommendState extends State<Recommend> {
                   child: Column(
                     children: [
                       Container(
-                        height: 410,
-                        width: 300,
+                        height: height * 0.6,
+                        width: width * 0.8,
                         child: PageView.builder(
                             itemCount: totalCards.length,
                             controller: controller,
@@ -143,8 +143,6 @@ class RecommendCard extends StatelessWidget {
             color: Colors.black,
           ),
           borderRadius: BorderRadius.all(Radius.circular(20))),
-      height: 410,
-      width: 400,
       child: Padding(
         padding: EdgeInsets.all(12),
         child: Column(
@@ -170,17 +168,20 @@ class RecommendCard extends StatelessWidget {
                 ),
               ),
             ),
-            DefaultTextStyle(
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black,
-                  decoration: TextDecoration.none),
-              child: Text(
-                desc,
+            Expanded(
+                child: SingleChildScrollView(
+              child: DefaultTextStyle(
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black,
+                    decoration: TextDecoration.none),
+                child: Text(
+                  desc,
+                ),
               ),
-            ),
+            )),
           ],
         ),
       ),
