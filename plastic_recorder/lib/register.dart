@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 
-const bgcolor = Color.fromRGBO(246, 246, 248, 1);
+const bgcolor = Color(0xffF6F6F8);
 const yellow = Color.fromRGBO(255, 159, 29, 1);
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
+//use username email and password
+String username = '';
+String email = '';
+String password = '';
 
 final formKey = GlobalKey<FormState>();
 final usernameController = TextEditingController();
+final emailController = TextEditingController();
 final passwordController = TextEditingController();
 bool isValid = formKey.currentState!.validate();
 
-String username = '';
-String password = '';
- 
+class register extends StatefulWidget {
+  const register({Key? key}) : super(key: key);
 
-class _LoginScreenState extends State<LoginScreen> {
+  @override
+  State<register> createState() => _registerState();
+}
+
+class _registerState extends State<register> {
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
@@ -28,12 +29,12 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: bgcolor,
         body: Container(
             child: Center(
-            child: Column(
+                child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Login',
+              'Register',
               style: TextStyle(fontSize: 30),
             ),
             SizedBox(height: 40),
@@ -41,39 +42,45 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Container(
                   width: deviceWidth * 0.7,
+                  //username text
                   child: TextFormField(
                     autofocus: true,
                     controller: usernameController,
-                    validator: (username){
-                      if(username==null){
-                        return 'Please enter a username';
-                      }
-                      return null;
-                      
-                    },
                     decoration: InputDecoration(
                       hintText: 'Username',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                     ),
                     onChanged: (value) {
-                      username = value;
+                      // username = value;
                     },
                   ),
                 ),
                 SizedBox(height: 20),
                 Container(
                   width: deviceWidth * 0.7,
+                  //email textform
                   child: TextFormField(
-                    style: TextStyle(color: Colors.black),
-                    controller: passwordController,
-                    obscureText: true,
-                    validator: (value) {
-                      if (value==null) {
-                        return 'Please enter your password';
-                      }
-                      return null;
+                    controller: emailController,
+                    autofocus: true,
+                    decoration: InputDecoration(
+                      hintText: 'Email',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                    ),
+                    onChanged: (value) {
+                      // username = value;
                     },
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  width: deviceWidth * 0.7,
+                  
+                  child: TextFormField(
+                    controller: passwordController,
+                    style: TextStyle(color: Colors.black),
+                    obscureText: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           //color black
@@ -98,34 +105,32 @@ class _LoginScreenState extends State<LoginScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                     ),
-                    
                     onPressed: () {
-                      if (isValid) {
+                       if (isValid) {
                         username = usernameController.text;
                         password = passwordController.text;
                       } else {
                         print('invalid username or password');
                       }
-                    }
-                     ,
-                    child: Text('Log in',
+                    },
+                    child: Text('Register',
                         style: TextStyle(color: Colors.white, fontSize: 20)),
                   ),
                 )),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Don\'t have an account?'),
+                Text('Already a user?'),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/signup');
+                    
                   },
                   style: TextButton.styleFrom(
                     minimumSize: Size.zero, // Set this
                     padding: EdgeInsets.zero, // and this
                   ),
                   child: Text(
-                    '  Sign up',
+                    '  Log in',
                     style: TextStyle(color: yellow),
                   ),
                 )
