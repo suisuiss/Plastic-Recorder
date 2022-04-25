@@ -14,6 +14,9 @@ class calender extends StatefulWidget {
 }
 
 class _calenderState extends State<calender> {
+  CalendarFormat _calendarFormat = CalendarFormat.month;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,14 +38,30 @@ class _calenderState extends State<calender> {
                   firstDay: DateTime(2000),
                   lastDay: DateTime(2050),
                   headerVisible: true,
+                  //calender format
+                  calendarFormat: _calendarFormat,
+                  onFormatChanged: (format) {
+                    setState(() {
+                      _calendarFormat = format;
+                    });
+                  },
+
                   //selected day
-                  onDaySelected: (date, events) {
-                    print(date);
-                  },       
-                 
+                  selectedDayPredicate: (day) {
+                    return isSameDay(_selectedDay, day);
+                  },
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      _selectedDay = selectedDay;
+                      _focusedDay = focusedDay;
+                      print(selectedDay); // update `_focusedDay` here as well
+                    });
+                  },
+
                   //style
                   calendarStyle: CalendarStyle(
                       // tableBorder: ,
+
                       isTodayHighlighted: true,
                       todayDecoration: BoxDecoration(
                         shape: BoxShape.circle,
