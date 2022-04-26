@@ -64,6 +64,15 @@ flutter:
   assets:
     - assets/appIcon.png
     - assets/water.png
+    - assets/bag.png
+    - assets/plastic.png
+    - assets/im1.png
+    - assets/im2.png
+    - assets/im3.png
+    - assets/im4.png
+    - assets/im5.png
+    - assets/im6.png
+    - assets/im7.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
