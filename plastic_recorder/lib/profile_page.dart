@@ -1,5 +1,4 @@
-import 'dart:js';
-
+ 
 import 'package:flutter/material.dart';
 import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
@@ -125,7 +124,7 @@ Widget hd() {
             color: Color(0xffFF9F1D),
           ),
           IconButton(
-              onPressed: (() => context),
+               onPressed: (() => print('pressed')),
               icon: Icon(
                 Icons.edit,
                 size: 30,

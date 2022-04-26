@@ -205,9 +205,9 @@ class _addbutState extends State<addbut> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          IconButton(onPressed: _decreasement, icon: Icon(Icons.remove_circle), color: Color.fromARGB(255, 216, 191, 184), padding: EdgeInsets.only(bottom: 9.0),),
+          IconButton(onPressed: _decreasement, icon: Icon(Icons.remove_circle), color: Color.fromARGB(255, 255, 255, 255), padding: EdgeInsets.only(bottom: 9.0),),
           Text('$_counter'),
-          IconButton(onPressed: _increment, icon: Icon(Icons.add_circle), color: Color.fromARGB(255, 216, 191, 184), padding: EdgeInsets.only(bottom: 9.0),),   
+          IconButton(onPressed: _increment, icon: Icon(Icons.add_circle), color: Color.fromARGB(255, 255, 255, 255), padding: EdgeInsets.only(bottom: 9.0),),   
         ],
       ),
     );

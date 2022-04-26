@@ -27,7 +27,7 @@ class _headerState extends State<header> {
             ),
             GestureDetector(
               onTap: () {
-                 Navigator.pushNamed(context, 'register' );
+                 Navigator.pushNamed(context, '/profile' );
               },
               child: Icon(
               Icons.account_circle,
