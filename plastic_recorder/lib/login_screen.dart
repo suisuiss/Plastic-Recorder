@@ -14,7 +14,6 @@ final formKey = GlobalKey<FormState>();
 final usernameController = TextEditingController();
 final passwordController = TextEditingController();
 bool isValid = formKey.currentState!.validate();
-
 String username = '';
 String password = '';
  
@@ -118,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text('Don\'t have an account?'),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/signup');
+                    Navigator.pushNamed(context, '/calender');
                   },
                   style: TextButton.styleFrom(
                     minimumSize: Size.zero, // Set this
