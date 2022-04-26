@@ -16,15 +16,11 @@ class _footerState extends State<footer> {
     setState(() {
       _selectedIndex = index;
       print(_selectedIndex);
-    }
-    
-   
-    );
-     Navigator.pushNamed(context, path[_selectedIndex]);
+    });
+    Navigator.pushNamed(context, path[_selectedIndex]);
   }
-  final path = [
-    '/login', '/register' , '/calender'
-  ];
+
+  final path = ['/login', '/register', '/calender'];
 
   @override
   Widget build(BuildContext context) {
