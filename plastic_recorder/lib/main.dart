@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plastic_recorder/firstpage.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
