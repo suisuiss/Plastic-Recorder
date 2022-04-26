@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plastic_recorder/firstpage.dart';
-import 'package:plastic_recorder/profile_page.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -12,9 +12,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ProfilePage(),
-      theme: ThemeData(primaryColor: Colors.orange),
-    );
+    return MaterialApp(home: firstPage());
   }
 }
