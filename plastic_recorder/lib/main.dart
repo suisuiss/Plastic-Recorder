@@ -6,7 +6,6 @@ import 'package:plastic_recorder/login_screen.dart';
 import 'package:plastic_recorder/recommend.dart';
 import 'package:plastic_recorder/register.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
@@ -37,4 +36,3 @@ class MyApp extends StatelessWidget {
       );
   }
 }
-
