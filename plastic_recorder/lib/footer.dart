@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:plastic_recorder/calender.dart';
+import 'package:plastic_recorder/login_screen.dart';
+import 'package:plastic_recorder/today_screen.dart';
 
 class footer extends StatefulWidget {
   const footer({Key? key}) : super(key: key);
@@ -12,8 +15,12 @@ class _footerState extends State<footer> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      print(_selectedIndex);
     });
+    Navigator.pushNamed(context, path[_selectedIndex]);
   }
+
+  final path = ['/login', '/register', '/calender'];
 
   @override
   Widget build(BuildContext context) {
