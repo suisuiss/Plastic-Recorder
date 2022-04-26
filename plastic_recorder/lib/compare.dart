@@ -32,7 +32,7 @@ class _CompareState extends State<Compare> {
     String formattedDate = DateFormat('MMMd').format(now);
 
     int avg = 2500;
-    int points = 300;
+    int points = 3500;
     double progress = points / avg;
 
     String display = ' points below average!';
@@ -79,7 +79,8 @@ class _CompareState extends State<Compare> {
                                     ),
                                     fit: BoxFit.fill,
                                   ),
-                                  height: 278 * progress.clamp(0, 1), //278 Max
+                                  height: 37 +
+                                      (278 * progress.clamp(0, 1)), //278 Max
                                   width: 200,
                                 ),
                                 bottom: 36,
@@ -104,7 +105,7 @@ class _CompareState extends State<Compare> {
                                   height: 50,
                                 ),
                                 bottom:
-                                    8 + (282 * progress.clamp(0, 1)), //Max 290
+                                    45 + (282 * progress.clamp(0, 1)), //Max 290
                               ),
                               Positioned(
                                 child: Container(
@@ -123,7 +124,7 @@ class _CompareState extends State<Compare> {
                                   height: 32,
                                 ),
                                 bottom:
-                                    8 + (282 * progress.clamp(0, 1)), //Max 290
+                                    47 + (282 * progress.clamp(0, 1)), //Max 290
                               ),
                             ]),
                       ),
