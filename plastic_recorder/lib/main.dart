@@ -28,10 +28,11 @@ class MyApp extends StatelessWidget {
         '/register' :(context) => register(),
         '/calender' :(context) => calender(),        
         '/compare' :(context) => Compare(),
-        'recommendation' :(context) => Recommend(),
+        '/recommendation' :(context) => Recommend(),
         '/profile' :(context) => ProfilePage(),
         '/add' :(context) => Add(), 
         '/today' : (context) => Today(),
+
         
       
       },

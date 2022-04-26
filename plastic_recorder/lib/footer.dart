@@ -22,6 +22,7 @@ class _footerState extends State<footer> {
 
   final path = ['/today', '/add', '/calender'];
 
+
   @override
   Widget build(BuildContext context) {
     return Container(
