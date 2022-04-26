@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         '/register' :(context) => register(),
         '/calender' :(context) => calender(),
         '/compare' :(context) => Compare(),
-        'recommendation' :(context) => Recommend(),
+        '/recommendation' :(context) => Recommend(),
         //'/profile' :(context) => (),
         //'/add' :(context) => Add(), 
         //'/today' : (context) => today(),
