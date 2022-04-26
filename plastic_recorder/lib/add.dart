@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plastic_recorder/footer.dart';
-import 'package:plastic_recorder/profile_header.dart';
+import 'package:plastic_recorder/header.dart';
 
 class Add extends StatefulWidget {
   const Add({Key? key}) : super(key: key);
