@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:plastic_recorder/login_screen.dart';
+import 'package:plastic_recorder/compare.dart';
 
 class firstPage extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class _firstPageState extends State<firstPage> {
 
   route() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        context, MaterialPageRoute(builder: (context) => Compare()));
   }
 
   initScreen(BuildContext context) {

@@ -32,7 +32,7 @@ class _CompareState extends State<Compare> {
     String formattedDate = DateFormat('MMMd').format(now);
 
     int avg = 2500;
-    int points = 3500;
+    int points = 1250;
     double progress = points / avg;
 
     String display = ' points below average!';
@@ -58,9 +58,22 @@ class _CompareState extends State<Compare> {
             //Body Container
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const EdgeInsets.symmetric(horizontal: 22.0),
                 child: Column(
                   children: [
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: DefaultTextStyle(
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            decoration: TextDecoration.none),
+                        child: Text(
+                          'Compared to the global average...',
+                        ),
+                      ),
+                    ),
                     FittedBox(
                       fit: BoxFit.fill,
                       child: Container(
@@ -145,6 +158,22 @@ class _CompareState extends State<Compare> {
                                 decoration: TextDecoration.none,
                               ),
                               children: <TextSpan>[
+                                TextSpan(
+                                  text: points.toString(),
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFFFF9F1D),
+                                      decoration: TextDecoration.none),
+                                ),
+                                TextSpan(
+                                  text: ' points, ',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.none,
+                                  ),
+                                ),
                                 TextSpan(
                                   text: (avg - points).abs().toString(),
                                   style: TextStyle(
