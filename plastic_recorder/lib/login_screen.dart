@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 const bgcolor = Color.fromRGBO(246, 246, 248, 1);
@@ -11,10 +12,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 final formKey = GlobalKey<FormState>();
-final usernameController = TextEditingController();
+final emailController = TextEditingController();
 final passwordController = TextEditingController();
 bool isValid = formKey.currentState!.validate();
-String username = '';
+String email = '';
 String password = '';
  
 
@@ -42,22 +43,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: deviceWidth * 0.7,
                   child: TextFormField(
                     autofocus: true,
-                    controller: usernameController,
-                    validator: (username){
-                      if(username==null){
+                    controller: emailController,
+                    validator: (email){
+                      if(email==null){
                         return 'Please enter a username';
                       }
                       return null;
                       
                     },
                     decoration: InputDecoration(
-                      hintText: 'Username',
+                      hintText: 'email',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                     ),
-                    onChanged: (value) {
-                      username = value;
-                    },
+                    // onChanged: (value) {
+                    //   email = value;
+                    // },
                   ),
                 ),
                 SizedBox(height: 20),
@@ -97,16 +98,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                     ),
+                    onPressed: Login,
                     
-                    onPressed: () {
-                      if (isValid) {
-                        username = usernameController.text;
-                        password = passwordController.text;
-                      } else {
-                        print('invalid username or password');
-                      }
-                    }
-                     ,
+                    // onPressed:(){
+                    //   if (isValid) {
+                    //     username = usernameController.text;
+                    //     password = passwordController.text;
+                    //   } else {
+                    //     print('invalid username or password');
+                    //   }
+                    // }
+                     
                     child: Text('Log in',
                         style: TextStyle(color: Colors.white, fontSize: 20)),
                   ),
@@ -133,4 +135,14 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ))));
   }
+  Future Login() async {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+      print('login with $passwordController.text + $emailController.text');
+      emailController.clear();
+      passwordController.clear();
+      Navigator.pushNamed(context,'/today');
+}
 }

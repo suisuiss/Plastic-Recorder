@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "483462445853",
+    "project_id": "plastic-recorder",
+    "storage_bucket": "plastic-recorder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:483462445853:android:7e0f976c5b8ba5f9453ff4",
+        "android_client_info": {
+          "package_name": "com.example.plastic_recorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "483462445853-8jp4q4s381ltce542k178p0m2k1rpdko.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-mQeNVMXCvj5nN-YcclTSBAKd7Win2qg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "483462445853-8jp4q4s381ltce542k178p0m2k1rpdko.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
