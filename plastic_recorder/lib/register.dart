@@ -1,40 +1,63 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 
 const bgcolor = Color(0xffF6F6F8);
 const yellow = Color.fromRGBO(255, 159, 29, 1);
 //use username email and password
-String username = '';
 String email = '';
 String password = '';
+String cpassword = '';
 
-final formKey = GlobalKey<FormState>();
-final usernameController = TextEditingController();
-final emailController = TextEditingController();
-final passwordController = TextEditingController();
-bool isValid = formKey.currentState!.validate();
+ 
+
+ 
 
 class register extends StatefulWidget {
   const register({Key? key}) : super(key: key);
 
   @override
   State<register> createState() => _registerState();
+  
 }
+ 
 
 class _registerState extends State<register> {
+  final formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final cpasswordController = TextEditingController();
+  Future signUp() async{
+    if(formKey.currentState!.validate()){
+      try{
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text, 
+        password: passwordController.text);
+        Navigator.pushNamed(context, '/today');
+    }on FirebaseAuthException catch(e){
+      print(e);
+    }      
+    }else{
+      print('invalid email or password');
+    }
+    
+  }
+  
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: bgcolor,
-        body: Container(
+        body: Form(
+            key:formKey,
             child: Center(
                 child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Register',
+              'Sign up',
               style: TextStyle(fontSize: 30),
             ),
             SizedBox(height: 40),
@@ -45,14 +68,19 @@ class _registerState extends State<register> {
                   //username text
                   child: TextFormField(
                     autofocus: true,
-                    controller: usernameController,
+                    controller: emailController,
                     decoration: InputDecoration(
-                      hintText: 'Username',
+                      hintText: 'email',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                     ),
-                    onChanged: (value) {
-                      // username = value;
+                    validator: (email) {
+                      if (email == null || email.isEmpty) {
+                        return 'Please enter a username';
+                      } else if (!email.contains('@')) {
+                        return 'Please enter a valid email';
+                      }
+                      return null;
                     },
                   ),
                 ),
@@ -61,34 +89,48 @@ class _registerState extends State<register> {
                   width: deviceWidth * 0.7,
                   //email textform
                   child: TextFormField(
-                    controller: emailController,
-                    autofocus: true,
+                    controller: passwordController,
                     decoration: InputDecoration(
-                      hintText: 'Email',
+                      hintText: 'password',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                     ),
-                    onChanged: (value) {
-                      // username = value;
+                    obscureText: true,
+                    validator: ( password) {
+                      if(password==null){
+                        return 'Please enter a password';
+                      }else if(password.length<6){
+                        return 'Password must be at least 6 characters';
+                      }
+                      return null;
                     },
                   ),
                 ),
                 SizedBox(height: 20),
                 Container(
                   width: deviceWidth * 0.7,
-                  
                   child: TextFormField(
-                    controller: passwordController,
+                    controller: cpasswordController,
                     style: TextStyle(color: Colors.black),
-                    obscureText: true,
+                    obscureText: true,      
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           //color black
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           borderSide:
                               BorderSide(color: Colors.black, width: 3)),
-                      labelText: 'Password',
+                      labelText: 'Comfirm Password',
+                      
+                      
                     ),
+                    validator: (val){
+                      if(val==null){
+                        return 'Please confirm your password';
+                      }else if(val!=passwordController.text){
+                        return 'Password does not match';
+                      }
+                      return null;
+                    },
                   ),
                 ),
               ],
@@ -105,15 +147,8 @@ class _registerState extends State<register> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                     ),
-                    onPressed: () {
-                       if (isValid) {
-                        username = usernameController.text;
-                        password = passwordController.text;
-                      } else {
-                        print('invalid username or password');
-                      }
-                    },
-                    child: Text('Register',
+                    onPressed: signUp,
+                    child: Text('Sign up',
                         style: TextStyle(color: Colors.white, fontSize: 20)),
                   ),
                 )),
@@ -123,7 +158,7 @@ class _registerState extends State<register> {
                 Text('Already a user?'),
                 TextButton(
                   onPressed: () {
-                    
+                    Navigator.pushNamed(context, '/login');
                   },
                   style: TextButton.styleFrom(
                     minimumSize: Size.zero, // Set this
@@ -138,5 +173,8 @@ class _registerState extends State<register> {
             )
           ],
         ))));
+        
   }
+   
+ 
 }

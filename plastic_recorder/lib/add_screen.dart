@@ -245,6 +245,7 @@ class _addbutState extends State<addbut> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+
           IconButton(
             onPressed: _decreasement,
             icon: Icon(Icons.remove_circle),
@@ -258,6 +259,7 @@ class _addbutState extends State<addbut> {
             color: Color.fromARGB(255, 255, 255, 255),
             padding: EdgeInsets.only(bottom: 9.0),
           ),
+
         ],
       ),
     );
