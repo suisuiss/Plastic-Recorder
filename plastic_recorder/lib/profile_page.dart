@@ -1,18 +1,22 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
+import 'package:plastic_recorder/editprofile_page.dart';
 import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   Widget textfield({@required hintText, required icon}) {
     return Material(
       elevation: 2,
-      shadowColor: Colors.grey,
+      shadowColor: const Color.fromARGB(255, 0, 0, 0),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: TextField(
         enabled: false,
@@ -25,6 +29,7 @@ class ProfilePage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
             prefixIcon: Icon(icon),
+            iconColor: const Color.fromARGB(77, 0, 0, 0),
             fillColor: const Color.fromARGB(77, 255, 255, 255),
             filled: true,
             border: const UnderlineInputBorder()),
@@ -39,7 +44,7 @@ class ProfilePage extends StatelessWidget {
       body: Container(
         child: Column(
           children: [
-            hd(),
+            hd(context),
             Expanded(
                 child: Stack(
               alignment: Alignment.center,
@@ -53,13 +58,8 @@ class ProfilePage extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          textfield(
-                              hintText: 'Username',
-                              icon: Icons.account_circle_outlined),
                           textfield(hintText: 'Email', icon: Icons.email),
-                          textfield(
-                              hintText: 'change the password',
-                              icon: Icons.lock),
+                          textfield(hintText: 'Password', icon: Icons.lock),
                           Container(
                             height: 40,
                             width: 160,
@@ -96,7 +96,7 @@ class ProfilePage extends StatelessWidget {
                         shape: BoxShape.circle,
                         color: Colors.white,
                         image: const DecorationImage(
-                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
                           image: AssetImage('assets/profileimg.jpg'),
                         ),
                       ),
@@ -113,7 +113,7 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-Widget hd() {
+Widget hd(BuildContext context) {
   return Container(
     child: Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -125,7 +125,8 @@ Widget hd() {
             color: Color(0xffFF9F1D),
           ),
           IconButton(
-              onPressed: (() => context),
+              onPressed: (() => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EditProfilePage()))),
               icon: Icon(
                 Icons.edit,
                 size: 30,
