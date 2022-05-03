@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:plastic_recorder/calender.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+ 
 
 const bgcolor = Color(0xffF6F6F8);
 const yellow = Color.fromRGBO(255, 159, 29, 1);
@@ -14,9 +18,11 @@ class calender extends StatefulWidget {
 }
 
 class _calenderState extends State<calender> {
+   
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+   final dateFormat = DateFormat('dd-MM-yyyy');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +40,12 @@ class _calenderState extends State<calender> {
                 // date identifier
                 //calender area
                 TableCalendar(
+           
                   focusedDay: DateTime.now(),
                   firstDay: DateTime(2000),
-                  lastDay: DateTime(2050),
+                  lastDay: DateTime.now(),
                   headerVisible: true,
+                   
                   //calender format
                   calendarFormat: _calendarFormat,
                   onFormatChanged: (format) {
@@ -45,6 +53,7 @@ class _calenderState extends State<calender> {
                       _calendarFormat = format;
                     });
                   },
+                  
 
                   //selected day
                   selectedDayPredicate: (day) {
@@ -54,10 +63,13 @@ class _calenderState extends State<calender> {
                     setState(() {
                       _selectedDay = selectedDay;
                       _focusedDay = focusedDay;
-                      print(selectedDay); // update `_focusedDay` here as well
+                       var fDate = dateFormat.format(selectedDay);
+                       print(fDate);
+                      
                     });
+                    Navigator.pushNamed(context, '/today');
                   },
-
+            
                   //style
                   calendarStyle: CalendarStyle(
                       // tableBorder: ,
