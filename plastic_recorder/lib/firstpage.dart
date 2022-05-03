@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:plastic_recorder/homeScreen.dart';
 import 'package:plastic_recorder/login_screen.dart';
 import 'package:plastic_recorder/compare.dart';
 import 'package:plastic_recorder/recommend.dart';
@@ -30,7 +31,7 @@ class _firstPageState extends State<firstPage> {
 
   route() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        context, MaterialPageRoute(builder: (context) => HomeScreen()));
   }
 
   initScreen(BuildContext context) {

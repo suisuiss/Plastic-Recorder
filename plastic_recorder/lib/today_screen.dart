@@ -241,7 +241,9 @@ class _ButtonState extends State<Button> {
     return Container(
       width: 300,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/compare');
+        },
         child: Text('Compare Usage'),
         style: ElevatedButton.styleFrom(
           primary: Color(0xffFF9F1D),

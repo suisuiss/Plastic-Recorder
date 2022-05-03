@@ -18,6 +18,27 @@ class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  Future Login() async {
+    if (formKey.currentState!.validate()) {
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        );
+        print('login with $passwordController.text + $emailController.text');
+        emailController.clear();
+        passwordController.clear();
+        Navigator.pushNamed(context, '/today');
+      } on FirebaseAuthException catch (e) {
+        print(e);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(e.message!),
+        ));
+      }
+    } else {
+      print('invalid username or password');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,20 +151,5 @@ class _LoginScreenState extends State<LoginScreen> {
                 )
               ],
             ))));
-  }
-
-  Future Login() async {
-    if (formKey.currentState!.validate()) {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-      print('login with $passwordController.text + $emailController.text');
-      emailController.clear();
-      passwordController.clear();
-      Navigator.pushNamed(context, '/today');
-    } else {
-      print('invalid username or password');
-    }
   }
 }
