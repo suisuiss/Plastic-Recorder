@@ -1,12 +1,8 @@
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:plastic_recorder/editprofile_page.dart';
 import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
 import 'package:plastic_recorder/login_screen.dart';
-
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -45,8 +41,6 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   @override
-
-  final user = FirebaseAuth.instance.currentUser!;
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -86,18 +80,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               style: ElevatedButton.styleFrom(
                                   primary:
                                       const Color.fromARGB(221, 252, 157, 15)),
-                              child: Center(
-                                child: ElevatedButton(
-                                 child: Text('logouttest'),
-                                 onPressed: ()=>{
-                                   FirebaseAuth.instance.signOut(),
-                                    Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) =>false)
-                                 },
-                                //  onPressed: () =>FirebaseAuth.instance.signOut();
-                                  // style: TextStyle(
-                                  //   fontSize: 20,
-                                  //   color: Colors.white,
-                                  // ),
+                              child: const Center(
+                                child: Text(
+                                  "log out",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
@@ -133,8 +122,6 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
-
-   
   }
 }
 
