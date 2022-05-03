@@ -104,6 +104,7 @@ class _RecommendState extends State<Recommend> {
                       ElevatedButton(
                         onPressed: () {
                           // Respond to button press
+                          Navigator.pushNamed(context, '/today');
                         },
                         style: ElevatedButton.styleFrom(
                             primary: Color(0xFFFF9F1D)),
