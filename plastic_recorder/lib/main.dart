@@ -11,6 +11,7 @@ import 'package:plastic_recorder/register.dart';
 import 'package:plastic_recorder/today_screen.dart';
 import 'package:plastic_recorder/add_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:plastic_recorder/homeScreen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,20 +19,23 @@ Future main() async {
   runApp(const MyApp());
 }
 
- 
+final user = FirebaseAuth.instance.currentUser!;
 
  
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+  
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
+  
      
     return MaterialApp( 
-      routes: {
+      initialRoute: '/',
+       routes: {
         '/':(context) => firstPage(),
+         '/home':(context) => HomeScreen(),
         '/login': (context) => LoginScreen(),
         '/register' :(context) => register(),
         '/calender' :(context) => calender(),        
@@ -40,10 +44,11 @@ class MyApp extends StatelessWidget {
         '/profile' :(context) => ProfilePage(),
         '/add' :(context) => Add(), 
         '/today' : (context) => Today(),
-
+        
         
       
       },
+     
        
 
       );

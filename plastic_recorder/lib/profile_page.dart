@@ -83,7 +83,7 @@ class ProfilePage extends StatelessWidget {
                                  child: Text('logouttest'),
                                  onPressed: ()=>{
                                    FirebaseAuth.instance.signOut(),
-                                    Navigator.of(context).pushNamedAndRemoveUntil('/login', (Route<dynamic> route) =>false)
+                                    Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) =>false)
                                  },
                                 //  onPressed: () =>FirebaseAuth.instance.signOut();
                                   // style: TextStyle(
