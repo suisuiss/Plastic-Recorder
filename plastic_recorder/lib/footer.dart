@@ -15,6 +15,11 @@ class _footerState extends State<footer> {
     });
   }
 
+<<<<<<< Updated upstream
+=======
+  final path = ['/login', '/today', '/add'];
+
+>>>>>>> Stashed changes
   @override
   Widget build(BuildContext context) {
     return Container(

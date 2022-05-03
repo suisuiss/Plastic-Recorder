@@ -1,0 +1,48 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "flutter_application",
+            "cwd": "Collection\\flutter_application",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flutter_application (profile mode)",
+            "cwd": "Collection\\flutter_application",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flutter_application (release mode)",
+            "cwd": "Collection\\flutter_application",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "myfirstapp",
+            "cwd": "Collection\\myfirstapp",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "myfirstapp (profile mode)",
+            "cwd": "Collection\\myfirstapp",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "myfirstapp (release mode)",
+            "cwd": "Collection\\myfirstapp",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
