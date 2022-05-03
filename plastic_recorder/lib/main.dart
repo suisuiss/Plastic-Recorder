@@ -19,6 +19,8 @@ Future main() async {
 }
 
  
+
+ 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -26,9 +28,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final user = FirebaseAuth.instance.currentUser;
-    return MaterialApp(
-       
+     
+    return MaterialApp( 
       routes: {
         '/':(context) => firstPage(),
         '/login': (context) => LoginScreen(),

@@ -32,6 +32,7 @@ class _footerState extends State<footer> {
             icon: ImageIcon(
               AssetImage("assets/appIcon.png"),
               size: 45,
+              color: Colors.grey,
             ),
             label: 'Today',
           ),
@@ -39,6 +40,7 @@ class _footerState extends State<footer> {
             icon: Icon(
               Icons.add_circle_outline,
               size: 43,
+              color: Colors.grey,
             ),
             label: 'Add Record',
           ),
@@ -46,12 +48,13 @@ class _footerState extends State<footer> {
             icon: Icon(
               Icons.calendar_month,
               size: 43,
+              color: Colors.grey,
             ),
             label: 'Calendar',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.grey[700],
         onTap: _onItemTapped,
       ),
     );
