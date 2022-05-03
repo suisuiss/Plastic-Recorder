@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:plastic_recorder/calender.dart';
+import 'package:plastic_recorder/login_screen.dart';
+import 'package:plastic_recorder/today_screen.dart';
 
 class footer extends StatefulWidget {
   const footer({Key? key}) : super(key: key);
@@ -12,14 +15,14 @@ class _footerState extends State<footer> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      print(_selectedIndex);
     });
+    Navigator.pushNamed(context, path[_selectedIndex]);
   }
 
-<<<<<<< Updated upstream
-=======
-  final path = ['/login', '/today', '/add'];
+  final path = ['/today', '/add', '/calender'];
 
->>>>>>> Stashed changes
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,6 +32,7 @@ class _footerState extends State<footer> {
             icon: ImageIcon(
               AssetImage("assets/appIcon.png"),
               size: 45,
+              color: Colors.grey,
             ),
             label: 'Today',
           ),
@@ -36,6 +40,7 @@ class _footerState extends State<footer> {
             icon: Icon(
               Icons.add_circle_outline,
               size: 43,
+              color: Colors.grey,
             ),
             label: 'Add Record',
           ),
@@ -43,12 +48,13 @@ class _footerState extends State<footer> {
             icon: Icon(
               Icons.calendar_month,
               size: 43,
+              color: Colors.grey,
             ),
             label: 'Calendar',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.grey[700],
         onTap: _onItemTapped,
       ),
     );
