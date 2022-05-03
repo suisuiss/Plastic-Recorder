@@ -19,9 +19,9 @@ class _footerState extends State<footer> {
     });
     Navigator.pushNamed(context, path[_selectedIndex]);
   }
-  
+
   final path = ['/today', '/add', '/calender'];
-  
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +32,7 @@ class _footerState extends State<footer> {
             icon: ImageIcon(
               AssetImage("assets/appIcon.png"),
               size: 45,
+              color: Colors.grey,
             ),
             label: 'Today',
           ),
@@ -39,6 +40,7 @@ class _footerState extends State<footer> {
             icon: Icon(
               Icons.add_circle_outline,
               size: 43,
+              color: Colors.grey,
             ),
             label: 'Add Record',
           ),
@@ -46,11 +48,13 @@ class _footerState extends State<footer> {
             icon: Icon(
               Icons.calendar_month,
               size: 43,
+              color: Colors.grey,
             ),
             label: 'Calendar',
           ),
         ],
         currentIndex: _selectedIndex,
+        selectedItemColor: Colors.grey[700],
         onTap: _onItemTapped,
       ),
     );
