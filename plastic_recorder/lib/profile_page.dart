@@ -11,14 +11,14 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  Widget textfield({@required hintText, required icon}) {
+  Widget textformfield({@required hintText, required icon}) {
     return Material(
       elevation: 2,
       shadowColor: const Color.fromARGB(255, 0, 0, 0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      child: TextField(
+      child: TextFormField(
         enabled: false,
         textAlign: TextAlign.center,
         decoration: InputDecoration(
@@ -58,8 +58,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          textfield(hintText: 'Email', icon: Icons.email),
-                          textfield(hintText: 'Password', icon: Icons.lock),
+                          textformfield(hintText: 'Email', icon: Icons.email),
+                          textformfield(hintText: 'Password', icon: Icons.lock),
                           Container(
                             height: 40,
                             width: 160,
