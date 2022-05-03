@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
@@ -151,7 +152,6 @@ class _BoxState extends State<Box> {
         ),
         child:   
             Row(
-              
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ibutton(),
@@ -194,7 +194,9 @@ class _ButtonState extends State<Button> {
     return Container(
       width: 100,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/recommendation');
+        },
         child: Text('ADD'),
         style: ElevatedButton.styleFrom(
           primary: Color(0xffFF9F1D),
@@ -300,7 +302,7 @@ class ibutton extends StatelessWidget {
                           children: [
                             picshow(
                                 namepic: 'Butter', pic: 'assets/butter.png'),
-                            picshow(namepic: 'Coke', pic: 'assets/coke.png'),
+                            picshow(namepic: 'Coke', pic: 'assets/Coke.png'),
                             picshow(namepic: 'Sauce', pic: 'assets/sauce.png'),
                           ]),
                     ],
