@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:plastic_recorder/editprofile_page.dart';
 import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
+import 'package:plastic_recorder/login_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -14,25 +15,27 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget textformfield({@required hintText, required icon}) {
     return Material(
       elevation: 2,
-      shadowColor: const Color.fromARGB(255, 0, 0, 0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+      shadowColor: Colors.black,
       child: TextFormField(
         enabled: false,
         textAlign: TextAlign.center,
         decoration: InputDecoration(
             hintText: hintText,
             hintStyle: const TextStyle(
-              letterSpacing: 2,
-              color: Color.fromARGB(137, 0, 0, 0),
-              fontWeight: FontWeight.bold,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold,
+                color: Colors.black),
+            prefixIcon: Icon(
+              icon,
+              color: Colors.black,
             ),
-            prefixIcon: Icon(icon),
-            iconColor: const Color.fromARGB(77, 0, 0, 0),
             fillColor: const Color.fromARGB(77, 255, 255, 255),
             filled: true,
-            border: const UnderlineInputBorder()),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.black,
+              ),
+            )),
       ),
     );
   }
@@ -58,13 +61,22 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          textformfield(hintText: 'Email', icon: Icons.email),
-                          textformfield(hintText: 'Password', icon: Icons.lock),
+                          textformfield(
+                            hintText: 'Email',
+                            icon: Icons.email,
+                          ),
+                          textformfield(
+                            hintText: 'Password',
+                            icon: Icons.lock,
+                          ),
                           Container(
                             height: 40,
                             width: 160,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: (() => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginScreen()))),
                               style: ElevatedButton.styleFrom(
                                   primary:
                                       const Color.fromARGB(221, 252, 157, 15)),

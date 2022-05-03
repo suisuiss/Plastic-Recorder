@@ -33,24 +33,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Material(
       elevation: 2,
       shadowColor: const Color.fromARGB(255, 0, 0, 0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
-      ),
+      // shape: RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.circular(5),
+      // ),
       child: TextFormField(
         textAlign: TextAlign.center,
         controller: myController,
         decoration: InputDecoration(
-            hintText: hintText,
-            hintStyle: const TextStyle(
-              letterSpacing: 2,
-              color: Color.fromARGB(137, 0, 0, 0),
-              fontWeight: FontWeight.bold,
-            ),
-            prefixIcon: Icon(icon),
-            iconColor: const Color.fromARGB(77, 0, 0, 0),
-            fillColor: const Color.fromARGB(77, 255, 255, 255),
-            filled: true,
-            border: const UnderlineInputBorder()),
+          hintText: hintText,
+          hintStyle: const TextStyle(
+            letterSpacing: 2,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+          prefixIcon: Icon(
+            icon,
+            color: Colors.black,
+          ),
+          fillColor: const Color.fromARGB(77, 255, 255, 255),
+          filled: true,
+        ),
       ),
     );
   }
