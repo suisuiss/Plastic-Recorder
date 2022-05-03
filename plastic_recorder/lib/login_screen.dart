@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 
 const bgcolor = Color.fromRGBO(246, 246, 248, 1);
 const yellow = Color.fromRGBO(255, 159, 29, 1);
- 
- 
-
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -14,7 +11,6 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-
 String email = '';
 String password = '';
 
@@ -22,8 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  
-  
+
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;

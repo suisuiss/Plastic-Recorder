@@ -31,8 +31,8 @@ class _CompareState extends State<Compare> {
     var now = new DateTime.now();
     String formattedDate = DateFormat('MMMd').format(now);
 
-    int avg = 2500;
-    int points = 1250;
+    int avg = 7;
+    int points = 5;
     double progress = points / avg;
 
     String display = ' points below average!';
