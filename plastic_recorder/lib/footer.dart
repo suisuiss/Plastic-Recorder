@@ -19,9 +19,9 @@ class _footerState extends State<footer> {
     });
     Navigator.pushNamed(context, path[_selectedIndex]);
   }
-
+  
   final path = ['/today', '/add', '/calender'];
-
+  
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,6 @@ class _footerState extends State<footer> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
     );
