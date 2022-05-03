@@ -1,13 +1,16 @@
-import 'dart:js';
-
+ 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
 
+
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+   ProfilePage({Key? key}) : super(key: key);
 
   Widget textfield({@required hintText, required icon}) {
+   
     return Material(
       elevation: 2,
       shadowColor: Colors.grey,
@@ -33,6 +36,8 @@ class ProfilePage extends StatelessWidget {
   }
 
   @override
+
+  final user = FirebaseAuth.instance.currentUser!;
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -53,8 +58,13 @@ class ProfilePage extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          Text(user.email!,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black)),
                           textfield(
-                              hintText: 'Username',
+                              hintText: 'email',
                               icon: Icons.account_circle_outlined),
                           textfield(hintText: 'Email', icon: Icons.email),
                           textfield(
@@ -68,13 +78,18 @@ class ProfilePage extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                   primary:
                                       const Color.fromARGB(221, 252, 157, 15)),
-                              child: const Center(
-                                child: Text(
-                                  "log out",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
-                                  ),
+                              child: Center(
+                                child: ElevatedButton(
+                                 child: Text('logouttest'),
+                                 onPressed: ()=>{
+                                   FirebaseAuth.instance.signOut(),
+                                   Navigator.pushNamed(context, '/login')
+                                 },
+                                //  onPressed: () =>FirebaseAuth.instance.signOut();
+                                  // style: TextStyle(
+                                  //   fontSize: 20,
+                                  //   color: Colors.white,
+                                  // ),
                                 ),
                               ),
                             ),
@@ -110,6 +125,8 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
     );
+
+   
   }
 }
 
@@ -125,7 +142,7 @@ Widget hd() {
             color: Color(0xffFF9F1D),
           ),
           IconButton(
-              onPressed: (() => context),
+               onPressed: (() => print('pressed')),
               icon: Icon(
                 Icons.edit,
                 size: 30,

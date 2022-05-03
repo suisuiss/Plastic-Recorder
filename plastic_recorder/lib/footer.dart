@@ -20,7 +20,8 @@ class _footerState extends State<footer> {
     Navigator.pushNamed(context, path[_selectedIndex]);
   }
 
-  final path = ['/login', '/register', '/calender'];
+  final path = ['/today', '/add', '/calender'];
+
 
   @override
   Widget build(BuildContext context) {
