@@ -174,10 +174,12 @@ class _BoxState extends State<Box> {
               )),
           Container(
             width: 125,
+            padding: EdgeInsets.only(left: 30),
             child: Text(
               name,
               style: TextStyle(
                   fontSize: 20,
+                  fontWeight: FontWeight.bold,
                   color: Colors.black,
                   decoration: TextDecoration.none),
             ),
