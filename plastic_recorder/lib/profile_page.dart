@@ -38,7 +38,9 @@ class ProfilePage extends StatelessWidget {
   @override
 
   final user = FirebaseAuth.instance.currentUser!;
+  
   Widget build(BuildContext context) {
+    var email = user.email;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -64,7 +66,7 @@ class ProfilePage extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black)),
                           textfield(
-                              hintText: 'email',
+                              hintText: '$email',
                               icon: Icons.account_circle_outlined),
                           textfield(hintText: 'Email', icon: Icons.email),
                           textfield(
