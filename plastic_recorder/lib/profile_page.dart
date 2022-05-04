@@ -1,49 +1,40 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:plastic_recorder/editprofile_page.dart';
 import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
-import 'package:plastic_recorder/login_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class ProfilePage extends StatelessWidget {
+  ProfilePage({Key? key}) : super(key: key);
 
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-final user = FirebaseAuth.instance.currentUser!;
-class _ProfilePageState extends State<ProfilePage> {
-  var email = user.email;
-  Widget textformfield({@required hintText, required icon}) {
+  Widget textfield({@required hintText, required icon}) {
     return Material(
       elevation: 2,
-      shadowColor: Colors.black,
-      child: TextFormField(
+      shadowColor: Colors.grey,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: TextField(
         enabled: false,
         textAlign: TextAlign.center,
         decoration: InputDecoration(
             hintText: hintText,
             hintStyle: const TextStyle(
-                letterSpacing: 2,
-                fontWeight: FontWeight.bold,
-                color: Colors.black),
-            prefixIcon: Icon(
-              icon,
-              color: Colors.black,
+              letterSpacing: 2,
+              color: Color.fromARGB(137, 0, 0, 0),
+              fontWeight: FontWeight.bold,
             ),
+            prefixIcon: Icon(icon),
             fillColor: const Color.fromARGB(77, 255, 255, 255),
             filled: true,
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.black,
-              ),
-            )),
+            border: const UnderlineInputBorder()),
       ),
     );
   }
 
   @override
   final user = FirebaseAuth.instance.currentUser!;
+
   Widget build(BuildContext context) {
     var email = user.email;
     return Scaffold(
@@ -51,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Container(
         child: Column(
           children: [
-            hd(context),
+            hd(),
             Expanded(
                 child: Stack(
               alignment: Alignment.center,
@@ -81,20 +72,24 @@ class _ProfilePageState extends State<ProfilePage> {
                             height: 40,
                             width: 160,
                             child: ElevatedButton(
-                              onPressed: ()=>{
-                                 FirebaseAuth.instance.signOut(),
-                                    Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) =>false)
-                              },
+                              onPressed: () {},
                               style: ElevatedButton.styleFrom(
                                   primary:
                                       const Color.fromARGB(221, 252, 157, 15)),
-                              child: const Center(
-                                child: Text(
-                                  "log out",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
-                                  ),
+                              child: Center(
+                                child: ElevatedButton(
+                                  child: Text('logouttest'),
+                                  onPressed: () => {
+                                    FirebaseAuth.instance.signOut(),
+                                    Navigator.of(context)
+                                        .pushNamedAndRemoveUntil('/home',
+                                            (Route<dynamic> route) => false)
+                                  },
+                                  //  onPressed: () =>FirebaseAuth.instance.signOut();
+                                  // style: TextStyle(
+                                  //   fontSize: 20,
+                                  //   color: Colors.white,
+                                  // ),
                                 ),
                               ),
                             ),
@@ -116,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         shape: BoxShape.circle,
                         color: Colors.white,
                         image: const DecorationImage(
-                          alignment: Alignment.center,
+                          fit: BoxFit.cover,
                           image: AssetImage('assets/profileimg.jpg'),
                         ),
                       ),
@@ -133,7 +128,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-Widget hd(BuildContext context) {
+Widget hd() {
   return Container(
     child: Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -145,8 +140,7 @@ Widget hd(BuildContext context) {
             color: Color(0xffFF9F1D),
           ),
           IconButton(
-              onPressed: (() => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EditProfilePage()))),
+              onPressed: (() => print('pressed')),
               icon: Icon(
                 Icons.edit,
                 size: 30,
