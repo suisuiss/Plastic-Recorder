@@ -53,7 +53,9 @@ class _LoginScreenState extends State<LoginScreen> {
     final deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: bgcolor,
-        body: Form(
+      body:Center(
+        child:SingleChildScrollView(
+       child: Form(
             key: formKey,
             child: Center(
                 child: Column(
@@ -157,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 )
               ],
-            ))));
+            ))))));
 
             
   }

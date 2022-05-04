@@ -91,8 +91,12 @@ class _calenderState extends State<calender> {
                         borderRadius: BorderRadius.circular(20)),
                   ),
                 ),
+                SizedBox(height: 20),
+                Text('Select the date, to see the past record',
+                    style: TextStyle(fontSize: 18)),
               ],
-            ))),
+            ))
+            ),
             footer()
           ],
         ),

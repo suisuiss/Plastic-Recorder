@@ -43,7 +43,9 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   @override
+  final user = FirebaseAuth.instance.currentUser!;
   Widget build(BuildContext context) {
+    var email = user.email;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -63,14 +65,18 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          textformfield(
-                            hintText: '$email',
-                            icon: Icons.email,
-                          ),
-                          textformfield(
-                            hintText: 'Password',
-                            icon: Icons.lock,
-                          ),
+                          Text(user.email!,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black)),
+                          textfield(
+                              hintText: '$email',
+                              icon: Icons.account_circle_outlined),
+                          textfield(hintText: 'Email', icon: Icons.email),
+                          textfield(
+                              hintText: 'change the password',
+                              icon: Icons.lock),
                           Container(
                             height: 40,
                             width: 160,
