@@ -3,6 +3,7 @@ import 'package:plastic_recorder/editprofile_page.dart';
 import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
 import 'package:plastic_recorder/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -11,7 +12,10 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
+final user = FirebaseAuth.instance.currentUser!;
+
 class _ProfilePageState extends State<ProfilePage> {
+  var email = user.email;
   Widget textformfield({@required hintText, required icon}) {
     return Material(
       elevation: 2,
@@ -62,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           textformfield(
-                            hintText: 'Email',
+                            hintText: '$email',
                             icon: Icons.email,
                           ),
                           textformfield(
@@ -73,10 +77,11 @@ class _ProfilePageState extends State<ProfilePage> {
                             height: 40,
                             width: 160,
                             child: ElevatedButton(
-                              onPressed: (() => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginScreen()))),
+                              onPressed: () => {
+                                FirebaseAuth.instance.signOut(),
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    '/home', (Route<dynamic> route) => false)
+                              },
                               style: ElevatedButton.styleFrom(
                                   primary:
                                       const Color.fromARGB(221, 252, 157, 15)),
