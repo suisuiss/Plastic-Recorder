@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
@@ -7,6 +9,7 @@ import 'package:intl/intl.dart';
 
 class Add extends StatelessWidget {
   Add({Key? key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -39,42 +42,49 @@ class Add extends StatelessWidget {
                           points: 2,
                           name: 'PET',
                           pic: 'assets/im1.png',
+                          typenum:0,
                         ),
                         Box(
                           pieces: 3,
                           points: 3,
                           name: 'PE-HD',
                           pic: 'assets/im2.png',
+                          typenum:1,
                         ),
                         Box(
                           pieces: 5,
                           points: 10,
                           name: 'PVC',
                           pic: 'assets/im3.png',
+                          typenum:2,
                         ),
                         Box(
                           pieces: 1,
                           points: 1,
                           name: 'PE-LD',
                           pic: 'assets/im4.png',
+                          typenum:3,
                         ),
                         Box(
                           pieces: 10,
                           points: 20,
                           name: 'PP',
                           pic: 'assets/im5.png',
+                          typenum:4,
                         ),
                         Box(
                           pieces: 10,
                           points: 20,
                           name: 'PS',
                           pic: 'assets/im6.png',
+                          typenum:5,
                         ),
                         Box(
                           pieces: 10,
                           points: 20,
                           name: 'O',
                           pic: 'assets/im7.png',
+                          typenum:6,
                         ),
                         Button(),
                       ],
@@ -96,18 +106,20 @@ class Box extends StatefulWidget {
   final int points;
   final String pic;
   final String name;
+  final int typenum;
 
   const Box(
       {Key? key,
       required this.pieces,
       required this.points,
       required this.pic,
-      required this.name})
+      required this.name,
+      required this.typenum})
       : super(key: key);
 
   @override
   State<Box> createState() => _BoxState(
-      pieces: this.pieces, points: this.points, pic: this.pic, name: this.name);
+      pieces: this.pieces, points: this.points, pic: this.pic, name: this.name, typenum: this.typenum);
 }
 
 class _BoxState extends State<Box> {
@@ -115,12 +127,14 @@ class _BoxState extends State<Box> {
   int points;
   String pic;
   String name;
+  int typenum;
 
   _BoxState({
     required this.pieces,
     required this.points,
     required this.pic,
     required this.name,
+    required this.typenum,
   });
 
   int sumpoint() {
@@ -133,51 +147,50 @@ class _BoxState extends State<Box> {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
     return Container(
-        // padding: EdgeInsets.all(12.0),
-        margin: const EdgeInsets.only(bottom: 30.0),
-        width: deviceWidth * 0.9,
-        height: deviceHeight * 0.125,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border(
-            top: BorderSide(width: 1.0, color: Color.fromARGB(255, 0, 0, 0)),
-            left: BorderSide(width: 1.0, color: Color.fromARGB(255, 0, 0, 0)),
-            right: BorderSide(width: 1.0, color: Color.fromARGB(255, 0, 0, 0)),
-            bottom: BorderSide(
-              width: 1.0,
-              color: Color.fromARGB(255, 0, 0, 0),
-            ),
+      // padding: EdgeInsets.all(12.0),
+      margin: const EdgeInsets.only(bottom: 30.0),
+      width: deviceWidth * 0.9,
+      height: deviceHeight * 0.125,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border(
+          top: BorderSide(width: 1.0, color: Color.fromARGB(255, 0, 0, 0)),
+          left: BorderSide(width: 1.0, color: Color.fromARGB(255, 0, 0, 0)),
+          right: BorderSide(width: 1.0, color: Color.fromARGB(255, 0, 0, 0)),
+          bottom: BorderSide(
+            width: 1.0,
+            color: Color.fromARGB(255, 0, 0, 0),
           ),
         ),
-        child:   
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ibutton(),
-                ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    child: Image.asset(
-                      pic,
-                      scale: 0.1,
-                      width: 50,
-                    )),
-                Container(
-                  width: 125,
-                  padding: EdgeInsets.only(left: 30),
-                  child: Text(
-                    name,
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        decoration: TextDecoration.none),
-                  ),
-                ),
-                addbut(),
-              ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ibutton( typenum: typenum ),
+          ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              child: Image.asset(
+                pic,
+                scale: 0.1,
+                width: 50,
+              )),
+          Container(
+            width: 125,
+            padding: EdgeInsets.only(left: 30),
+            child: Text(
+              name,
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  decoration: TextDecoration.none),
             ),
-        );
+          ),
+          addbut(),
+        ],
+      ),
+    );
   }
 }
 
@@ -208,7 +221,7 @@ class _ButtonState extends State<Button> {
 
 class addbut extends StatefulWidget {
   const addbut({Key? key}) : super(key: key);
-
+  
   @override
   State<addbut> createState() => _addbutState();
 }
@@ -247,21 +260,20 @@ class _addbutState extends State<addbut> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-
           IconButton(
             onPressed: _decreasement,
             icon: Icon(Icons.remove_circle),
             color: Color.fromARGB(255, 255, 255, 255),
             padding: EdgeInsets.only(bottom: 9.0),
           ),
-          Text('$_counter', style: TextStyle(color: Colors.white, fontSize: 20)),
+          Text('$_counter',
+              style: TextStyle(color: Colors.white, fontSize: 20)),
           IconButton(
             onPressed: _increment,
             icon: Icon(Icons.add_circle),
             color: Color.fromARGB(255, 255, 255, 255),
             padding: EdgeInsets.only(bottom: 9.0),
           ),
-
         ],
       ),
     );
@@ -269,55 +281,79 @@ class _addbutState extends State<addbut> {
 }
 
 class ibutton extends StatelessWidget {
-  const ibutton({Key? key}) : super(key: key);
-
-  @override
+   ibutton({Key? key, required this.typenum}) : super(key: key);
+  final int typenum;
+   List<List<Widget>> type = [
+    [ 
+        picshow(namepic: 'peanut butter jar', pic: 'assets/butter.png'),
+        picshow(namepic: 'soda bottle', pic: 'assets/Coke.png'),
+        picshow(namepic: 'condiment bottle', pic: 'assets/sauce.png') 
+    ],
+    [
+        picshow(namepic: 'trash bags', pic: 'assets/plastic.png')
+    ],
+    [
+        picshow(namepic: 'asdasd', pic: 'assets/im3.png')
+    ],
+    [
+        picshow(namepic: 'asdasd', pic: 'assets/im3.png')
+    ],
+    [
+        picshow(namepic: 'asdasd', pic: 'assets/im3.png')
+    ],
+    [
+        picshow(namepic: 'asdasd', pic: 'assets/im3.png')
+    ],
+    [
+        picshow(namepic: 'asdasd', pic: 'assets/im3.png')
+    ],
+  ];
   
+  
+  @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
-
     return Container(
       // alignment: Alignment.topLeft,
       child: IconButton(
-      onPressed: () => showDialog(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-                actions: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: IconButton(
-                          onPressed: () => Navigator.pop(context, 'Close'),
-                          icon: Icon(Icons.close),
-                          color: Colors.black,
+        onPressed: () => showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+                  actions: <Widget>[
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            onPressed: () => Navigator.pop(context, 'Close'),
+                            icon: Icon(Icons.close),
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
-                      ImageSlideshow(
-                          width: deviceWidth * 0.7,
-                          height: deviceHeight * 0.4,
-                          indicatorColor: Color(0xffFF9F1D),
-                          children: [
-                            picshow(
-                                namepic: 'Butter', pic: 'assets/butter.png'),
-                            picshow(namepic: 'Coke', pic: 'assets/Coke.png'),
-                            picshow(namepic: 'Sauce', pic: 'assets/sauce.png'),
-                          ]),
-                    ],
-                  ),
-                ],
-                // content: const Text('asd'),
-              )),
-      icon: Icon(
-        Icons.info_outline,
-        color: Colors.black,
-        size: 20.0,
+                        ImageSlideshow(
+                            width: deviceWidth * 0.7,
+                            height: deviceHeight * 0.4,
+                            indicatorColor: Color(0xffFF9F1D),
+                            children: [
+                              for (var i = 0; i < type[typenum].length ; i++) 
+                                    type[typenum][i]
+                                 
+                            ]
+                            ),
+                      ],
+                    ),
+                  ],
+                  // content: const Text('asd'),
+                )),
+        icon: Icon(
+          Icons.info_outline,
+          color: Colors.black,
+          size: 20.0,
+        ),
       ),
-    ),
     );
-    
   }
 }
 
