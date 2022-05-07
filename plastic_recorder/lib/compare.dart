@@ -228,7 +228,11 @@ class _CompareState extends State<Compare> {
                                               ),
                                             ),
                                             TextSpan(
-                                              text: avg.toString(),
+                                              text: (avg -
+                                                      (snapshot.data?.toInt() ??
+                                                          0))
+                                                  .abs()
+                                                  .toString(),
                                               style: TextStyle(
                                                   fontSize: 24,
                                                   fontWeight: FontWeight.bold,
@@ -237,7 +241,9 @@ class _CompareState extends State<Compare> {
                                                       TextDecoration.none),
                                             ),
                                             TextSpan(
-                                              text: ' is the average!',
+                                              text: (snapshot.data! > avg
+                                                  ? ' more than the average!'
+                                                  : ' less than the average!'),
                                               style: TextStyle(
                                                 fontSize: 24,
                                                 color: Colors.black,
