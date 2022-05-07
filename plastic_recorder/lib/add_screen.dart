@@ -220,7 +220,8 @@ class _ButtonState extends State<Button> {
 }
 
 class addbut extends StatefulWidget {
-  const addbut({Key? key,}) : super(key: key);
+  const addbut({Key? key}) : super(key: key);
+
   @override
   State<addbut> createState() => _addbutState();
 }
