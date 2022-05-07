@@ -221,27 +221,53 @@ class _ButtonState extends State<Button> {
 
 class addbut extends StatefulWidget {
   const addbut({Key? key}) : super(key: key);
-  
+
   @override
   State<addbut> createState() => _addbutState();
 }
 
 class _addbutState extends State<addbut> {
   int _counter = 0;
+  // int count1 = 0;
+  // int count2 = 0;
+  // int count3 = 0;
+  // int count4 = 0;
+  // int count5 = 0;
+  // int count6 = 0;
+  // int count7 = 0;
+  // int typenum;
+
+  // _addbutState({
+  //   required this.typenum
+  // })
+
+  // List type = [
+  //   {'count1'},
+  //   {'count2'},
+  //   {'count3'},
+  //   {'count4'},
+  //   {'count5'},
+  //   {'count6'},
+  //   {'count7'},
+  // ];
 
   void _increment() {
     setState(() {
-      ++_counter;
+     
+        ++_counter;
+     
     });
   }
 
   void _decreasement() {
     setState(() {
-      if (_counter != 0) {
+     
+        if (_counter != 0) {
         --_counter;
       } else {
         _counter = 0;
       }
+    
     });
   }
 
@@ -339,7 +365,6 @@ class ibutton extends StatelessWidget {
                             children: [
                               for (var i = 0; i < type[typenum].length ; i++) 
                                     type[typenum][i]
-                                 
                             ]
                             ),
                       ],
