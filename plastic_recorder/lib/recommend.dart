@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
@@ -55,7 +56,17 @@ class _RecommendState extends State<Recommend> {
           'Plastic Bottles',
           'assets/bottles.png',
           'Small plastic bottles might be convenient, but they are even more wasteful than large plastic bottles. As an alternative, you should try using refillable bottles instead of single use. You can also use blah blah and blah blah for an even greener option...',
-          UniqueKey())
+          UniqueKey()),
+      RecommendCard(
+          'Plastic Bottles',
+          'assets/bottles.png',
+          'Small plastic bottles might be convenient, but they are even more wasteful than large plastic bottles. As an alternative, you should try using refillable bottles instead of single use. You can also use blah blah and blah blah for an even greener option...',
+          UniqueKey()),
+      RecommendCard(
+          'Plastic Bottles',
+          'assets/bottles.png',
+          'Small plastic bottles might be convenient, but they are even more wasteful than large plastic bottles. As an alternative, you should try using refillable bottles instead of single use. You can also use blah blah and blah blah for an even greener option...',
+          UniqueKey()),
     ];
 
     return Scaffold(
