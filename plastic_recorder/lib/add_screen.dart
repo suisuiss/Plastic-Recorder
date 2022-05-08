@@ -267,6 +267,7 @@ class _addbutState extends State<addbut> {
       } else {
         type[typenum] = 0;
       }
+    
     });
   }
 
