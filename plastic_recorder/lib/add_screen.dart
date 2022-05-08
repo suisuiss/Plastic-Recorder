@@ -9,7 +9,6 @@ import 'package:intl/intl.dart';
 
 class Add extends StatelessWidget {
   Add({Key? key}) : super(key: key);
-  
 
   @override
   Widget build(BuildContext context) {
@@ -42,49 +41,49 @@ class Add extends StatelessWidget {
                           points: 2,
                           name: 'PET',
                           pic: 'assets/im1.png',
-                          typenum:0,
+                          typenum: 0,
                         ),
                         Box(
                           pieces: 3,
                           points: 3,
                           name: 'PE-HD',
                           pic: 'assets/im2.png',
-                          typenum:1,
+                          typenum: 1,
                         ),
                         Box(
                           pieces: 5,
                           points: 10,
                           name: 'PVC',
                           pic: 'assets/im3.png',
-                          typenum:2,
+                          typenum: 2,
                         ),
                         Box(
                           pieces: 1,
                           points: 1,
                           name: 'PE-LD',
                           pic: 'assets/im4.png',
-                          typenum:3,
+                          typenum: 3,
                         ),
                         Box(
                           pieces: 10,
                           points: 20,
                           name: 'PP',
                           pic: 'assets/im5.png',
-                          typenum:4,
+                          typenum: 4,
                         ),
                         Box(
                           pieces: 10,
                           points: 20,
                           name: 'PS',
                           pic: 'assets/im6.png',
-                          typenum:5,
+                          typenum: 5,
                         ),
                         Box(
                           pieces: 10,
                           points: 20,
                           name: 'O',
                           pic: 'assets/im7.png',
-                          typenum:6,
+                          typenum: 6,
                         ),
                         Button(),
                       ],
@@ -119,7 +118,11 @@ class Box extends StatefulWidget {
 
   @override
   State<Box> createState() => _BoxState(
-      pieces: this.pieces, points: this.points, pic: this.pic, name: this.name, typenum: this.typenum);
+      pieces: this.pieces,
+      points: this.points,
+      pic: this.pic,
+      name: this.name,
+      typenum: this.typenum);
 }
 
 class _BoxState extends State<Box> {
@@ -167,7 +170,7 @@ class _BoxState extends State<Box> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ibutton( typenum: typenum ),
+          ibutton(typenum: typenum),
           ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               child: Image.asset(
@@ -187,7 +190,9 @@ class _BoxState extends State<Box> {
                   decoration: TextDecoration.none),
             ),
           ),
-          addbut(),
+          addbut(
+            typenum: typenum,
+          ),
         ],
       ),
     );
@@ -208,6 +213,9 @@ class _ButtonState extends State<Button> {
       width: 100,
       child: ElevatedButton(
         onPressed: () {
+          print(_addbutState.type);
+          _addbutState.type = [0,0,0,0,0,0,0];
+          //  print(_addbutState.type);
           Navigator.pushNamed(context, '/recommendation');
         },
         child: Text('ADD'),
@@ -220,27 +228,44 @@ class _ButtonState extends State<Button> {
 }
 
 class addbut extends StatefulWidget {
-  const addbut({Key? key}) : super(key: key);
-  
+  const addbut({Key? key, required this.typenum}) : super(key: key);
+  final int typenum;
   @override
-  State<addbut> createState() => _addbutState();
+  State<addbut> createState() => _addbutState(typenum: this.typenum);
 }
 
 class _addbutState extends State<addbut> {
   int _counter = 0;
+  int typenum;
+
+  _addbutState({required this.typenum});
+
+  static List<int> type = [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ].cast<int>();
 
   void _increment() {
     setState(() {
-      ++_counter;
+      // ++_counter;
+      type[typenum]++;
+      print(type);
     });
   }
 
   void _decreasement() {
     setState(() {
-      if (_counter != 0) {
-        --_counter;
+      if (type[typenum] != 0) {
+        // --_counter;
+        type[typenum]--;
+        print(type);
       } else {
-        _counter = 0;
+        type[typenum] = 0;
       }
     });
   }
@@ -266,7 +291,7 @@ class _addbutState extends State<addbut> {
             color: Color.fromARGB(255, 255, 255, 255),
             padding: EdgeInsets.only(bottom: 9.0),
           ),
-          Text('$_counter',
+          Text('${type[typenum]}',
               style: TextStyle(color: Colors.white, fontSize: 20)),
           IconButton(
             onPressed: _increment,
@@ -281,35 +306,22 @@ class _addbutState extends State<addbut> {
 }
 
 class ibutton extends StatelessWidget {
-   ibutton({Key? key, required this.typenum}) : super(key: key);
+  ibutton({Key? key, required this.typenum}) : super(key: key);
   final int typenum;
-   List<List<Widget>> type = [
-    [ 
-        picshow(namepic: 'peanut butter jar', pic: 'assets/butter.png'),
-        picshow(namepic: 'soda bottle', pic: 'assets/Coke.png'),
-        picshow(namepic: 'condiment bottle', pic: 'assets/sauce.png') 
-    ],
+  List<List<Widget>> type = [
     [
-        picshow(namepic: 'trash bags', pic: 'assets/plastic.png')
+      picshow(namepic: 'peanut butter jar', pic: 'assets/butter.png'),
+      picshow(namepic: 'soda bottle', pic: 'assets/Coke.png'),
+      picshow(namepic: 'condiment bottle', pic: 'assets/sauce.png')
     ],
-    [
-        picshow(namepic: 'asdasd', pic: 'assets/im3.png')
-    ],
-    [
-        picshow(namepic: 'asdasd', pic: 'assets/im3.png')
-    ],
-    [
-        picshow(namepic: 'asdasd', pic: 'assets/im3.png')
-    ],
-    [
-        picshow(namepic: 'asdasd', pic: 'assets/im3.png')
-    ],
-    [
-        picshow(namepic: 'asdasd', pic: 'assets/im3.png')
-    ],
+    [picshow(namepic: 'trash bags', pic: 'assets/plastic.png')],
+    [picshow(namepic: 'asdasd', pic: 'assets/im3.png')],
+    [picshow(namepic: 'asdasd', pic: 'assets/im3.png')],
+    [picshow(namepic: 'asdasd', pic: 'assets/im3.png')],
+    [picshow(namepic: 'asdasd', pic: 'assets/im3.png')],
+    [picshow(namepic: 'asdasd', pic: 'assets/im3.png')],
   ];
-  
-  
+
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
@@ -337,11 +349,9 @@ class ibutton extends StatelessWidget {
                             height: deviceHeight * 0.4,
                             indicatorColor: Color(0xffFF9F1D),
                             children: [
-                              for (var i = 0; i < type[typenum].length ; i++) 
-                                    type[typenum][i]
-                                 
-                            ]
-                            ),
+                              for (var i = 0; i < type[typenum].length; i++)
+                                type[typenum][i]
+                            ]),
                       ],
                     ),
                   ],
