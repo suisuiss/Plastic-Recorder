@@ -11,11 +11,12 @@ class footer extends StatefulWidget {
 }
 
 class _footerState extends State<footer> {
+  var now = new DateTime.now();
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      print(_selectedIndex);
+      
     });
     Navigator.pushNamed(context, path[_selectedIndex]);
   }
