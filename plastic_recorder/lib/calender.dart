@@ -64,10 +64,11 @@ class _calenderState extends State<calender> {
                       _selectedDay = selectedDay;
                       _focusedDay = focusedDay;
                        var fDate = dateFormat.format(selectedDay);
-                       print(fDate);
+                      
                       
                     });
-                    Navigator.pushNamed(context, '/today');
+                    Navigator.pushNamed(context, '/today', arguments: _selectedDay);
+                  
                   },
             
                   //style

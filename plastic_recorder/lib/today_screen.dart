@@ -5,10 +5,20 @@ import 'package:plastic_recorder/header.dart';
 import 'package:intl/intl.dart';
 
 class Today extends StatelessWidget {
+  
   Today({Key? key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
+    final calDate = ModalRoute != null? ModalRoute.of(context)!.settings.arguments : DateTime.now();
+    final dateFormat = DateFormat('MMMd');
+    DateTime? showingDate;
+      if(calDate == null){
+       showingDate = DateTime.now();
+    }else{
+      showingDate = DateTime.parse(calDate.toString());
+    }
     var now = new DateTime.now();
     String formattedDate = DateFormat('MMMd').format(now);
     return Scaffold(
@@ -27,11 +37,14 @@ class Today extends StatelessWidget {
                         Container(
                           alignment: Alignment.topCenter,
                           margin: const EdgeInsets.only(bottom: 20),
-                          child: Text(formattedDate,
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
+                         child: Text(dateFormat.format(showingDate), style: TextStyle(fontSize: 30)),
+                           
+                                                     
+                          // child:Text(DateFormat('MMMd').format(calDate) ,
+                          //     style: TextStyle(
+                          //         fontSize: 30,
+                          //         color: Colors.black,
+                          //         decoration: TextDecoration.none))
                         ),
                         Box(
                           pieces: 2,
