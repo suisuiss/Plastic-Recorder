@@ -8,9 +8,10 @@ import 'package:plastic_recorder/header.dart';
 
 class ProfilePage extends StatelessWidget {
    ProfilePage({Key? key}) : super(key: key);
+    
 
   Widget textfield({@required hintText, required icon}) {
-   
+    
     return Material(
       elevation: 2,
       shadowColor: Colors.grey,
@@ -38,9 +39,12 @@ class ProfilePage extends StatelessWidget {
   @override
 
   final user = FirebaseAuth.instance.currentUser!;
+   
   
   Widget build(BuildContext context) {
     var email = user.email;
+    var uid = user.uid;
+    
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
