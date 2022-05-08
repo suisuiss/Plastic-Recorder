@@ -187,10 +187,12 @@ class _BoxState extends State<Box> {
               )),
           Container(
             width: 125,
+            padding: EdgeInsets.only(left: 30),
             child: Text(
               name,
               style: TextStyle(
                   fontSize: 20,
+                  fontWeight: FontWeight.bold,
                   color: Colors.black,
                   decoration: TextDecoration.none),
             ),
@@ -254,7 +256,9 @@ class _ButtonState extends State<Button> {
     return Container(
       width: 300,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/compare');
+        },
         child: Text('Compare Usage'),
         style: ElevatedButton.styleFrom(
           primary: Color(0xffFF9F1D),
