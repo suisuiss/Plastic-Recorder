@@ -11,12 +11,14 @@ class Today extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final calDate = ModalRoute != null? ModalRoute.of(context)!.settings.arguments : DateTime.now();
+    final calDate = ModalRoute != null
+        ? ModalRoute.of(context)!.settings.arguments
+        : DateTime.now();
     final dateFormat = DateFormat('MMMd');
     DateTime? showingDate;
-      if(calDate == null){
-       showingDate = DateTime.now();
-    }else{
+    if (calDate == null) {
+      showingDate = DateTime.now();
+    } else {
       showingDate = DateTime.parse(calDate.toString());
     }
     var now = new DateTime.now();
@@ -37,14 +39,8 @@ class Today extends StatelessWidget {
                         Container(
                           alignment: Alignment.topCenter,
                           margin: const EdgeInsets.only(bottom: 20),
-                         child: Text(dateFormat.format(showingDate), style: TextStyle(fontSize: 30)),
-                           
-                                                     
-                          // child:Text(DateFormat('MMMd').format(calDate) ,
-                          //     style: TextStyle(
-                          //         fontSize: 30,
-                          //         color: Colors.black,
-                          //         decoration: TextDecoration.none))
+                          child: Text(dateFormat.format(showingDate),
+                              style: TextStyle(fontSize: 30)),
                         ),
                         Box(
                           pieces: 2,
@@ -59,7 +55,7 @@ class Today extends StatelessWidget {
                           points: 3,
                           name: 'PE-HD',
                           pic: 'assets/im2.png',
-                           namepic: 'PE-HD',
+                          namepic: 'PE-HD',
                           picI: 'assets/im2.png',
                         ),
                         Box(
@@ -67,7 +63,7 @@ class Today extends StatelessWidget {
                           points: 10,
                           name: 'PVC',
                           pic: 'assets/im3.png',
-                           namepic: 'PVC',
+                          namepic: 'PVC',
                           picI: 'assets/im3.png',
                         ),
                         Box(
@@ -75,7 +71,7 @@ class Today extends StatelessWidget {
                           points: 1,
                           name: 'PE-LD',
                           pic: 'assets/im4.png',
-                           namepic: 'PE-LD',
+                          namepic: 'PE-LD',
                           picI: 'assets/im4.png',
                         ),
                         Box(
@@ -83,7 +79,7 @@ class Today extends StatelessWidget {
                           points: 20,
                           name: 'PP',
                           pic: 'assets/im5.png',
-                           namepic: 'PP',
+                          namepic: 'PP',
                           picI: 'assets/im5.png',
                         ),
                         Box(
@@ -91,7 +87,7 @@ class Today extends StatelessWidget {
                           points: 20,
                           name: 'PS',
                           pic: 'assets/im6.png',
-                           namepic: 'PS',
+                          namepic: 'PS',
                           picI: 'assets/im6.png',
                         ),
                         Box(
@@ -99,7 +95,7 @@ class Today extends StatelessWidget {
                           points: 20,
                           name: 'O',
                           pic: 'assets/im7.png',
-                           namepic: 'O',
+                          namepic: 'O',
                           picI: 'assets/im7.png',
                         ),
                         Container(
@@ -149,7 +145,12 @@ class Box extends StatefulWidget {
 
   @override
   State<Box> createState() => _BoxState(
-      pieces: this.pieces, points: this.points, pic: this.pic, name: this.name, namepic: this.namepic, picI: this.picI);
+      pieces: this.pieces,
+      points: this.points,
+      pic: this.pic,
+      name: this.name,
+      namepic: this.namepic,
+      picI: this.picI);
 }
 
 class _BoxState extends State<Box> {
@@ -199,7 +200,10 @@ class _BoxState extends State<Box> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ibutton(namepic: '$namepic', pic: '$picI',),
+          ibutton(
+            namepic: '$namepic',
+            pic: '$picI',
+          ),
           ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               child: Image.asset(
@@ -291,7 +295,8 @@ class _ButtonState extends State<Button> {
 }
 
 class ibutton extends StatelessWidget {
-  const ibutton({Key? key, required this.namepic , required this.pic}) : super(key: key);
+  const ibutton({Key? key, required this.namepic, required this.pic})
+      : super(key: key);
   final String pic;
   final String namepic;
 
@@ -317,8 +322,7 @@ class ibutton extends StatelessWidget {
                             color: Colors.black,
                           ),
                         ),
-                        picshow(namepic: '$namepic' , pic: '$pic'),
-                        
+                        picshow(namepic: '$namepic', pic: '$pic'),
                       ],
                     ),
                   ],
@@ -359,13 +363,12 @@ class picshow extends StatelessWidget {
           ),
           Container(
             padding: EdgeInsets.all(30.0),
-            child:Text(
-            '$namepic',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-          ), 
+            child: Text(
+              '$namepic',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            ),
           )
-          
         ],
       ),
     );
