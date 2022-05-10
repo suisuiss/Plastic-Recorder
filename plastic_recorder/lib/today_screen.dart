@@ -5,10 +5,22 @@ import 'package:plastic_recorder/header.dart';
 import 'package:intl/intl.dart';
 
 class Today extends StatelessWidget {
+  
   Today({Key? key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
+    final calDate = ModalRoute != null
+        ? ModalRoute.of(context)!.settings.arguments
+        : DateTime.now();
+    final dateFormat = DateFormat('MMMd');
+    DateTime? showingDate;
+    if (calDate == null) {
+      showingDate = DateTime.now();
+    } else {
+      showingDate = DateTime.parse(calDate.toString());
+    }
     var now = new DateTime.now();
     String formattedDate = DateFormat('MMMd').format(now);
     return Scaffold(
@@ -27,53 +39,64 @@ class Today extends StatelessWidget {
                         Container(
                           alignment: Alignment.topCenter,
                           margin: const EdgeInsets.only(bottom: 20),
-                          child: Text(formattedDate,
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
+                          child: Text(dateFormat.format(showingDate),
+                              style: TextStyle(fontSize: 30)),
                         ),
                         Box(
                           pieces: 2,
                           points: 2,
                           name: 'PET',
                           pic: 'assets/im1.png',
+                          namepic: 'PET',
+                          picI: 'assets/im1.png',
                         ),
                         Box(
                           pieces: 3,
                           points: 3,
                           name: 'PE-HD',
                           pic: 'assets/im2.png',
+                          namepic: 'PE-HD',
+                          picI: 'assets/im2.png',
                         ),
                         Box(
                           pieces: 5,
                           points: 10,
                           name: 'PVC',
                           pic: 'assets/im3.png',
+                          namepic: 'PVC',
+                          picI: 'assets/im3.png',
                         ),
                         Box(
                           pieces: 1,
                           points: 1,
                           name: 'PE-LD',
                           pic: 'assets/im4.png',
+                          namepic: 'PE-LD',
+                          picI: 'assets/im4.png',
                         ),
                         Box(
                           pieces: 10,
                           points: 20,
                           name: 'PP',
                           pic: 'assets/im5.png',
+                          namepic: 'PP',
+                          picI: 'assets/im5.png',
                         ),
                         Box(
                           pieces: 10,
                           points: 20,
                           name: 'PS',
                           pic: 'assets/im6.png',
+                          namepic: 'PS',
+                          picI: 'assets/im6.png',
                         ),
                         Box(
                           pieces: 10,
                           points: 20,
                           name: 'O',
                           pic: 'assets/im7.png',
+                          namepic: 'O',
+                          picI: 'assets/im7.png',
                         ),
                         Container(
                           padding: EdgeInsets.all(8),
@@ -107,18 +130,27 @@ class Box extends StatefulWidget {
   final int points;
   final String pic;
   final String name;
+  final String namepic;
+  final String picI;
 
   const Box(
       {Key? key,
       required this.pieces,
       required this.points,
       required this.pic,
-      required this.name})
+      required this.name,
+      required this.namepic,
+      required this.picI})
       : super(key: key);
 
   @override
   State<Box> createState() => _BoxState(
-      pieces: this.pieces, points: this.points, pic: this.pic, name: this.name);
+      pieces: this.pieces,
+      points: this.points,
+      pic: this.pic,
+      name: this.name,
+      namepic: this.namepic,
+      picI: this.picI);
 }
 
 class _BoxState extends State<Box> {
@@ -126,12 +158,16 @@ class _BoxState extends State<Box> {
   int points;
   String pic;
   String name;
+  String namepic;
+  String picI;
 
   _BoxState({
     required this.pieces,
     required this.points,
     required this.pic,
     required this.name,
+    required this.namepic,
+    required this.picI,
   });
 
   int sumpoint() {
@@ -164,7 +200,10 @@ class _BoxState extends State<Box> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ibutton(),
+          ibutton(
+            namepic: '$namepic',
+            pic: '$picI',
+          ),
           ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               child: Image.asset(
@@ -256,7 +295,10 @@ class _ButtonState extends State<Button> {
 }
 
 class ibutton extends StatelessWidget {
-  const ibutton({Key? key}) : super(key: key);
+  const ibutton({Key? key, required this.namepic, required this.pic})
+      : super(key: key);
+  final String pic;
+  final String namepic;
 
   @override
   Widget build(BuildContext context) {
@@ -280,18 +322,7 @@ class ibutton extends StatelessWidget {
                             color: Colors.black,
                           ),
                         ),
-                        picshow(namepic: 'Example: water bottle, peanut butter jar, condiment bottle, soda bottles, mouth wash bottle, salad dressing,  frozen foods packaging, bakery products', pic: 'assets/im1.png'),
-
-                        // ImageSlideshow(
-                        //     width: deviceWidth * 0.7,
-                        //     height: deviceHeight * 0.4,
-                        //     indicatorColor: Color(0xffFF9F1D),
-                        //     children: [
-                        //       picshow(
-                        //           namepic: 'Butter', pic: 'assets/butter.png'),
-                        //       picshow(namepic: 'Coke', pic: 'assets/coke.png'),
-                        //       picshow(namepic: 'Sauce', pic: 'assets/sauce.png'),
-                        //     ]),
+                        picshow(namepic: '$namepic', pic: '$pic'),
                       ],
                     ),
                   ],
@@ -332,13 +363,12 @@ class picshow extends StatelessWidget {
           ),
           Container(
             padding: EdgeInsets.all(30.0),
-            child:Text(
-            '$namepic',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-          ), 
+            child: Text(
+              '$namepic',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            ),
           )
-          
         ],
       ),
     );
