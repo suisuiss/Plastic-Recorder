@@ -400,29 +400,11 @@ Future<int?> getPoints() async {
 
   var db = FirebaseFirestore.instance;
 
-  /*final docRef = db.collection("test-record").get().then((event) {
-    for (var doc in event.docs) {
-      var dat = Record.fromJson(doc.data());
-      //print("${doc.id} => ${doc.data()}");
-      if (DateTime.fromMillisecondsSinceEpoch(dat.time.seconds * 1000) ==
-          today) {
-        points += dat.t1 * 2;
-        points += dat.t2 * 3;
-        points += dat.t3 * 6;
-        points += dat.t4 * 5;
-        points += dat.t5 * 4;
-        points += dat.t6 * 3;
-        points += dat.t7 * 8;
-      }
-    }
-  });*/
-
   final docRef = db.collection("UserRec").get();
   QuerySnapshot<Map<String, dynamic>> records = await docRef;
 
   records.docs.forEach((doc) {
     var dat = Record.fromJson(doc.data());
-    //print("${doc.id} => ${doc.data()}");
     if (today.isSameDay(
             DateTime.fromMillisecondsSinceEpoch(dat.time.seconds * 1000)) &&
         dat.uid == uid) {
@@ -436,7 +418,6 @@ Future<int?> getPoints() async {
     }
   });
 
-  //await Future.delayed(Duration(milliseconds: 4000));
   return points;
 }
 
