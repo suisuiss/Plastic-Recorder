@@ -8,6 +8,7 @@ import 'package:flutter/animation.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dart_date/dart_date.dart';
 
 final user = FirebaseAuth.instance.currentUser!;
 var uid = user.uid;
@@ -30,7 +31,6 @@ class _CompareState extends State<Compare> {
   void initState() {
     super.initState();
 
-    print('test');
     dataFuture = getPoints();
   }
 
@@ -92,8 +92,7 @@ class _CompareState extends State<Compare> {
                                   child: Container(
                                     width: 1000,
                                     height: 400,
-                                    child:
-                                        SimpleTimeSeriesChart.withSampleData(),
+                                    child: SimpleTimeSeriesChart(),
                                   ),
                                 ),
                               ],
@@ -261,16 +260,7 @@ class _CompareState extends State<Compare> {
                       ),
                     );
                   } else {
-                    return TextButton(
-                      style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.blue),
-                      ),
-                      onPressed: () {
-                        print(dataFuture.then((value) => print(value)));
-                      },
-                      child: Text('TextButton'),
-                    );
+                    return Text('Loading...');
                   }
                 }),
 
@@ -288,55 +278,44 @@ class _CompareState extends State<Compare> {
   }
 }
 
-class SimpleTimeSeriesChart extends StatelessWidget {
-  final List<charts.Series<dynamic, DateTime>> seriesList;
+class SimpleTimeSeriesChart extends StatefulWidget {
+  const SimpleTimeSeriesChart({Key? key}) : super(key: key);
+
+  @override
+  _SimpleTimeSeriesChartState createState() => _SimpleTimeSeriesChartState();
+}
+
+class _SimpleTimeSeriesChartState extends State<SimpleTimeSeriesChart> {
   bool animate = false;
 
-  SimpleTimeSeriesChart(this.seriesList, {required this.animate});
+  late Future<List<charts.Series<dynamic, DateTime>>> dataFuture;
 
-  /// Creates a [TimeSeriesChart] with sample data and no transition.
-  factory SimpleTimeSeriesChart.withSampleData() {
-    return new SimpleTimeSeriesChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
+  @override
+  void initState() {
+    super.initState();
+
+    dataFuture = getPointsChart();
   }
 
   @override
   Widget build(BuildContext context) {
-    return charts.TimeSeriesChart(
-      seriesList,
-      animate: animate,
-      // Optionally pass in a [DateTimeFactory] used by the chart. The factory
-      // should create the same type of [DateTime] as the data provided. If none
-      // specified, the default creates local date time.
-      dateTimeFactory: const charts.LocalDateTimeFactory(),
-    );
-  }
-
-  /// Create one series with sample hard coded data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
-    final data = [
-      new TimeSeriesSales(new DateTime(2022, 5, 28), 10),
-      new TimeSeriesSales(new DateTime(2022, 5, 29), 15),
-      new TimeSeriesSales(new DateTime(2022, 5, 30), 11),
-      new TimeSeriesSales(new DateTime(2022, 6, 1), 0),
-      new TimeSeriesSales(new DateTime(2022, 6, 2), 20),
-      new TimeSeriesSales(new DateTime(2022, 6, 3), 22),
-      new TimeSeriesSales(new DateTime(2022, 6, 4), 15),
-      new TimeSeriesSales(new DateTime(2022, 6, 5), 18),
-    ];
-
-    return [
-      new charts.Series<TimeSeriesSales, DateTime>(
-        id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (TimeSeriesSales sales, _) => sales.time,
-        measureFn: (TimeSeriesSales sales, _) => sales.sales,
-        data: data,
-      )
-    ];
+    return FutureBuilder(
+        future: dataFuture,
+        builder: (context,
+            AsyncSnapshot<List<charts.Series<dynamic, DateTime>>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return charts.TimeSeriesChart(
+              snapshot.data!,
+              animate: false,
+              // Optionally pass in a [DateTimeFactory] used by the chart. The factory
+              // should create the same type of [DateTime] as the data provided. If none
+              // specified, the default creates local date time.
+              dateTimeFactory: const charts.LocalDateTimeFactory(),
+            );
+          } else {
+            return Text('Loading...');
+          }
+        });
   }
 }
 
@@ -346,6 +325,72 @@ class TimeSeriesSales {
   final int sales;
 
   TimeSeriesSales(this.time, this.sales);
+}
+
+Future<List<charts.Series<dynamic, DateTime>>> getPointsChart() async {
+  var now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  var empty = TimeSeriesSales(today, 0);
+  var points = [0, 0, 0, 0, 0, 0, 0];
+  List<TimeSeriesSales> data = [
+    empty,
+    empty,
+    empty,
+    empty,
+    empty,
+    empty,
+    empty
+  ];
+
+  var db = FirebaseFirestore.instance;
+
+  final docRef = db.collection("UserRec").get();
+  QuerySnapshot<Map<String, dynamic>> records = await docRef;
+
+  records.docs.forEach((doc) {
+    var dat = Record.fromJson(doc.data());
+    if (dat.uid == uid) {
+      for (int i = 0; i < 7; i++) {
+        if (today.subtract(Duration(days: i)).isSameDay(
+            DateTime.fromMillisecondsSinceEpoch(dat.time.seconds * 1000))) {
+          points[i] += dat.t1 * 2;
+          points[i] += dat.t2 * 3;
+          points[i] += dat.t3 * 6;
+          points[i] += dat.t4 * 5;
+          points[i] += dat.t5 * 4;
+          points[i] += dat.t6 * 3;
+          points[i] += dat.t7 * 8;
+        }
+      }
+    }
+  });
+
+  for (int i = 0; i < 7; i++) {
+    data[i] = TimeSeriesSales(today.subtract(Duration(days: i)), points[i]);
+  }
+
+  /*data = [
+    new TimeSeriesSales(new DateTime(2022, 5, 28), 10),
+    new TimeSeriesSales(new DateTime(2022, 5, 29), 15),
+    new TimeSeriesSales(new DateTime(2022, 5, 30), 11),
+    new TimeSeriesSales(new DateTime(2022, 6, 1), 0),
+    new TimeSeriesSales(new DateTime(2022, 6, 2), 20),
+    new TimeSeriesSales(new DateTime(2022, 6, 3), 22),
+    new TimeSeriesSales(new DateTime(2022, 6, 4), 15),
+    new TimeSeriesSales(new DateTime(2022, 6, 5), 18),
+  ];*/
+
+  var result = [
+    new charts.Series<TimeSeriesSales, DateTime>(
+      id: 'Sales',
+      colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+      domainFn: (TimeSeriesSales sales, _) => sales.time,
+      measureFn: (TimeSeriesSales sales, _) => sales.sales,
+      data: data,
+    )
+  ];
+
+  return result;
 }
 
 Future<int?> getPoints() async {
@@ -372,13 +417,15 @@ Future<int?> getPoints() async {
     }
   });*/
 
-  final docRef = db.collection("test-record").get();
+  final docRef = db.collection("UserRec").get();
   QuerySnapshot<Map<String, dynamic>> records = await docRef;
 
   records.docs.forEach((doc) {
     var dat = Record.fromJson(doc.data());
     //print("${doc.id} => ${doc.data()}");
-    if (DateTime.fromMillisecondsSinceEpoch(dat.time.seconds * 1000) == today) {
+    if (today.isSameDay(
+            DateTime.fromMillisecondsSinceEpoch(dat.time.seconds * 1000)) &&
+        dat.uid == uid) {
       points += dat.t1 * 2;
       points += dat.t2 * 3;
       points += dat.t3 * 6;
@@ -390,8 +437,6 @@ Future<int?> getPoints() async {
   });
 
   //await Future.delayed(Duration(milliseconds: 4000));
-
-  print(points);
   return points;
 }
 
@@ -420,15 +465,15 @@ class Record {
 
   factory Record.fromJson(Map<String, dynamic> json) {
     return Record(
-      uid: json['uid'] as String,
-      time: json['date'] as Timestamp,
-      t1: json['plastics'][0] as int,
-      t2: json['plastics'][1] as int,
-      t3: json['plastics'][2] as int,
-      t4: json['plastics'][3] as int,
-      t5: json['plastics'][4] as int,
-      t6: json['plastics'][5] as int,
-      t7: json['plastics'][6] as int,
+      uid: json['userId'] as String,
+      time: json['Date'] as Timestamp,
+      t1: json['allplasticpiece'][0] as int,
+      t2: json['allplasticpiece'][1] as int,
+      t3: json['allplasticpiece'][2] as int,
+      t4: json['allplasticpiece'][3] as int,
+      t5: json['allplasticpiece'][4] as int,
+      t6: json['allplasticpiece'][5] as int,
+      t7: json['allplasticpiece'][6] as int,
     );
   }
 }
