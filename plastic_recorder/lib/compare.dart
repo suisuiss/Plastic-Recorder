@@ -9,11 +9,13 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dart_date/dart_date.dart';
+import 'package:plastic_recorder/today_screen.dart';
 
 final user = FirebaseAuth.instance.currentUser!;
 var uid = user.uid;
 final Stream<QuerySnapshot> records =
     FirebaseFirestore.instance.collection('test-record').snapshots();
+var calDate;
 
 int points = 99;
 
@@ -30,8 +32,31 @@ class _CompareState extends State<Compare> {
   @override
   void initState() {
     super.initState();
+    dataFuture = getPoints(DateTime.now());
 
-    dataFuture = getPoints();
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        calDate = ModalRoute != null
+            ? ModalRoute.of(context)!.settings.arguments
+            : DateTime.now();
+
+        if (calDate == null) {
+          calDate = DateTime.now();
+        }
+      });
+
+      print(calDate.toString());
+
+      final dateFormat = DateFormat('MMMd');
+      DateTime? showingDate;
+      if (calDate == null) {
+        showingDate = DateTime.now();
+      } else {
+        showingDate = DateTime.parse(calDate.toString());
+      }
+
+      dataFuture = getPoints(showingDate);
+    });
   }
 
   @override
@@ -65,7 +90,8 @@ class _CompareState extends State<Compare> {
             FutureBuilder<int?>(
                 future: dataFuture,
                 builder: (context, AsyncSnapshot<int?> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData) {
                     return Expanded(
                       child: SingleChildScrollView(
                         padding: const EdgeInsets.symmetric(horizontal: 22.0),
@@ -201,7 +227,9 @@ class _CompareState extends State<Compare> {
                                         textAlign: TextAlign.center,
                                         text: TextSpan(
                                           text: 'On ' +
-                                              formattedDate +
+                                              DateFormat('MMMd')
+                                                  .format(calDate)
+                                                  .toString() +
                                               ', your plastic consumption is ',
                                           style: TextStyle(
                                             fontSize: 24,
@@ -293,8 +321,25 @@ class _SimpleTimeSeriesChartState extends State<SimpleTimeSeriesChart> {
   @override
   void initState() {
     super.initState();
+    dataFuture = getPointsChart(DateTime.now());
 
-    dataFuture = getPointsChart();
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        calDate = ModalRoute != null
+            ? ModalRoute.of(context)!.settings.arguments
+            : DateTime.now();
+      });
+
+      final dateFormat = DateFormat('MMMd');
+      DateTime? showingDate;
+      if (calDate == null) {
+        showingDate = DateTime.now();
+      } else {
+        showingDate = DateTime.parse(calDate.toString());
+      }
+
+      dataFuture = getPointsChart(showingDate);
+    });
   }
 
   @override
@@ -327,10 +372,10 @@ class TimeSeriesSales {
   TimeSeriesSales(this.time, this.sales);
 }
 
-Future<List<charts.Series<dynamic, DateTime>>> getPointsChart() async {
+Future<List<charts.Series<dynamic, DateTime>>> getPointsChart(
+    DateTime day) async {
   var now = DateTime.now();
-  final today = DateTime(now.year, now.month, now.day);
-  var empty = TimeSeriesSales(today, 0);
+  var empty = TimeSeriesSales(day, 0);
   var points = [0, 0, 0, 0, 0, 0, 0];
   List<TimeSeriesSales> data = [
     empty,
@@ -351,7 +396,7 @@ Future<List<charts.Series<dynamic, DateTime>>> getPointsChart() async {
     var dat = Record.fromJson(doc.data());
     if (dat.uid == uid) {
       for (int i = 0; i < 7; i++) {
-        if (today.subtract(Duration(days: i)).isSameDay(
+        if (day.subtract(Duration(days: i)).isSameDay(
             DateTime.fromMillisecondsSinceEpoch(dat.time.seconds * 1000))) {
           points[i] += dat.t1 * 2;
           points[i] += dat.t2 * 3;
@@ -366,7 +411,7 @@ Future<List<charts.Series<dynamic, DateTime>>> getPointsChart() async {
   });
 
   for (int i = 0; i < 7; i++) {
-    data[i] = TimeSeriesSales(today.subtract(Duration(days: i)), points[i]);
+    data[i] = TimeSeriesSales(day.subtract(Duration(days: i)), points[i]);
   }
 
   /*data = [
@@ -393,10 +438,9 @@ Future<List<charts.Series<dynamic, DateTime>>> getPointsChart() async {
   return result;
 }
 
-Future<int?> getPoints() async {
+Future<int?> getPoints(DateTime day) async {
   int points = 0;
   var now = DateTime.now();
-  final today = DateTime(now.year, now.month, now.day);
 
   var db = FirebaseFirestore.instance;
 
@@ -405,7 +449,7 @@ Future<int?> getPoints() async {
 
   records.docs.forEach((doc) {
     var dat = Record.fromJson(doc.data());
-    if (today.isSameDay(
+    if (day.isSameDay(
             DateTime.fromMillisecondsSinceEpoch(dat.time.seconds * 1000)) &&
         dat.uid == uid) {
       points += dat.t1 * 2;
