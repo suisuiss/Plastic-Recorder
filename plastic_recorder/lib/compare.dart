@@ -111,8 +111,7 @@ class _CompareState extends State<Compare> {
                                       decoration: TextDecoration.none,
                                       fontWeight: FontWeight.bold,
                                     ),
-                                    child: Text(
-                                        'Compared to your past records...'),
+                                    child: Text('Compared to past 7-days...'),
                                   ),
                                 ),
                                 Padding(
