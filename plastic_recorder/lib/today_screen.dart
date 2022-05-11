@@ -5,9 +5,7 @@ import 'package:plastic_recorder/header.dart';
 import 'package:intl/intl.dart';
 
 class Today extends StatelessWidget {
-  
   Today({Key? key}) : super(key: key);
-  
 
   @override
   Widget build(BuildContext context) {
@@ -283,7 +281,10 @@ class _ButtonState extends State<Button> {
       width: 300,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/compare');
+          Navigator.pushNamed(context, '/compare',
+              arguments: ModalRoute != null
+                  ? ModalRoute.of(context)!.settings.arguments
+                  : DateTime.now());
         },
         child: Text('Compare Usage'),
         style: ElevatedButton.styleFrom(

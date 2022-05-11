@@ -11,8 +11,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dart_date/dart_date.dart';
 import 'package:plastic_recorder/today_screen.dart';
 
-final user = FirebaseAuth.instance.currentUser!;
-var uid = user.uid;
 final Stream<QuerySnapshot> records =
     FirebaseFirestore.instance.collection('test-record').snapshots();
 var calDate;
@@ -32,6 +30,10 @@ class _CompareState extends State<Compare> {
   @override
   void initState() {
     super.initState();
+
+    final user = FirebaseAuth.instance.currentUser!;
+    var uid = user.uid;
+
     dataFuture = getPoints(DateTime.now());
 
     Future.delayed(Duration.zero, () {
@@ -374,6 +376,9 @@ class TimeSeriesSales {
 
 Future<List<charts.Series<dynamic, DateTime>>> getPointsChart(
     DateTime day) async {
+  final user = FirebaseAuth.instance.currentUser!;
+  var uid = user.uid;
+
   var now = DateTime.now();
   var empty = TimeSeriesSales(day, 0);
   var points = [0, 0, 0, 0, 0, 0, 0];
@@ -439,6 +444,9 @@ Future<List<charts.Series<dynamic, DateTime>>> getPointsChart(
 }
 
 Future<int?> getPoints(DateTime day) async {
+  final user = FirebaseAuth.instance.currentUser!;
+  var uid = user.uid;
+
   int points = 0;
   var now = DateTime.now();
 
