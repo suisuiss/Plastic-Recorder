@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 const bgcolor = Color.fromRGBO(246, 246, 248, 1);
 const yellow = Color.fromRGBO(255, 159, 29, 1);
 
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -13,25 +14,30 @@ class LoginScreen extends StatefulWidget {
 
 String email = '';
 String password = '';
-
+ 
 
 class _LoginScreenState extends State<LoginScreen> {
-  
+   
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   Future Login() async {
     if (formKey.currentState!.validate()) {
-      try {
+
+      try{
         await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim(),
-        );
-        print('login with $passwordController.text + $emailController.text');
-        emailController.clear();
-        passwordController.clear();
-        Navigator.pushNamed(context, '/today');
-      } on FirebaseAuthException catch (e) {
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+        
+      );
+       
+      ;
+      emailController.clear();
+      passwordController.clear();
+      Navigator.pushNamed(context, '/home');
+        
+      } on FirebaseAuthException catch(e){
+
         print(e);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(e.message!),

@@ -24,8 +24,8 @@ class _registerState extends State<register> {
     if (formKey.currentState!.validate()) {
       try {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text);
-        Navigator.pushNamed(context, '/today');
+            email: emailController.text.trim(), password: passwordController.text.trim());
+        Navigator.pushNamed(context, '/home');
       } on FirebaseAuthException catch (e) {
         print(e);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
