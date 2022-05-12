@@ -1,5 +1,10 @@
-import 'dart:ffi';
+import 'dart:async';
+// import 'dart:ffi';
+// import 'dart:html';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/ui/utils/stream_subscriber_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
@@ -37,50 +42,36 @@ class Add extends StatelessWidget {
                                   decoration: TextDecoration.none)),
                         ),
                         Box(
-                          pieces: 2,
-                          points: 2,
                           name: 'PET',
                           pic: 'assets/im1.png',
                           typenum: 0,
                         ),
                         Box(
-                          pieces: 3,
-                          points: 3,
                           name: 'PE-HD',
                           pic: 'assets/im2.png',
                           typenum: 1,
                         ),
                         Box(
-                          pieces: 5,
-                          points: 10,
                           name: 'PVC',
                           pic: 'assets/im3.png',
                           typenum: 2,
                         ),
                         Box(
-                          pieces: 1,
-                          points: 1,
                           name: 'PE-LD',
                           pic: 'assets/im4.png',
                           typenum: 3,
                         ),
                         Box(
-                          pieces: 10,
-                          points: 20,
                           name: 'PP',
                           pic: 'assets/im5.png',
                           typenum: 4,
                         ),
                         Box(
-                          pieces: 10,
-                          points: 20,
                           name: 'PS',
                           pic: 'assets/im6.png',
                           typenum: 5,
                         ),
                         Box(
-                          pieces: 10,
-                          points: 20,
                           name: 'O',
                           pic: 'assets/im7.png',
                           typenum: 6,
@@ -101,49 +92,29 @@ class Add extends StatelessWidget {
 var sum = 0;
 
 class Box extends StatefulWidget {
-  final int pieces;
-  final int points;
   final String pic;
   final String name;
   final int typenum;
 
   const Box(
-      {Key? key,
-      required this.pieces,
-      required this.points,
-      required this.pic,
-      required this.name,
-      required this.typenum})
+      {Key? key, required this.pic, required this.name, required this.typenum})
       : super(key: key);
 
   @override
-  State<Box> createState() => _BoxState(
-      pieces: this.pieces,
-      points: this.points,
-      pic: this.pic,
-      name: this.name,
-      typenum: this.typenum);
+  State<Box> createState() =>
+      _BoxState(pic: this.pic, name: this.name, typenum: this.typenum);
 }
 
 class _BoxState extends State<Box> {
-  int pieces;
-  int points;
   String pic;
   String name;
   int typenum;
 
   _BoxState({
-    required this.pieces,
-    required this.points,
     required this.pic,
     required this.name,
     required this.typenum,
   });
-
-  int sumpoint() {
-    sum += points;
-    return sum;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -206,16 +177,52 @@ class Button extends StatefulWidget {
   State<Button> createState() => _ButtonState();
 }
 
+final user = FirebaseAuth.instance.currentUser!;
+var total = 0;
+List<dynamic> pointdb = [0, 0, 0, 0, 0, 0, 0];
+
 class _ButtonState extends State<Button> {
+  static List<int> point = [0, 0, 0, 0, 0, 0, 0];
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 100,
       child: ElevatedButton(
         onPressed: () {
-          print(_addbutState.type);
-          _addbutState.type = [0,0,0,0,0,0,0];
-          //  print(_addbutState.type);
+          var newtype = _addbutState.type;
+          // print(_addbutState.type);
+          point = [
+            (_addbutState.type[0] * 2),
+            (_addbutState.type[1] * 3),
+            (_addbutState.type[2] * 6),
+            (_addbutState.type[3] * 5),
+            (_addbutState.type[4] * 4),
+            (_addbutState.type[5] * 3),
+            (_addbutState.type[6] * 8),
+          ];
+          void checkdb() async {
+            bool c = false;
+            var a =
+                FirebaseFirestore.instance.collection('UserRec').snapshots();
+            QuerySnapshot<Map<String, dynamic>> b = await a.first;
+            b.docs.forEach((e) {
+              if (e.id == '$uid $date') {
+                updatepiece();
+                print('a');
+                c = true;
+              }
+            });
+            if (c == false) {
+              recordpiece(type: _addbutState.type, point: point, total: total);
+              _addbutState.type = [0, 0, 0, 0, 0, 0, 0];
+              print('n');
+            }
+          }
+
+          ;
+
+          checkdb();
+
           Navigator.pushNamed(context, '/recommendation');
         },
         child: Text('ADD'),
@@ -224,6 +231,81 @@ class _ButtonState extends State<Button> {
         ),
       ),
     );
+  }
+  // var total;
+  // void newtotalpoint(){
+  //   for(var i = 0; i < 7; i++) {
+  //    total += _addbutState.type[i];
+  //   }
+  // }
+  // void totalpoint(){
+  //   for(var i=0 ; i<7; i++){
+  //     total +=
+  //   }
+  // }
+
+  void updatepiece() async {
+    var intpiece = await readpiece();
+    for (int i = 0; i < 7; i++) {
+      intpiece[i] += _addbutState.type[i];
+    }
+    List<int> newpoint = [
+      (intpiece[0] * 2),
+      (intpiece[1] * 3),
+      (intpiece[2] * 6),
+      (intpiece[3] * 5),
+      (intpiece[4] * 4),
+      (intpiece[5] * 3),
+      (intpiece[6] * 8),
+    ];
+
+    // print(_addbutState.type);
+    await recordpiece(type: intpiece, point: newpoint, total: total);
+    _addbutState.type = [0, 0, 0, 0, 0, 0, 0];
+  }
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  var uid = user.uid;
+  var date = DateFormat.MMMd().format(new DateTime.now());
+  Future<List<int>> readpiece() async {
+    List<int> pointdbint = [];
+    var dbpie = FirebaseFirestore.instance.collection('UserRec').snapshots();
+    QuerySnapshot<Map<String, dynamic>> recpiece = await dbpie.first;
+    var test;
+    recpiece.docs.forEach((e) {
+      if (e.id == '$uid $date') {
+        test = e.data();
+        pointdb = e.data()['allplasticpiece'];
+        print(pointdb);
+        pointdbint = pointdb.cast<int>();
+        // print(test);
+      }
+    });
+    return pointdbint;
+    //.map((snapshot) => snapshot.docs.map((e) => print(e)))
+  }
+
+  Future recordpiece(
+      {required List<int> type,
+      required List<int> point,
+      required int total}) async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    var uid = user.uid;
+    for (var i = 0; i < 7; i++) {
+      total += point[i];
+    }
+    var date = DateFormat.MMMd().format(new DateTime.now());
+    final piece =
+        FirebaseFirestore.instance.collection('UserRec').doc('$uid $date');
+    final json = {
+      'allplasticpiece': type,
+      'allplasticpoint': point,
+      'Date': new DateTime.now(),
+      'userId': uid,
+      'totalpoint': total,
+    };
+    await piece.set(json);
+    print(_addbutState.type);
   }
 }
 
@@ -267,7 +349,6 @@ class _addbutState extends State<addbut> {
       } else {
         type[typenum] = 0;
       }
-    
     });
   }
 
