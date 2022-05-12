@@ -27,6 +27,16 @@ class _TodayState extends State<Today> {
   List<int> pointdb=[];
   @override
   Widget build(BuildContext context) {
+    final calDate = ModalRoute != null
+        ? ModalRoute.of(context)!.settings.arguments
+        : DateTime.now();
+    final dateFormat = DateFormat('MMMd');
+    DateTime? showingDate;
+    if (calDate == null) {
+      showingDate = DateTime.now();
+    } else {
+      showingDate = DateTime.parse(calDate.toString());
+    }
     var now = new DateTime.now();
     String formattedDate = DateFormat('MMMd').format(now);
     return Scaffold(
@@ -45,11 +55,8 @@ class _TodayState extends State<Today> {
                         Container(
                           alignment: Alignment.topCenter,
                           margin: const EdgeInsets.only(bottom: 20),
-                          child: Text(formattedDate,
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
+                          child: Text(dateFormat.format(showingDate),
+                              style: TextStyle(fontSize: 30)),
                         ),
                         // FutureBuilder<List<pieceandpoint>>(
                         //   future: getpiceandpoint().first,
@@ -363,7 +370,10 @@ class _ButtonState extends State<Button> {
       width: 300,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/compare');
+          Navigator.pushNamed(context, '/compare',
+              arguments: ModalRoute != null
+                  ? ModalRoute.of(context)!.settings.arguments
+                  : DateTime.now());
         },
         child: Text('Compare Usage'),
         style: ElevatedButton.styleFrom(

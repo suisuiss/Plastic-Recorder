@@ -21,36 +21,26 @@ Future main() async {
 
 final user = FirebaseAuth.instance.currentUser!;
 
- 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-  
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-  
-     
-    return MaterialApp( 
+    return MaterialApp(
       initialRoute: '/',
-       routes: {
-        '/':(context) => firstPage(),
-         '/home':(context) => HomeScreen(),
+      routes: {
+        '/': (context) => firstPage(),
+        '/home': (context) => HomeScreen(),
         '/login': (context) => LoginScreen(),
-        '/register' :(context) => register(),
-        '/calender' :(context) => calender(),        
-        '/compare' :(context) => Compare(),
-        '/recommendation' :(context) => Recommend(),
-        '/profile' :(context) => ProfilePage(),
-        '/add' :(context) => Add(), 
-        '/today' : (context) => Today(),
-        
-        
-      
+        '/register': (context) => register(),
+        '/calender': (context) => calender(),
+        '/compare': (context) => Compare(),
+        '/recommendation': (context) => Recommend(),
+        '/profile': (context) => ProfilePage(),
+        '/add': (context) => Add(),
+        '/today': (context) => Today(),
       },
-     
-       
-
-      );
+    );
   }
 }
