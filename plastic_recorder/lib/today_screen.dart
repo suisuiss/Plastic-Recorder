@@ -1,12 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:plastic_recorder/add_screen.dart';
 import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_database/firebase_database.dart';
 
-class Today extends StatelessWidget {
-  Today({Key? key}) : super(key: key);
+class Today extends StatefulWidget {
+  const Today({Key? key}) : super(key: key);
+  
+  @override
+  State<Today> createState() => _TodayState();
+  
+}
 
+class _TodayState extends State<Today> {
+  @override
+    void initState() {
+      super.initState();
+     getpiceandpoint();
+  }
+  var totaldb;
+  List<int> piecedb =[];
+  List<int> pointdb=[];
   @override
   Widget build(BuildContext context) {
     final calDate = ModalRoute != null
@@ -40,67 +58,93 @@ class Today extends StatelessWidget {
                           child: Text(dateFormat.format(showingDate),
                               style: TextStyle(fontSize: 30)),
                         ),
+                        // FutureBuilder<List<pieceandpoint>>(
+                        //   future: getpiceandpoint().first,
+                        //   builder: (context, snapshot) {
+                        //     if(snapshot.hasData){
+                        //       final pieceandpoint = snapshot.data!;
+
+                        //       return ListView(
+                        //         children: pieceandpoint.map(box).toList(),
+                        //       );
+                        //     }
+                        //   }
+                        // ),
                         Box(
-                          pieces: 2,
-                          points: 2,
+                          pieces: 0,
+                          points: 0,
                           name: 'PET',
                           pic: 'assets/im1.png',
-                          namepic: 'PET',
                           picI: 'assets/im1.png',
+                          namepic:
+                              'Examples: water bottle, peanut butter jar, condiment bottle, soda bottles, mouth wash bottle, salad dressing,  frozen foods packaging, bakery products',
+                          typenum: 0,
                         ),
                         Box(
                           pieces: 3,
                           points: 3,
                           name: 'PE-HD',
                           pic: 'assets/im2.png',
-                          namepic: 'PE-HD',
                           picI: 'assets/im2.png',
+                          namepic:
+                              'Examples: milk jugs, household cleaner bottles, shampoo bottles, trash bags,shopping bags, cereal box liners ',
+                          typenum: 1,
                         ),
                         Box(
                           pieces: 5,
                           points: 10,
                           name: 'PVC',
                           pic: 'assets/im3.png',
-                          namepic: 'PVC',
                           picI: 'assets/im3.png',
+                          namepic:
+                              'Examples: pipes, wire jacketing, clear food packaging, wire rope, medical equipment, siding, windows',
+                          typenum: 2,
                         ),
                         Box(
                           pieces: 1,
                           points: 1,
                           name: 'PE-LD',
                           pic: 'assets/im4.png',
-                          namepic: 'PE-LD',
                           picI: 'assets/im4.png',
+                          namepic:
+                              'Examples: squeezable bottles, bread bags, carpet, plastic film, tote bags, package cushioning, ziplock bags',
+                          typenum: 3,
                         ),
                         Box(
                           pieces: 10,
                           points: 20,
                           name: 'PP',
                           pic: 'assets/im5.png',
-                          namepic: 'PP',
                           picI: 'assets/im5.png',
+                          namepic:
+                              'Examples: straws, plastic furniture, yogurt containers, hangers, butter tubs, tupperwear,',
+                          typenum: 4,
                         ),
                         Box(
                           pieces: 10,
                           points: 20,
                           name: 'PS',
                           pic: 'assets/im6.png',
-                          namepic: 'PS',
                           picI: 'assets/im6.png',
+                          namepic:
+                              'Examples: disposable plates, meat trays, egg cartons, clear pill bottles, packing foam, plastic cutlery, disposable cups',
+                          typenum: 5,
                         ),
                         Box(
                           pieces: 10,
                           points: 20,
                           name: 'O',
                           pic: 'assets/im7.png',
-                          namepic: 'O',
                           picI: 'assets/im7.png',
+                          namepic:
+                              'Examples: sunglasses, CDs, baby bottles, water coolers bottle, headlight lenses',
+                          typenum: 6,
                         ),
                         Container(
                           padding: EdgeInsets.all(8),
                           alignment: Alignment.center,
                           child: Text(
-                            'Total:   $sum   point(s)',
+                            'Total:   $totaldb   point(s)',
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.black,
@@ -118,10 +162,47 @@ class Today extends StatelessWidget {
         ),
       ),
     );
-  }
-}
 
-var sum = 0;
+    // class _dataState extends State<data> {
+    //   @override
+    //   Widget build(BuildContext context) {
+    //     return Container(
+    //
+    //     );
+    //   }
+    // }
+  }
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  List piece= [];
+  List point=[];
+  var total;
+  var uid = user.uid;
+  var date = DateFormat.MMMd().format(new DateTime.now());
+  Future getpiceandpoint() async {
+    var dbpp = FirebaseFirestore.instance.collection('UserRec').snapshots();
+    QuerySnapshot<Map<String, dynamic>> recpp = await dbpp.first;
+    recpp.docs.forEach((e) {
+      if (e.id == '$uid $date') {
+        piece = e.data()['allplasticpiece'];
+        point = e.data()['allplasticpoint'];
+        total = e.data()['totalpoint'];
+      }
+      piecedb = piece.cast<int>();
+      pointdb = point.cast<int>();
+      totaldb = total;
+      print('--------');
+      print(totaldb);
+    });
+  }
+
+  // Stream<List<pieceandpoint>> readpp() => FirebaseFirestore.instance
+  //       .collection('UserRec')
+  //       .snapshots()
+  //       .map((snapshot) =>
+  //       snapshot.docs.map((e) => pieceandpoint.fromJson(e.data())).toList());
+
+}
 
 class Box extends StatefulWidget {
   final int pieces;
@@ -130,6 +211,7 @@ class Box extends StatefulWidget {
   final String name;
   final String namepic;
   final String picI;
+  final int typenum;
 
   const Box(
       {Key? key,
@@ -138,17 +220,20 @@ class Box extends StatefulWidget {
       required this.pic,
       required this.name,
       required this.namepic,
-      required this.picI})
+      required this.picI,
+      required this.typenum})
       : super(key: key);
 
   @override
   State<Box> createState() => _BoxState(
-      pieces: this.pieces,
-      points: this.points,
-      pic: this.pic,
-      name: this.name,
-      namepic: this.namepic,
-      picI: this.picI);
+        pieces: this.pieces,
+        points: this.points,
+        pic: this.pic,
+        name: this.name,
+        namepic: this.namepic,
+        picI: this.picI,
+        typenum: this.typenum,
+      );
 }
 
 class _BoxState extends State<Box> {
@@ -158,6 +243,9 @@ class _BoxState extends State<Box> {
   String name;
   String namepic;
   String picI;
+  int typenum;
+  // static int piecedb;
+  // static int pointdb;
 
   _BoxState({
     required this.pieces,
@@ -166,6 +254,7 @@ class _BoxState extends State<Box> {
     required this.name,
     required this.namepic,
     required this.picI,
+    required this.typenum,
   });
 
   int sumpoint() {
@@ -300,7 +389,6 @@ class ibutton extends StatelessWidget {
       : super(key: key);
   final String pic;
   final String namepic;
-
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
@@ -340,8 +428,11 @@ class ibutton extends StatelessWidget {
 }
 
 class picshow extends StatelessWidget {
-  const picshow({Key? key, required this.namepic, required this.pic})
-      : super(key: key);
+  const picshow({
+    Key? key,
+    required this.namepic,
+    required this.pic,
+  }) : super(key: key);
   final String namepic;
   final String pic;
 
@@ -369,9 +460,33 @@ class picshow extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
             ),
-          )
+          ),
         ],
       ),
     );
   }
+}
+
+class pieceandpoint {
+  final String userid;
+  final int piece;
+  final int point;
+
+  pieceandpoint({
+    required this.userid,
+    required this.piece,
+    required this.point,
+  });
+
+  Map<String, dynamic> toJson() => {
+        'userid': userid,
+        'piece': piece,
+        'point': point,
+      };
+
+  static pieceandpoint fromJson(Map<String, dynamic> json) => pieceandpoint(
+        userid: json['UserId'],
+        piece: json['allplasticpiece'],
+        point: json['allplasticpoint'],
+      );
 }
