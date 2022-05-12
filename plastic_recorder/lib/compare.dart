@@ -357,6 +357,16 @@ class _SimpleTimeSeriesChartState extends State<SimpleTimeSeriesChart> {
               // should create the same type of [DateTime] as the data provided. If none
               // specified, the default creates local date time.
               dateTimeFactory: const charts.LocalDateTimeFactory(),
+              domainAxis: new charts.DateTimeAxisSpec(
+                tickProviderSpec: charts.DayTickProviderSpec(increments: [1]),
+                tickFormatterSpec: new charts.AutoDateTimeTickFormatterSpec(
+                  day: new charts.TimeFormatterSpec(
+                      format: 'dd MMM',
+                      transitionFormat: 'dd MMM',
+                      noonFormat: 'dd MMM'),
+                ),
+                showAxisLine: false,
+              ),
             );
           } else {
             return Text('Loading...');
