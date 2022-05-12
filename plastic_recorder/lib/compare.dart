@@ -71,7 +71,7 @@ class _CompareState extends State<Compare> {
     var now = new DateTime.now();
     String formattedDate = DateFormat('MMMd').format(now);
 
-    int avg = 7;
+    int avg = 30;
 
     var color = ColorTween(begin: Colors.green, end: Colors.red);
 

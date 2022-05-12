@@ -10,21 +10,15 @@ import 'package:firebase_database/firebase_database.dart';
 
 class Today extends StatefulWidget {
   const Today({Key? key}) : super(key: key);
-  
+
   @override
   State<Today> createState() => _TodayState();
-  
 }
 
 class _TodayState extends State<Today> {
-  @override
-    void initState() {
-      super.initState();
-     getpiceandpoint();
-  }
   var totaldb;
-  List<int> piecedb =[];
-  List<int> pointdb=[];
+  List<int> piecedb = [];
+  List<int> pointdb = [];
   @override
   Widget build(BuildContext context) {
     final calDate = ModalRoute != null
@@ -144,7 +138,7 @@ class _TodayState extends State<Today> {
                           padding: EdgeInsets.all(8),
                           alignment: Alignment.center,
                           child: Text(
-                            'Total:   $totaldb   point(s)',
+                            'Total:   10   point(s)',
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.black,
@@ -174,8 +168,8 @@ class _TodayState extends State<Today> {
   }
 
   final FirebaseAuth auth = FirebaseAuth.instance;
-  List piece= [];
-  List point=[];
+  List piece = [];
+  List point = [];
   var total;
   var uid = user.uid;
   var date = DateFormat.MMMd().format(new DateTime.now());
