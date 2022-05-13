@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class header extends StatefulWidget {
   const header({Key? key}) : super(key: key);
@@ -16,8 +17,17 @@ class _headerState extends State<header> {
         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [           
             GestureDetector(
+              //canPop
               onTap: () {
-                Navigator.pop(context);
+               if(Navigator.canPop(context)){
+                  Navigator.pop(context);
+               }else{
+              //  return null; 
+                 SystemNavigator.pop();
+                  
+               }
+               
+                 
               },
               child: Icon(
               Icons.chevron_left_outlined,
