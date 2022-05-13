@@ -1,11 +1,18 @@
-import 'dart:ffi';
+import 'dart:async';
+// import 'dart:ffi';
+// import 'dart:html';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/ui/utils/stream_subscriber_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
 import 'package:intl/intl.dart';
+
+import 'main.dart';
 
 class Add extends StatelessWidget {
   Add({Key? key}) : super(key: key);
@@ -37,50 +44,36 @@ class Add extends StatelessWidget {
                                   decoration: TextDecoration.none)),
                         ),
                         Box(
-                          pieces: 2,
-                          points: 2,
                           name: 'PET',
                           pic: 'assets/im1.png',
                           typenum: 0,
                         ),
                         Box(
-                          pieces: 3,
-                          points: 3,
                           name: 'PE-HD',
                           pic: 'assets/im2.png',
                           typenum: 1,
                         ),
                         Box(
-                          pieces: 5,
-                          points: 10,
                           name: 'PVC',
                           pic: 'assets/im3.png',
                           typenum: 2,
                         ),
                         Box(
-                          pieces: 1,
-                          points: 1,
                           name: 'PE-LD',
                           pic: 'assets/im4.png',
                           typenum: 3,
                         ),
                         Box(
-                          pieces: 10,
-                          points: 20,
                           name: 'PP',
                           pic: 'assets/im5.png',
                           typenum: 4,
                         ),
                         Box(
-                          pieces: 10,
-                          points: 20,
                           name: 'PS',
                           pic: 'assets/im6.png',
                           typenum: 5,
                         ),
                         Box(
-                          pieces: 10,
-                          points: 20,
                           name: 'O',
                           pic: 'assets/im7.png',
                           typenum: 6,
@@ -101,49 +94,29 @@ class Add extends StatelessWidget {
 var sum = 0;
 
 class Box extends StatefulWidget {
-  final int pieces;
-  final int points;
   final String pic;
   final String name;
   final int typenum;
 
   const Box(
-      {Key? key,
-      required this.pieces,
-      required this.points,
-      required this.pic,
-      required this.name,
-      required this.typenum})
+      {Key? key, required this.pic, required this.name, required this.typenum})
       : super(key: key);
 
   @override
-  State<Box> createState() => _BoxState(
-      pieces: this.pieces,
-      points: this.points,
-      pic: this.pic,
-      name: this.name,
-      typenum: this.typenum);
+  State<Box> createState() =>
+      _BoxState(pic: this.pic, name: this.name, typenum: this.typenum);
 }
 
 class _BoxState extends State<Box> {
-  int pieces;
-  int points;
   String pic;
   String name;
   int typenum;
 
   _BoxState({
-    required this.pieces,
-    required this.points,
     required this.pic,
     required this.name,
     required this.typenum,
   });
-
-  int sumpoint() {
-    sum += points;
-    return sum;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -206,16 +179,55 @@ class Button extends StatefulWidget {
   State<Button> createState() => _ButtonState();
 }
 
+
+var total = 0;
+List<dynamic> pointdb = [0, 0, 0, 0, 0, 0, 0];
+
 class _ButtonState extends State<Button> {
+  static List<int> point = [0, 0, 0, 0, 0, 0, 0];
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+    var uid = user.uid;
     return Container(
       width: 100,
       child: ElevatedButton(
         onPressed: () {
-          print(_addbutState.type);
-          _addbutState.type = [0,0,0,0,0,0,0];
-          //  print(_addbutState.type);
+          var newtype = _addbutState.type;
+          // print(_addbutState.type);
+          point = [
+            (_addbutState.type[0] * 2),
+            (_addbutState.type[1] * 3),
+            (_addbutState.type[2] * 6),
+            (_addbutState.type[3] * 5),
+            (_addbutState.type[4] * 4),
+            (_addbutState.type[5] * 3),
+            (_addbutState.type[6] * 8),
+          ];
+          void checkdb() async {
+            bool c = false;
+            var a = FirebaseFirestore.instance.collection('UserRec').snapshots();
+            QuerySnapshot<Map<String, dynamic>> b = await a.first;
+            final user = FirebaseAuth.instance.currentUser!;
+            var uid = user.uid;
+            b.docs.forEach((e) {
+              if (e.id == '$uid $date') {
+                updatepiece();
+                print('a');
+                c = true;
+              }
+            });
+            if (c == false) {
+              recordpiece(type: _addbutState.type, point: point, total: total);
+              _addbutState.type = [0, 0, 0, 0, 0, 0, 0];
+              print('n');
+            }
+          }
+
+          ;
+
+          checkdb();
+
           Navigator.pushNamed(context, '/recommendation');
         },
         child: Text('ADD'),
@@ -224,6 +236,83 @@ class _ButtonState extends State<Button> {
         ),
       ),
     );
+  }
+  // var total;
+  // void newtotalpoint(){
+  //   for(var i = 0; i < 7; i++) {
+  //    total += _addbutState.type[i];
+  //   }
+  // }
+  // void totalpoint(){
+  //   for(var i=0 ; i<7; i++){
+  //     total +=
+  //   }
+  // }
+
+  void updatepiece() async {
+    var intpiece = await readpiece();
+    for (int i = 0; i < 7; i++) {
+      intpiece[i] += _addbutState.type[i];
+    }
+    List<int> newpoint = [
+      (intpiece[0] * 2),
+      (intpiece[1] * 3),
+      (intpiece[2] * 6),
+      (intpiece[3] * 5),
+      (intpiece[4] * 4),
+      (intpiece[5] * 3),
+      (intpiece[6] * 8),
+    ];
+
+    // print(_addbutState.type);
+    await recordpiece(type: intpiece, point: newpoint, total: total);
+    _addbutState.type = [0, 0, 0, 0, 0, 0, 0];
+  }
+
+  
+  var date = DateFormat.MMMd().format(new DateTime.now());
+  Future<List<int>> readpiece() async {
+    final user = FirebaseAuth.instance.currentUser!;
+      var uid = user.uid;
+    List<int> pointdbint = [];
+    var dbpie = FirebaseFirestore.instance.collection('UserRec').snapshots();
+    QuerySnapshot<Map<String, dynamic>> recpiece = await dbpie.first;
+    var test;
+    recpiece.docs.forEach((e) {
+      
+      if (e.id == '$uid $date') {
+        test = e.data();
+        pointdb = e.data()['allplasticpiece'];
+        print(pointdb);
+        pointdbint = pointdb.cast<int>();
+        // print(test);
+      }
+    });
+    return pointdbint;
+    //.map((snapshot) => snapshot.docs.map((e) => print(e)))
+  }
+
+  Future recordpiece(
+      {required List<int> type,
+      required List<int> point,
+      required int total}) async {
+        final user = FirebaseAuth.instance.currentUser!;
+    var uid = user.uid;
+    for (var i = 0; i < 7; i++) {
+      total += point[i];
+    }
+    var date = DateFormat.MMMd().format(new DateTime.now());
+    final piece =
+        FirebaseFirestore.instance.collection('UserRec').doc('$uid $date');
+    final json = {
+      'allplasticpiece': type,
+      'allplasticpoint': point,
+      'Date': new DateTime.now(),
+      'userId': uid,
+      'totalpoint': total,
+    };
+    await piece.set(json);
+    print(_addbutState.type);
   }
 }
 
@@ -267,7 +356,6 @@ class _addbutState extends State<addbut> {
       } else {
         type[typenum] = 0;
       }
-    
     });
   }
 
@@ -311,16 +399,65 @@ class ibutton extends StatelessWidget {
   final int typenum;
   List<List<Widget>> type = [
     [
+      picshow(namepic: 'PET', pic: 'assets/im1.png'),
       picshow(namepic: 'peanut butter jar', pic: 'assets/butter.png'),
       picshow(namepic: 'soda bottle', pic: 'assets/Coke.png'),
-      picshow(namepic: 'condiment bottle', pic: 'assets/sauce.png')
+      picshow(namepic: 'water bottle', pic: 'assets/im11.png'),
+      picshow(namepic: 'mouth wash bottle', pic: 'assets/im12.png'),
+      picshow(namepic: 'condiment bottle', pic: 'assets/im13.png'),
+      picshow(namepic: 'frozen food packaging', pic: 'assets/im14.png'),
+      picshow(namepic: 'bakery product', pic: 'assets/im15.png'),
+      
     ],
-    [picshow(namepic: 'trash bags', pic: 'assets/plastic.png')],
-    [picshow(namepic: 'asdasd', pic: 'assets/im3.png')],
-    [picshow(namepic: 'asdasd', pic: 'assets/im3.png')],
-    [picshow(namepic: 'asdasd', pic: 'assets/im3.png')],
-    [picshow(namepic: 'asdasd', pic: 'assets/im3.png')],
-    [picshow(namepic: 'asdasd', pic: 'assets/im3.png')],
+    [picshow(namepic: 'PE-HD', pic: 'assets/im2.png'),
+     picshow(namepic: 'milk jugs', pic: 'assets/im21.png'),
+     picshow(namepic: 'cleaner bottles', pic: 'assets/im22.png'),
+     picshow(namepic: 'shampoo bottles', pic: 'assets/im23.png'),
+     picshow(namepic: 'trash bags', pic: 'assets/im24.png'),
+     picshow(namepic: 'shopping bags', pic: 'assets/im25.png'),
+     picshow(namepic: 'cereal box liners', pic: 'assets/im26.png'),
+    ],
+    [
+      picshow(namepic: 'PVC', pic: 'assets/im3.png'),
+      picshow(namepic: 'pipes', pic: 'assets/im31.png'),
+      picshow(namepic: 'wire jacketing', pic: 'assets/im32.png'),
+      picshow(namepic: 'clear food packaging', pic: 'assets/im33.png'),
+      picshow(namepic: 'wire rope', pic: 'assets/im34.png'),
+      picshow(namepic: 'medical equipment', pic: 'assets/im35.png'),
+      picshow(namepic: 'siding', pic: 'assets/im36.png'),
+      picshow(namepic: 'windows', pic: 'assets/im37.png'),
+    ],
+    [picshow(namepic: 'PE-LD', pic: 'assets/im4.png'),
+    picshow(namepic: 'squeezable bottles', pic: 'assets/im41.png'),
+    picshow(namepic: 'bread bags', pic: 'assets/im42.png'),
+    picshow(namepic: 'carpet', pic: 'assets/im43.png'),
+    picshow(namepic: 'plastic film', pic: 'assets/im44.png'),
+    picshow(namepic: 'tote bags', pic: 'assets/im45.png'),
+    picshow(namepic: 'ziplock bags', pic: 'assets/im46.png'),
+    ],
+    [picshow(namepic: 'PP', pic: 'assets/im5.png'),
+    picshow(namepic: 'straws', pic: 'assets/im51.png'),
+    picshow(namepic: 'plastic furniture', pic: 'assets/im52.png'),
+    picshow(namepic: 'yogurt containers', pic: 'assets/im53.png'),
+    picshow(namepic: 'hangers', pic: 'assets/im54.png'),
+    picshow(namepic: 'butter tubs', pic: 'assets/im55.png'),
+    picshow(namepic: 'tupperwear', pic: 'assets/im56.png'),
+    ],
+    [picshow(namepic: 'PS', pic: 'assets/im6.png'),
+    picshow(namepic: 'disposable plates', pic: 'assets/im61.png'),
+    picshow(namepic: 'meat trays', pic: 'assets/im62.png'),
+    picshow(namepic: 'egg cartons', pic: 'assets/im63.png'),
+    picshow(namepic: 'clear pill bottles', pic: 'assets/im64.png'),
+    picshow(namepic: 'packing foam ', pic: 'assets/im65.png'),
+    picshow(namepic: 'plastic cutlery', pic: 'assets/im66.png'),
+    picshow(namepic: 'disposable cups', pic: 'assets/im67.png'),
+    ],
+    [picshow(namepic: 'O', pic: 'assets/im7.png'),
+    picshow(namepic: 'sunglasses', pic: 'assets/im71.png'),
+    picshow(namepic: 'CDs', pic: 'assets/im72.png'),
+    picshow(namepic: 'baby bottles', pic: 'assets/im73.png'),
+    picshow(namepic: 'water coolers bottle', pic: 'assets/im74.png'),
+    picshow(namepic: 'headlight lenses', pic: 'assets/im75.png'),],
   ];
 
   @override
@@ -347,7 +484,7 @@ class ibutton extends StatelessWidget {
                         ),
                         ImageSlideshow(
                             width: deviceWidth * 0.7,
-                            height: deviceHeight * 0.4,
+                            height: deviceHeight * 0.5,
                             indicatorColor: Color(0xffFF9F1D),
                             children: [
                               for (var i = 0; i < type[typenum].length; i++)
@@ -391,9 +528,9 @@ class picshow extends StatelessWidget {
           ),
           Image.asset(
             '$pic',
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
             width: deviceWidth * 0.6,
-            height: deviceHeight * 0.3,
+            height: deviceHeight * 0.4,
           ),
         ],
       ),

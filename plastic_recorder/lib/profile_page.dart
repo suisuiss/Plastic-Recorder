@@ -13,6 +13,7 @@ class ProfilePage extends StatefulWidget {
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 
+
 class _ProfilePageState extends State<ProfilePage> {
   final formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -101,6 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(yellow),
                       ),
+
                     ),
                   ),
                 ],
@@ -132,6 +134,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       Icons.chevron_left_outlined,
                                       size: 45,
                                       color: Color(0xffFF9F1D),
+
                                     ),
                                   ),
                                   Visibility(
