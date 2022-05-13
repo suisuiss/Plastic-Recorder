@@ -46,7 +46,6 @@ class _TodayState extends State<Today> {
       }
 
       checkdb = check(showingDate);
-
     });
     done = false;
     super.initState();
@@ -274,13 +273,14 @@ class _TodayState extends State<Today> {
     });
     if (c == false) {
       print('ffff');
-      await recordpiece([0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], 0 ,date1);
+      await recordpiece([0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], 0, date1);
       getpiceandpoint(date1);
     }
     return done;
   }
 
-  Future recordpiece(List<int> type, List<int> point, int total, DateTime date1) async {
+  Future recordpiece(
+      List<int> type, List<int> point, int total, DateTime date1) async {
     final user = FirebaseAuth.instance.currentUser!;
     var uid = user.uid;
     var date = DateFormat.MMMd().format(date1);
@@ -380,7 +380,9 @@ class _BoxState extends State<Box> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ibutton(typenum: typenum,),
+          ibutton(
+            typenum: typenum,
+          ),
           ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               child: Image.asset(
@@ -487,15 +489,15 @@ class ibutton extends StatelessWidget {
       picshow(namepic: 'condiment bottle', pic: 'assets/im13.png'),
       picshow(namepic: 'frozen food packaging', pic: 'assets/im14.png'),
       picshow(namepic: 'bakery product', pic: 'assets/im15.png'),
-      
     ],
-    [picshow(namepic: 'PE-HD', pic: 'assets/im2.png'),
-     picshow(namepic: 'milk jugs', pic: 'assets/im21.png'),
-     picshow(namepic: 'cleaner bottles', pic: 'assets/im22.png'),
-     picshow(namepic: 'shampoo bottles', pic: 'assets/im23.png'),
-     picshow(namepic: 'trash bags', pic: 'assets/im24.png'),
-     picshow(namepic: 'shopping bags', pic: 'assets/im25.png'),
-     picshow(namepic: 'cereal box liners', pic: 'assets/im26.png'),
+    [
+      picshow(namepic: 'PE-HD', pic: 'assets/im2.png'),
+      picshow(namepic: 'milk jugs', pic: 'assets/im21.png'),
+      picshow(namepic: 'cleaner bottles', pic: 'assets/im22.png'),
+      picshow(namepic: 'shampoo bottles', pic: 'assets/im23.png'),
+      picshow(namepic: 'trash bags', pic: 'assets/im24.png'),
+      picshow(namepic: 'shopping bags', pic: 'assets/im25.png'),
+      picshow(namepic: 'cereal box liners', pic: 'assets/im26.png'),
     ],
     [
       picshow(namepic: 'PVC', pic: 'assets/im3.png'),
@@ -507,37 +509,42 @@ class ibutton extends StatelessWidget {
       picshow(namepic: 'siding', pic: 'assets/im36.png'),
       picshow(namepic: 'windows', pic: 'assets/im37.png'),
     ],
-    [picshow(namepic: 'PE-LD', pic: 'assets/im4.png'),
-    picshow(namepic: 'squeezable bottles', pic: 'assets/im41.png'),
-    picshow(namepic: 'bread bags', pic: 'assets/im42.png'),
-    picshow(namepic: 'carpet', pic: 'assets/im43.png'),
-    picshow(namepic: 'plastic film', pic: 'assets/im44.png'),
-    picshow(namepic: 'tote bags', pic: 'assets/im45.png'),
-    picshow(namepic: 'ziplock bags', pic: 'assets/im46.png'),
+    [
+      picshow(namepic: 'PE-LD', pic: 'assets/im4.png'),
+      picshow(namepic: 'squeezable bottles', pic: 'assets/im41.png'),
+      picshow(namepic: 'bread bags', pic: 'assets/im42.png'),
+      picshow(namepic: 'carpet', pic: 'assets/im43.png'),
+      picshow(namepic: 'plastic film', pic: 'assets/im44.png'),
+      picshow(namepic: 'tote bags', pic: 'assets/im45.png'),
+      picshow(namepic: 'ziplock bags', pic: 'assets/im46.png'),
     ],
-    [picshow(namepic: 'PP', pic: 'assets/im5.png'),
-    picshow(namepic: 'straws', pic: 'assets/im51.png'),
-    picshow(namepic: 'plastic furniture', pic: 'assets/im52.png'),
-    picshow(namepic: 'yogurt containers', pic: 'assets/im53.png'),
-    picshow(namepic: 'hangers', pic: 'assets/im54.png'),
-    picshow(namepic: 'butter tubs', pic: 'assets/im55.png'),
-    picshow(namepic: 'tupperwear', pic: 'assets/im56.png'),
+    [
+      picshow(namepic: 'PP', pic: 'assets/im5.png'),
+      picshow(namepic: 'straws', pic: 'assets/im51.png'),
+      picshow(namepic: 'plastic furniture', pic: 'assets/im52.png'),
+      picshow(namepic: 'yogurt containers', pic: 'assets/im53.png'),
+      picshow(namepic: 'hangers', pic: 'assets/im54.png'),
+      picshow(namepic: 'butter tubs', pic: 'assets/im55.png'),
+      picshow(namepic: 'tupperwear', pic: 'assets/im56.png'),
     ],
-    [picshow(namepic: 'PS', pic: 'assets/im6.png'),
-    picshow(namepic: 'disposable plates', pic: 'assets/im61.png'),
-    picshow(namepic: 'meat trays', pic: 'assets/im62.png'),
-    picshow(namepic: 'egg cartons', pic: 'assets/im63.png'),
-    picshow(namepic: 'clear pill bottles', pic: 'assets/im64.png'),
-    picshow(namepic: 'packing foam ', pic: 'assets/im65.png'),
-    picshow(namepic: 'plastic cutlery', pic: 'assets/im66.png'),
-    picshow(namepic: 'disposable cups', pic: 'assets/im67.png'),
+    [
+      picshow(namepic: 'PS', pic: 'assets/im6.png'),
+      picshow(namepic: 'disposable plates', pic: 'assets/im61.png'),
+      picshow(namepic: 'meat trays', pic: 'assets/im62.png'),
+      picshow(namepic: 'egg cartons', pic: 'assets/im63.png'),
+      picshow(namepic: 'clear pill bottles', pic: 'assets/im64.png'),
+      picshow(namepic: 'packing foam ', pic: 'assets/im65.png'),
+      picshow(namepic: 'plastic cutlery', pic: 'assets/im66.png'),
+      picshow(namepic: 'disposable cups', pic: 'assets/im67.png'),
     ],
-    [picshow(namepic: 'O', pic: 'assets/im7.png'),
-    picshow(namepic: 'sunglasses', pic: 'assets/im71.png'),
-    picshow(namepic: 'CDs', pic: 'assets/im72.png'),
-    picshow(namepic: 'baby bottles', pic: 'assets/im73.png'),
-    picshow(namepic: 'water coolers bottle', pic: 'assets/im74.png'),
-    picshow(namepic: 'headlight lenses', pic: 'assets/im75.png'),],
+    [
+      picshow(namepic: 'O', pic: 'assets/im7.png'),
+      picshow(namepic: 'sunglasses', pic: 'assets/im71.png'),
+      picshow(namepic: 'CDs', pic: 'assets/im72.png'),
+      picshow(namepic: 'baby bottles', pic: 'assets/im73.png'),
+      picshow(namepic: 'water coolers bottle', pic: 'assets/im74.png'),
+      picshow(namepic: 'headlight lenses', pic: 'assets/im75.png'),
+    ],
   ];
 
   @override
@@ -617,5 +624,3 @@ class picshow extends StatelessWidget {
     );
   }
 }
-
-

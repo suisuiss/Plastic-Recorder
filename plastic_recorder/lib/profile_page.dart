@@ -11,17 +11,17 @@ class ProfilePage extends StatefulWidget {
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
- 
+
 final FirebaseAuth auth = FirebaseAuth.instance;
 
 User? usr = FirebaseAuth.instance.currentUser;
 var uemail = usr?.email;
 var uid = usr?.uid;
 getCurrentUser() async {
-    final  User us = await auth.currentUser!;
-    final uid = us.uid;
-    print(uid);
-  }
+  final User us = await auth.currentUser!;
+  final uid = us.uid;
+  print(uid);
+}
 
 class _ProfilePageState extends State<ProfilePage> {
   var isEdit = false;
@@ -54,7 +54,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-     
     final user = FirebaseAuth.instance.currentUser!;
     final formKey = GlobalKey<FormState>();
     final deviceHeight = MediaQuery.of(context).size.height;
@@ -91,7 +90,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   : textformfield(
                                       // hintText: '$GetUserData() ',
                                       hintText: '${user.email}',
-                                      
+
                                       icon: Icons.email,
                                     ),
                               textformfield(
