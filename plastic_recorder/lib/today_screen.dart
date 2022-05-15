@@ -481,7 +481,7 @@ class ibutton extends StatelessWidget {
   final int typenum;
   List<List<Widget>> type = [
     [
-      picshow(namepic: 'PET', pic: 'assets/im1.png'),
+      picshow(namepic: 'PET', pic: 'assets/PET.png'),
       picshow(namepic: 'peanut butter jar', pic: 'assets/butter.png'),
       picshow(namepic: 'soda bottle', pic: 'assets/Coke.png'),
       picshow(namepic: 'water bottle', pic: 'assets/im11.png'),
@@ -491,7 +491,7 @@ class ibutton extends StatelessWidget {
       picshow(namepic: 'bakery product', pic: 'assets/im15.png'),
     ],
     [
-      picshow(namepic: 'PE-HD', pic: 'assets/im2.png'),
+      picshow(namepic: 'PE-HD', pic: 'assets/PE-HD.png'),
       picshow(namepic: 'milk jugs', pic: 'assets/im21.png'),
       picshow(namepic: 'cleaner bottles', pic: 'assets/im22.png'),
       picshow(namepic: 'shampoo bottles', pic: 'assets/im23.png'),
@@ -500,7 +500,7 @@ class ibutton extends StatelessWidget {
       picshow(namepic: 'cereal box liners', pic: 'assets/im26.png'),
     ],
     [
-      picshow(namepic: 'PVC', pic: 'assets/im3.png'),
+      picshow(namepic: 'PVC', pic: 'assets/PVC.png'),
       picshow(namepic: 'pipes', pic: 'assets/im31.png'),
       picshow(namepic: 'wire jacketing', pic: 'assets/im32.png'),
       picshow(namepic: 'clear food packaging', pic: 'assets/im33.png'),
@@ -510,7 +510,7 @@ class ibutton extends StatelessWidget {
       picshow(namepic: 'windows', pic: 'assets/im37.png'),
     ],
     [
-      picshow(namepic: 'PE-LD', pic: 'assets/im4.png'),
+      picshow(namepic: 'PE-LD', pic: 'assets/PE-LD.png'),
       picshow(namepic: 'squeezable bottles', pic: 'assets/im41.png'),
       picshow(namepic: 'bread bags', pic: 'assets/im42.png'),
       picshow(namepic: 'carpet', pic: 'assets/im43.png'),
@@ -519,7 +519,7 @@ class ibutton extends StatelessWidget {
       picshow(namepic: 'ziplock bags', pic: 'assets/im46.png'),
     ],
     [
-      picshow(namepic: 'PP', pic: 'assets/im5.png'),
+      picshow(namepic: 'PP', pic: 'assets/PP.png'),
       picshow(namepic: 'straws', pic: 'assets/im51.png'),
       picshow(namepic: 'plastic furniture', pic: 'assets/im52.png'),
       picshow(namepic: 'yogurt containers', pic: 'assets/im53.png'),
@@ -528,7 +528,7 @@ class ibutton extends StatelessWidget {
       picshow(namepic: 'tupperwear', pic: 'assets/im56.png'),
     ],
     [
-      picshow(namepic: 'PS', pic: 'assets/im6.png'),
+      picshow(namepic: 'PS', pic: 'assets/PS.png'),
       picshow(namepic: 'disposable plates', pic: 'assets/im61.png'),
       picshow(namepic: 'meat trays', pic: 'assets/im62.png'),
       picshow(namepic: 'egg cartons', pic: 'assets/im63.png'),
@@ -538,7 +538,7 @@ class ibutton extends StatelessWidget {
       picshow(namepic: 'disposable cups', pic: 'assets/im67.png'),
     ],
     [
-      picshow(namepic: 'O', pic: 'assets/im7.png'),
+      picshow(namepic: 'O', pic: 'assets/O.png'),
       picshow(namepic: 'sunglasses', pic: 'assets/im71.png'),
       picshow(namepic: 'CDs', pic: 'assets/im72.png'),
       picshow(namepic: 'baby bottles', pic: 'assets/im73.png'),

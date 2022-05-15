@@ -145,6 +145,15 @@ flutter:
     - assets/Coke.png
     - assets/sauce.png
 
+    - assets/PET.png
+    - assets/PE-HD.png
+    - assets/PVC.png
+    - assets/PP.png
+    - assets/PS.png
+    - assets/O.png
+    - assets/PE-LD.png
+
+
 
 
   # To add assets to your application, add an assets section, like this:
