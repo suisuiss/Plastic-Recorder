@@ -26,7 +26,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future _signOut() async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context)
-        .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+        .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
   }
 
   Future _change() async {
