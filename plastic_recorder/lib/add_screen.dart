@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/ui/utils/stream_subscriber_mixin.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
@@ -47,36 +48,43 @@ class Add extends StatelessWidget {
                           name: 'PET',
                           pic: 'assets/im1.png',
                           typenum: 0,
+                          point: 2,
                         ),
                         Box(
                           name: 'PE-HD',
                           pic: 'assets/im2.png',
                           typenum: 1,
+                          point: 3,
                         ),
                         Box(
                           name: 'PVC',
                           pic: 'assets/im3.png',
                           typenum: 2,
+                          point: 6,
                         ),
                         Box(
                           name: 'PE-LD',
                           pic: 'assets/im4.png',
                           typenum: 3,
+                          point: 5,
                         ),
                         Box(
                           name: 'PP',
                           pic: 'assets/im5.png',
                           typenum: 4,
+                          point: 4,
                         ),
                         Box(
                           name: 'PS',
                           pic: 'assets/im6.png',
                           typenum: 5,
+                          point: 3,
                         ),
                         Box(
                           name: 'O',
                           pic: 'assets/im7.png',
                           typenum: 6,
+                          point: 8,
                         ),
                         Button(),
                       ],
@@ -97,26 +105,32 @@ class Box extends StatefulWidget {
   final String pic;
   final String name;
   final int typenum;
+  final int point;
 
   const Box(
-      {Key? key, required this.pic, required this.name, required this.typenum})
+      {Key? key,
+      required this.pic,
+      required this.name,
+      required this.typenum,
+      required this.point})
       : super(key: key);
 
   @override
-  State<Box> createState() =>
-      _BoxState(pic: this.pic, name: this.name, typenum: this.typenum);
+  State<Box> createState() => _BoxState(
+      pic: this.pic, name: this.name, typenum: this.typenum, point: this.point);
 }
 
 class _BoxState extends State<Box> {
   String pic;
   String name;
   int typenum;
+  int point;
 
-  _BoxState({
-    required this.pic,
-    required this.name,
-    required this.typenum,
-  });
+  _BoxState(
+      {required this.pic,
+      required this.name,
+      required this.typenum,
+      required this.point});
 
   @override
   Widget build(BuildContext context) {
@@ -152,17 +166,23 @@ class _BoxState extends State<Box> {
                 width: 50,
               )),
           Container(
-            width: 125,
-            padding: EdgeInsets.only(left: 30),
-            child: Text(
-              name,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  decoration: TextDecoration.none),
-            ),
-          ),
+              width: 125,
+              padding: EdgeInsets.only(left: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        decoration: TextDecoration.none),
+                  ),
+                  Text('$point points',
+                      style: TextStyle(fontSize: 15, color: Colors.black))
+                ],
+              )),
           addbut(
             typenum: typenum,
           ),
@@ -221,14 +241,33 @@ class _ButtonState extends State<Button> {
               recordpiece(type: _addbutState.type, point: point, total: total);
               _addbutState.type = [0, 0, 0, 0, 0, 0, 0];
               print('n');
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                        actions: <Widget>[
+                          Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: IconButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Close'),
+                                  icon: Icon(Icons.close),
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text('NO DATA')
+                            ],
+                          )
+                        ],
+                      ));
             }
           }
 
           ;
 
           checkdb();
-
-          Navigator.pushNamed(context, '/recommendation', arguments: point);
+          //  Navigator.pushNamed(context, '/recommendation', arguments: point);
         },
         child: Text('ADD'),
         style: ElevatedButton.styleFrom(
@@ -264,9 +303,38 @@ class _ButtonState extends State<Button> {
       (intpiece[6] * 8),
     ];
 
-    // print(_addbutState.type);
-    await recordpiece(type: intpiece, point: newpoint, total: total);
-    _addbutState.type = [0, 0, 0, 0, 0, 0, 0];
+    print(newpoint);
+    if (listEquals(_addbutState.type, [0, 0, 0, 0, 0, 0, 0])) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+                actions: <Widget>[
+                  Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                          onPressed: () => Navigator.pop(context, 'Close'),
+                          icon: Icon(Icons.close),
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        'NO PLASTIC ADDED',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  )
+                ],
+              ));
+      print('no da');
+    } else {
+      print('date');
+      await recordpiece(type: intpiece, point: newpoint, total: total);
+      _addbutState.type = [0, 0, 0, 0, 0, 0, 0];
+      Navigator.pushNamed(context, '/recommendation', arguments: point);
+    }
   }
 
   var date = DateFormat.MMMd().format(new DateTime.now());
@@ -397,7 +465,7 @@ class ibutton extends StatelessWidget {
   final int typenum;
   List<List<Widget>> type = [
     [
-      picshow(namepic: 'PET', pic: 'assets/im1.png'),
+      picshow(namepic: 'PET', pic: 'assets/PET.png'),
       picshow(namepic: 'peanut butter jar', pic: 'assets/butter.png'),
       picshow(namepic: 'soda bottle', pic: 'assets/Coke.png'),
       picshow(namepic: 'water bottle', pic: 'assets/im11.png'),
@@ -407,7 +475,7 @@ class ibutton extends StatelessWidget {
       picshow(namepic: 'bakery product', pic: 'assets/im15.png'),
     ],
     [
-      picshow(namepic: 'PE-HD', pic: 'assets/im2.png'),
+      picshow(namepic: 'PE-HD', pic: 'assets/PE-HD.png'),
       picshow(namepic: 'milk jugs', pic: 'assets/im21.png'),
       picshow(namepic: 'cleaner bottles', pic: 'assets/im22.png'),
       picshow(namepic: 'shampoo bottles', pic: 'assets/im23.png'),
@@ -416,7 +484,7 @@ class ibutton extends StatelessWidget {
       picshow(namepic: 'cereal box liners', pic: 'assets/im26.png'),
     ],
     [
-      picshow(namepic: 'PVC', pic: 'assets/im3.png'),
+      picshow(namepic: 'PVC', pic: 'assets/PVC.png'),
       picshow(namepic: 'pipes', pic: 'assets/im31.png'),
       picshow(namepic: 'wire jacketing', pic: 'assets/im32.png'),
       picshow(namepic: 'clear food packaging', pic: 'assets/im33.png'),
@@ -426,7 +494,7 @@ class ibutton extends StatelessWidget {
       picshow(namepic: 'windows', pic: 'assets/im37.png'),
     ],
     [
-      picshow(namepic: 'PE-LD', pic: 'assets/im4.png'),
+      picshow(namepic: 'PE-LD', pic: 'assets/PE-LD.png'),
       picshow(namepic: 'squeezable bottles', pic: 'assets/im41.png'),
       picshow(namepic: 'bread bags', pic: 'assets/im42.png'),
       picshow(namepic: 'carpet', pic: 'assets/im43.png'),
@@ -435,7 +503,7 @@ class ibutton extends StatelessWidget {
       picshow(namepic: 'ziplock bags', pic: 'assets/im46.png'),
     ],
     [
-      picshow(namepic: 'PP', pic: 'assets/im5.png'),
+      picshow(namepic: 'PP', pic: 'assets/PP.png'),
       picshow(namepic: 'straws', pic: 'assets/im51.png'),
       picshow(namepic: 'plastic furniture', pic: 'assets/im52.png'),
       picshow(namepic: 'yogurt containers', pic: 'assets/im53.png'),
@@ -444,7 +512,7 @@ class ibutton extends StatelessWidget {
       picshow(namepic: 'tupperwear', pic: 'assets/im56.png'),
     ],
     [
-      picshow(namepic: 'PS', pic: 'assets/im6.png'),
+      picshow(namepic: 'PS', pic: 'assets/PS.png'),
       picshow(namepic: 'disposable plates', pic: 'assets/im61.png'),
       picshow(namepic: 'meat trays', pic: 'assets/im62.png'),
       picshow(namepic: 'egg cartons', pic: 'assets/im63.png'),
@@ -454,7 +522,7 @@ class ibutton extends StatelessWidget {
       picshow(namepic: 'disposable cups', pic: 'assets/im67.png'),
     ],
     [
-      picshow(namepic: 'O', pic: 'assets/im7.png'),
+      picshow(namepic: 'O', pic: 'assets/O.png'),
       picshow(namepic: 'sunglasses', pic: 'assets/im71.png'),
       picshow(namepic: 'CDs', pic: 'assets/im72.png'),
       picshow(namepic: 'baby bottles', pic: 'assets/im73.png'),
