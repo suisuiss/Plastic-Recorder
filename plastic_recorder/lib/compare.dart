@@ -71,7 +71,7 @@ class _CompareState extends State<Compare> {
     var now = new DateTime.now();
     String formattedDate = DateFormat('MMMd').format(now);
 
-    int avg = 7;
+    int avg = 30;
 
     var color = ColorTween(begin: Colors.green, end: Colors.red);
 
@@ -111,8 +111,7 @@ class _CompareState extends State<Compare> {
                                       decoration: TextDecoration.none,
                                       fontWeight: FontWeight.bold,
                                     ),
-                                    child: Text(
-                                        'Compared to your past records...'),
+                                    child: Text('Compared to past 7-days...'),
                                   ),
                                 ),
                                 Padding(
@@ -358,6 +357,16 @@ class _SimpleTimeSeriesChartState extends State<SimpleTimeSeriesChart> {
               // should create the same type of [DateTime] as the data provided. If none
               // specified, the default creates local date time.
               dateTimeFactory: const charts.LocalDateTimeFactory(),
+              domainAxis: new charts.DateTimeAxisSpec(
+                tickProviderSpec: charts.DayTickProviderSpec(increments: [1]),
+                tickFormatterSpec: new charts.AutoDateTimeTickFormatterSpec(
+                  day: new charts.TimeFormatterSpec(
+                      format: 'dd MMM',
+                      transitionFormat: 'dd MMM',
+                      noonFormat: 'dd MMM'),
+                ),
+                showAxisLine: false,
+              ),
             );
           } else {
             return Text('Loading...');
