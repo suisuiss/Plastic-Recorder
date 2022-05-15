@@ -13,7 +13,6 @@ class ProfilePage extends StatefulWidget {
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 
-
 class _ProfilePageState extends State<ProfilePage> {
   final formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -46,7 +45,6 @@ class _ProfilePageState extends State<ProfilePage> {
         _pass.clear();
         _cpass.clear();
       } on FirebaseAuthException catch (e) {
-        
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(e.message!),
         ));
@@ -94,15 +92,13 @@ class _ProfilePageState extends State<ProfilePage> {
         ? Center(
             child: Container(
               color: Colors.white,
-              child: 
-              Column(
+              child: Column(
                 children: [
                   Expanded(
                     child: Center(
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(yellow),
                       ),
-
                     ),
                   ),
                 ],
@@ -134,7 +130,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                       Icons.chevron_left_outlined,
                                       size: 45,
                                       color: Color(0xffFF9F1D),
-
                                     ),
                                   ),
                                   Visibility(
@@ -156,96 +151,64 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   //BODY FORM
                   Expanded(
-                    child: 
-                    SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Image(
-                            image: AssetImage(
-                              'assets/profileimg1.jpg',
-                            ),
-                            width: 150,
-                            height: 150,
+                    child: Column(
+                      children: [
+                        Image(
+                          image: AssetImage(
+                            'assets/profileimg1.jpg',
                           ),
-                          Form(
-                            key: formKey,
-                            child: Container(
-                              height: deviceHeight * 0.4,
-                              width: double.infinity,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  isEditing
-                                      ? TextFormField(
-                                          controller: _email,
-                                          textAlign: TextAlign.center,
-                                          validator: (email) {
-                                            if (email == null ||
-                                                email.isEmpty) {
-                                              return 'Please enter an email';
-                                            } else if (!email.contains('@')) {
-                                              return 'Please enter a valid email';
-                                            }
-                                            return null;
-                                          },
-                                          decoration: InputDecoration(
-                                              hintText: 'Enter your new email',
-                                              hintStyle: const TextStyle(
-                                                  letterSpacing: 1,
-                                                  fontSize: 20,
-                                                  color: Colors.grey),
-                                              prefixIcon: Icon(
-                                                Icons.email,
-                                                color: Colors.black,
-                                              )))
-                                      : textformfield(
-                                          hintText: '${user.email}',
-                                          icon: Icons.email,
-                                        ),
-                                  isEditing
-                                      ? TextFormField(
-                                          controller: _pass,
-                                          textAlign: TextAlign.center,
-                                          obscureText: true,
-                                          validator: (password) {
-                                            if (password == null) {
-                                              return 'Please enter a password';
-                                            } else if (password.length < 6) {
-                                              return 'Password must be at least 6 characters';
-                                            }
-                                            return null;
-                                          },
-                                          decoration: InputDecoration(
-                                              hintText: 'New password',
-                                              hintStyle: const TextStyle(
-                                                  letterSpacing: 1,
-                                                  fontSize: 20,
-                                                  color: Colors.grey),
-                                              prefixIcon: Icon(
-                                                Icons.lock,
-                                                color: Colors.black,
-                                              )))
-                                      : textformfield(
-                                          hintText: 'Password',
-                                          icon: Icons.lock,
-                                        ),
-                                  Visibility(
-                                    visible: isEditing,
-                                    child: TextFormField(
-                                        controller: _cpass,
+                          width: 150,
+                          height: 150,
+                        ),
+                        Form(
+                          key: formKey,
+                          child: Container(
+                            height: deviceHeight * 0.4,
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                isEditing
+                                    ? TextFormField(
+                                        controller: _email,
                                         textAlign: TextAlign.center,
-                                        obscureText: true,
-                                        validator: (val) {
-                                          if (val == null) {
-                                            return 'Please confirm your password';
-                                          } else if (val != _pass.text) {
-                                            return 'Password does not match';
+                                        validator: (email) {
+                                          if (email == null || email.isEmpty) {
+                                            return 'Please enter an email';
+                                          } else if (!email.contains('@')) {
+                                            return 'Please enter a valid email';
                                           }
                                           return null;
                                         },
                                         decoration: InputDecoration(
-                                            hintText: 'Confirm the password',
+                                            hintText: 'Enter your new email',
+                                            hintStyle: const TextStyle(
+                                                letterSpacing: 1,
+                                                fontSize: 20,
+                                                color: Colors.grey),
+                                            prefixIcon: Icon(
+                                              Icons.email,
+                                              color: Colors.black,
+                                            )))
+                                    : textformfield(
+                                        hintText: '${user.email}',
+                                        icon: Icons.email,
+                                      ),
+                                isEditing
+                                    ? TextFormField(
+                                        controller: _pass,
+                                        textAlign: TextAlign.center,
+                                        obscureText: true,
+                                        validator: (password) {
+                                          if (password == null) {
+                                            return 'Please enter a password';
+                                          } else if (password.length < 6) {
+                                            return 'Password must be at least 6 characters';
+                                          }
+                                          return null;
+                                        },
+                                        decoration: InputDecoration(
+                                            hintText: 'New password',
                                             hintStyle: const TextStyle(
                                                 letterSpacing: 1,
                                                 fontSize: 20,
@@ -253,49 +216,76 @@ class _ProfilePageState extends State<ProfilePage> {
                                             prefixIcon: Icon(
                                               Icons.lock,
                                               color: Colors.black,
-                                            ))),
-                                  ),
-                                  Container(
-                                    height: 40,
-                                    width: 160,
-                                    child: isEditing
-                                        ? ElevatedButton(
-                                            onPressed: _change,
-                                            style: ElevatedButton.styleFrom(
-                                                primary: const Color.fromARGB(
-                                                    221, 252, 157, 15)),
-                                            child: const Center(
-                                              child: Text(
-                                                "update",
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        : ElevatedButton(
-                                            onPressed: _signOut,
-                                            style: ElevatedButton.styleFrom(
-                                                primary: const Color.fromARGB(
-                                                    221, 252, 157, 15)),
-                                            child: const Center(
-                                              child: Text(
-                                                "log out",
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.white,
-                                                ),
+                                            )))
+                                    : textformfield(
+                                        hintText: 'Password',
+                                        icon: Icons.lock,
+                                      ),
+                                Visibility(
+                                  visible: isEditing,
+                                  child: TextFormField(
+                                      controller: _cpass,
+                                      textAlign: TextAlign.center,
+                                      obscureText: true,
+                                      validator: (val) {
+                                        if (val == null) {
+                                          return 'Please confirm your password';
+                                        } else if (val != _pass.text) {
+                                          return 'Password does not match';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                          hintText: 'Confirm the password',
+                                          hintStyle: const TextStyle(
+                                              letterSpacing: 1,
+                                              fontSize: 20,
+                                              color: Colors.grey),
+                                          prefixIcon: Icon(
+                                            Icons.lock,
+                                            color: Colors.black,
+                                          ))),
+                                ),
+                                Container(
+                                  height: 40,
+                                  width: 160,
+                                  child: isEditing
+                                      ? ElevatedButton(
+                                          onPressed: _change,
+                                          style: ElevatedButton.styleFrom(
+                                              primary: const Color.fromARGB(
+                                                  221, 252, 157, 15)),
+                                          child: const Center(
+                                            child: Text(
+                                              "update",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
                                               ),
                                             ),
                                           ),
-                                  )
-                                ],
-                              ),
+                                        )
+                                      : ElevatedButton(
+                                          onPressed: _signOut,
+                                          style: ElevatedButton.styleFrom(
+                                              primary: const Color.fromARGB(
+                                                  221, 252, 157, 15)),
+                                          child: const Center(
+                                            child: Text(
+                                              "log out",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                )
+                              ],
                             ),
-                          )
-                        ],
-                      ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   footer()

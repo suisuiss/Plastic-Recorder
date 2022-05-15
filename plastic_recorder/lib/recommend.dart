@@ -13,7 +13,74 @@ class Recommend extends StatefulWidget {
   State<Recommend> createState() => _RecommendState();
 }
 
+List<Widget> totalCards = <Widget>[];
+List<Widget> cards = <Widget>[
+  RecommendCard(
+      'Type 1: PET',
+      'assets/im1.png',
+      'Polyethylene terephthalate or PET or PETE  is the most common thermoplastic polymer resin of the polyester family. PET products might be convenient, but they are wasteful and can be used only once. As an alternative, you should try using refillable products instead of single use. You can also use biodegradable product  for an even greener option.',
+      UniqueKey()),
+  RecommendCard(
+      'Type 2: PE-HD',
+      'assets/im2.png',
+      'High-density polyethylene or PE-HD or HDPE is a thermoplastic polymer produced from the monomer ethylene. his plastic can be easily reused and recycled up to 10 times. You can reuse it as refillable products.',
+      UniqueKey()),
+  RecommendCard(
+      'Type 3: PVC',
+      'assets/im3.png',
+      'Polyvinyl chloride or PVC is the world\'s third-most widely produced synthetic polymer of plastic. It is one of the least recyclable plastics due to the variety of additives in the material. However, there are many alternatives to PVC. For example, RIVERCYCLON is 100% recyclable. RIVERCYCLON® is made with a single, non-toxic polymer, derived from the most commonly recycled plastic worldwide with reasonable prices.',
+      UniqueKey()),
+  RecommendCard(
+      'Type 4: PE-LD',
+      'assets/im4.png',
+      'Low-density polyethylene or PE-LD or LDPE is a thermoplastic made from the monomer ethylene. A very small amount is recyclable. You can reuse PE-LD products a few times.',
+      UniqueKey()),
+  RecommendCard(
+      'Type 5: PP',
+      'assets/im5.png',
+      'Polypropylene or PP is a thermoplastic polymer used in a wide variety of applications. It is produced via chain-growth polymerization from the monomer propylene. Anyhow, The Californian-based company Cereplast claims its biopropylene resin is an industry first and could replace traditional PP in the vast majority of applications.',
+      UniqueKey()),
+  RecommendCard(
+      'Type 6: PS',
+      'assets/im6.png',
+      'Polystyrene or PS s a synthetic aromatic hydrocarbon polymer made from the monomer known as styrene. Polystyrene is a lightweight plastic that is cheap to produce. It can be made into a solid material or foam. Most PS products can be used only once. Polystyrene can be recycled but it is not widely accepted everywhere, as a smaller number of factories accept it. You can use biodegradable products or products that are reusable.',
+      UniqueKey()),
+  RecommendCard(
+      'Type 7: O/OTHER',
+      'assets/im7.png',
+      'OTHER or O is other plastics, such as acrylic, nylon, polycarbonate, and polylactic acid (a bioplastic also known as PLA), and multilayer combinations of different plastics. Number 7 plastics are not typically recycled as they\'re mostly specialty produced in limited volumes. It is suggested that these items are not reused unless labeled with “PLA” (aka Polylactic acid). This means the product is compostable and should not be placed in the recycling bin.',
+      UniqueKey()),
+];
+
 class _RecommendState extends State<Recommend> {
+  @override
+  void initState() {
+    super.initState();
+
+    List<int> list;
+    totalCards = [];
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        Object? args = ModalRoute != null
+            ? ModalRoute.of(context)!.settings.arguments
+            : [];
+
+        if (args == null) {
+          totalCards = [];
+        } else {
+          list = args as List<int>;
+          for (int i = 0; i < 7; i++) {
+            if (list[i] > 0) {
+              totalCards.add(cards[i]);
+            }
+          }
+          print('Has points');
+          print(args);
+        }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final _currentPageNotifier = ValueNotifier<int>(0);
@@ -35,48 +102,10 @@ class _RecommendState extends State<Recommend> {
 
     final controller = PageController(initialPage: 0);
 
-    List<Widget> totalCards = <Widget>[
-      RecommendCard(
-          'Type 1: PET',
-          'assets/im1.png',
-          'Polyethylene terephthalate or PET or PETE  is the most common thermoplastic polymer resin of the polyester family. PET products might be convenient, but they are wasteful and can be used only once. As an alternative, you should try using refillable products instead of single use. You can also use biodegradable product  for an even greener option.',
-          UniqueKey()),
-      RecommendCard(
-          'Type 2: PE-HD',
-          'assets/im2.png',
-          'High-density polyethylene or PE-HD or HDPE is a thermoplastic polymer produced from the monomer ethylene. his plastic can be easily reused and recycled up to 10 times. You can reuse it as refillable products.',
-          UniqueKey()),
-      RecommendCard(
-          'Type 3: PVC',
-          'assets/im3.png',
-          'Polyvinyl chloride or PVC is the world\'s third-most widely produced synthetic polymer of plastic. It is one of the least recyclable plastics due to the variety of additives in the material. However, there are many alternatives to PVC. For example, RIVERCYCLON is 100% recyclable. RIVERCYCLON® is made with a single, non-toxic polymer, derived from the most commonly recycled plastic worldwide with reasonable prices.',
-          UniqueKey()),
-      RecommendCard(
-          'Type 4: PE-LD',
-          'assets/im4.png',
-          'Low-density polyethylene or PE-LD or LDPE is a thermoplastic made from the monomer ethylene. A very small amount is recyclable. You can reuse PE-LD products a few times.',
-          UniqueKey()),
-      RecommendCard(
-          'Type 5: PP',
-          'assets/im5.png',
-          'Polypropylene or PP is a thermoplastic polymer used in a wide variety of applications. It is produced via chain-growth polymerization from the monomer propylene. Anyhow, The Californian-based company Cereplast claims its biopropylene resin is an industry first and could replace traditional PP in the vast majority of applications.',
-          UniqueKey()),
-      RecommendCard(
-          'Type 6: PS',
-          'assets/im6.png',
-          'Polystyrene or PS s a synthetic aromatic hydrocarbon polymer made from the monomer known as styrene. Polystyrene is a lightweight plastic that is cheap to produce. It can be made into a solid material or foam. Most PS products can be used only once. Polystyrene can be recycled but it is not widely accepted everywhere, as a smaller number of factories accept it. You can use biodegradable products or products that are reusable.',
-          UniqueKey()),
-      RecommendCard(
-          'Type 7: O/OTHER',
-          'assets/im7.png',
-          'OTHER or O is other plastics, such as acrylic, nylon, polycarbonate, and polylactic acid (a bioplastic also known as PLA), and multilayer combinations of different plastics. Number 7 plastics are not typically recycled as they\'re mostly specialty produced in limited volumes. It is suggested that these items are not reused unless labeled with “PLA” (aka Polylactic acid). This means the product is compostable and should not be placed in the recycling bin.',
-          UniqueKey()),
-    ];
-
     return Scaffold(
       //You should use `Scaffold` if you have `TextField` in body.
       //Otherwise on focus your `TextField` won`t scroll when keyboard popup.
-      body: SafeArea(
+      body: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -119,7 +148,7 @@ class _RecommendState extends State<Recommend> {
                       ElevatedButton(
                         onPressed: () {
                           // Respond to button press
-                          Navigator.pushNamed(context, '/today');
+                          Navigator.pushReplacementNamed(context, '/today');
                         },
                         style: ElevatedButton.styleFrom(
                             primary: Color(0xFFFF9F1D)),

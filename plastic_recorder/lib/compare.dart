@@ -78,7 +78,7 @@ class _CompareState extends State<Compare> {
     return Scaffold(
       //You should use `Scaffold` if you have `TextField` in body.
       //Otherwise on focus your `TextField` won`t scroll when keyboard popup.
-      body: SafeArea(
+      body: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
