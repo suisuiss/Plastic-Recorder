@@ -20,7 +20,9 @@ class Today extends StatefulWidget {
 }
 
 class _TodayState extends State<Today> {
-  late Future checkdb;
+   static bool done = false;
+  Future? checkdb1;
+  Future? gettt;
   @override
   void initState() {
     var calDate;
@@ -45,16 +47,15 @@ class _TodayState extends State<Today> {
         showingDate = DateTime.parse(calDate.toString());
       }
 
-      checkdb = check(showingDate);
+      checkdb1 = check(showingDate);
+      gettt = getpiceandpoint(showingDate);
     });
-    done = false;
     super.initState();
   }
 
   List<int> pointset = [0, 0, 0, 0, 0, 0, 0].cast<int>();
   List<int> pieceset = [0, 0, 0, 0, 0, 0, 0].cast<int>();
   bool checkbool = false;
-  static bool done = false;
   var totaldb;
   var piecedb;
   var pointdb;
@@ -97,7 +98,7 @@ class _TodayState extends State<Today> {
                               style: TextStyle(fontSize: 30)),
                         ),
                         FutureBuilder<dynamic>(
-                            future: checkdb,
+                            future: gettt,
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.done) {
@@ -254,7 +255,6 @@ class _TodayState extends State<Today> {
       print(piecedb);
       print(pointdb);
     });
-    // return done;
   }
 
   Future check(DateTime date1) async {
