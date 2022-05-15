@@ -162,7 +162,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: [
                           Image(
                             image: AssetImage(
-                              'assets/profileimg.jpg',
+                              'assets/profileimg1.jpg',
                             ),
                             width: 150,
                             height: 150,
