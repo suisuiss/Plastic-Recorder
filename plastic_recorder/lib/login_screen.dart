@@ -34,7 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ;
       emailController.clear();
       passwordController.clear();
-      Navigator.pushNamed(context, '/home');
+       
+      Navigator.pushReplacementNamed(context, '/today');
         
       } on FirebaseAuthException catch(e){
 
