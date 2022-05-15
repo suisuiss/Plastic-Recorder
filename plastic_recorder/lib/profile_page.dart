@@ -13,7 +13,6 @@ class ProfilePage extends StatefulWidget {
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 
-
 class _ProfilePageState extends State<ProfilePage> {
   final formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -46,7 +45,6 @@ class _ProfilePageState extends State<ProfilePage> {
         _pass.clear();
         _cpass.clear();
       } on FirebaseAuthException catch (e) {
-        
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(e.message!),
         ));
@@ -94,15 +92,13 @@ class _ProfilePageState extends State<ProfilePage> {
         ? Center(
             child: Container(
               color: Colors.white,
-              child: 
-              Column(
+              child: Column(
                 children: [
                   Expanded(
                     child: Center(
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(yellow),
                       ),
-
                     ),
                   ),
                 ],
@@ -134,7 +130,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                       Icons.chevron_left_outlined,
                                       size: 45,
                                       color: Color(0xffFF9F1D),
-
                                     ),
                                   ),
                                   Visibility(
@@ -171,16 +166,14 @@ class _ProfilePageState extends State<ProfilePage> {
                             height: deviceHeight * 0.4,
                             width: double.infinity,
                             child: Column(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 isEditing
                                     ? TextFormField(
                                         controller: _email,
                                         textAlign: TextAlign.center,
                                         validator: (email) {
-                                          if (email == null ||
-                                              email.isEmpty) {
+                                          if (email == null || email.isEmpty) {
                                             return 'Please enter an email';
                                           } else if (!email.contains('@')) {
                                             return 'Please enter a valid email';

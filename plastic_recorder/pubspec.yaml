@@ -79,6 +79,7 @@ flutter:
     - assets/water.png
     - assets/bottles.png
     - assets/email.jpg
+    - assets/profileimg.jpg
    
     - assets/password.png
     - assets/username.png
