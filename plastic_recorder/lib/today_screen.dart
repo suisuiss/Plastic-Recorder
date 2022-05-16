@@ -23,10 +23,11 @@ class _TodayState extends State<Today> {
    static bool done = false;
   Future? checkdb1;
   Future? gettt;
+
   @override
   void initState() {
     var calDate;
-    Future.delayed(Duration.zero, () {
+    Future.delayed(Duration.zero,() {
       setState(() {
         calDate = ModalRoute != null
             ? ModalRoute.of(context)!.settings.arguments
@@ -98,7 +99,7 @@ class _TodayState extends State<Today> {
                               style: TextStyle(fontSize: 30)),
                         ),
                         FutureBuilder<dynamic>(
-                            future: gettt,
+                            future: checkdb1,
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.done) {
@@ -250,11 +251,12 @@ class _TodayState extends State<Today> {
         });
       }
       done = true;
-      print('--------');
+      
+    });
+    print('--------');
       print(totaldb);
       print(piecedb);
       print(pointdb);
-    });
   }
 
   Future check(DateTime date1) async {
@@ -274,7 +276,7 @@ class _TodayState extends State<Today> {
     if (c == false) {
       print('ffff');
       await recordpiece([0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], 0, date1);
-      getpiceandpoint(date1);
+      await getpiceandpoint(date1);
     }
     return done;
   }
@@ -294,6 +296,7 @@ class _TodayState extends State<Today> {
       'totalpoint': total,
     };
     await piece.set(json);
+    print('newdacom');
   }
 }
 
