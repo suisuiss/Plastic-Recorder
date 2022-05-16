@@ -86,7 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
+    final user = FirebaseAuth.instance.currentUser;
     final deviceHeight = MediaQuery.of(context).size.height;
     return isLoading
         ? Center(
@@ -191,7 +191,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               color: Colors.black,
                                             )))
                                     : textformfield(
-                                        hintText: '${user.email}',
+                                        hintText: '${user?.email}',
                                         icon: Icons.email,
                                       ),
                                 isEditing
