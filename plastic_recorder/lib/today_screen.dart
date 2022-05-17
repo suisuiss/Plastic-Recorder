@@ -244,6 +244,9 @@ class _TodayState extends State<Today> {
         piece = e.data()['allplasticpiece'];
         point = e.data()['allplasticpoint'];
         total = e.data()['totalpoint'];
+          totaldb = total;
+          piecedb = piece.cast<int>();
+          pointdb = point.cast<int>();
         setState(() {
           totaldb = total;
           piecedb = piece.cast<int>();
