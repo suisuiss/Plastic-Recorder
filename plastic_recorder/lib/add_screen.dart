@@ -12,7 +12,6 @@ import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:plastic_recorder/footer.dart';
 import 'package:plastic_recorder/header.dart';
 import 'package:intl/intl.dart';
-
 import 'main.dart';
 
 class Add extends StatelessWidget {

@@ -470,7 +470,7 @@ class _ButtonState extends State<Button> {
                   ? ModalRoute.of(context)!.settings.arguments
                   : DateTime.now());
         },
-        child: Text('Compare Usage'),
+        child: Text(' Compare to avarage'),
         style: ElevatedButton.styleFrom(
           primary: Color(0xffFF9F1D),
         ),
