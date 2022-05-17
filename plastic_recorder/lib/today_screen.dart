@@ -64,8 +64,8 @@ class _TodayState extends State<Today> {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
-    var uid = user.uid;
+    final user = FirebaseAuth.instance.currentUser;
+    var uid = user?.uid;
     final calDate = ModalRoute != null
         ? ModalRoute.of(context)!.settings.arguments
         : DateTime.now();
@@ -234,8 +234,8 @@ class _TodayState extends State<Today> {
   var point;
   var total = 0;
   Future getpiceandpoint(DateTime date1) async {
-    final user = FirebaseAuth.instance.currentUser!;
-    var uid = user.uid;
+    final user = FirebaseAuth.instance.currentUser;
+    var uid = user?.uid;
     var date = DateFormat.MMMd().format(date1);
     var dbpp = FirebaseFirestore.instance.collection('UserRec').snapshots();
     QuerySnapshot<Map<String, dynamic>> recpp = await dbpp.first;
@@ -244,9 +244,9 @@ class _TodayState extends State<Today> {
         piece = e.data()['allplasticpiece'];
         point = e.data()['allplasticpoint'];
         total = e.data()['totalpoint'];
-          totaldb = total;
-          piecedb = piece.cast<int>();
-          pointdb = point.cast<int>();
+          // totaldb = total;
+          // piecedb = piece.cast<int>();
+          // pointdb = point.cast<int>();
         setState(() {
           totaldb = total;
           piecedb = piece.cast<int>();
@@ -263,8 +263,8 @@ class _TodayState extends State<Today> {
   }
 
   Future check(DateTime date1) async {
-    final user = FirebaseAuth.instance.currentUser!;
-    var uid = user.uid;
+    final user = FirebaseAuth.instance.currentUser;
+    var uid = user?.uid;
     bool c = false;
     var date = DateFormat.MMMd().format(date1);
     var checkdb = FirebaseFirestore.instance.collection('UserRec').snapshots();
@@ -286,8 +286,8 @@ class _TodayState extends State<Today> {
 
   Future recordpiece(
       List<int> type, List<int> point, int total, DateTime date1) async {
-    final user = FirebaseAuth.instance.currentUser!;
-    var uid = user.uid;
+    final user = FirebaseAuth.instance.currentUser;
+    var uid = user?.uid;
     var date = DateFormat.MMMd().format(date1);
     final piece =
         FirebaseFirestore.instance.collection('UserRec').doc('$uid $date');
